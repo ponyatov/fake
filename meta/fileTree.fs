@@ -38,3 +38,11 @@ let dirs () =
         | _ -> ()
 
 dirs ()
+
+let _files = [ "Makefile"; "README.md"; "LICENSE", ".clang-format", ".prettierc" ]
+
+let files () =
+    for f in _files do
+        touch f
+
+files ()
