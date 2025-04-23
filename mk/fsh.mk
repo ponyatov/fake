@@ -14,4 +14,4 @@ dotnet: \
 .config/dotnet-tools.json:
 	dotnet new tool-manifest
 
-# dotnet tool update --ignore-failed-sources --global Microsoft.dotnet-interactive
+# dotnet tool update --ignore-failed-sources --global Microsoft.dotnet-interactive --add-source https://api.nuget.org/v3/index.json
