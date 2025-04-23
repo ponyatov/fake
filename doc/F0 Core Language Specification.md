@@ -1,2 +1,2 @@
-# L0
+# F0
 ## Core Language Specification

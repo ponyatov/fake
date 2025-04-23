@@ -1,6 +1,6 @@
 # Language Level Layers
 
-![[L0 Core Language Specification]]
-![[L1 Language Layer for Slave Devices]]
-![[L2 Gateways and Hub Functional]]
-![[L3 Data Storage and Processing Semantics]]
+![[F0 Core Language Specification]]
+![[F1 Language Layer for Slave Devices]]
+![[F2 Gateways and Hub Functional]]
+![[F3 Data Storage and Processing Semantics]]

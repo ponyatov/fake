@@ -1,1 +1,6 @@
 # [[gui/GUI|GUI]]
+![[fake/Framebuffer|Framebuffer]]
+![[Embedded UI]]
+![[OS-Hosted GUI]]
+![[Vectored Canvas]]
+![[Data Visualization]]

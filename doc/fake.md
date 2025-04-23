@@ -16,17 +16,17 @@ github: https://github.com/ponyatov/fake
 > Elon Musk Express, Inc.
 
 ### [[fake/Preface|Preface]]
-## [[fake/Scope|Scope]]
-## [[Normative References]]
-## [[Definitions and Conventions]]
-## [[Compliance]]
-## [[fake/Environment|Environment]]
+### [[fake/Scope|Scope]]
+### [[Normative References]]
+### [[Definitions and Conventions]]
+### [[Compliance]]
+### [[fake/Environment|Environment]]
 
 ## [[Language Level Layers]]
-### [[L0 Core Language Specification]]
-### [[L1 Language Layer for Slave Devices]]
-### [[L2 Gateways and Hub Functional]]
-### [[L3 Data Storage and Processing Semantics]]
+### [[F0 Core Language Specification]]
+### [[F1 Language Layer for Slave Devices]]
+### [[F2 Gateways and Hub Functional]]
+### [[F3 Data Storage and Processing Semantics]]
 
 ## [[Side Languages Interop]]
 ### [[Bare C]]
@@ -42,14 +42,15 @@ github: https://github.com/ponyatov/fake
 ### [[DSL Tools]]
 ### [[fake/Signal Processing|Signal Processing]]
 ### [[Motion Control]]
-### [[fake/Navigation]]
+### [[Navigation]]
 
 ## [[fake/Networking|Networking]]
-### [[fake/MODBUS|MODBUS]]
+### [[Serial IO]]
 ### [[IP Stack]]
+### [[fake/MODBUS|MODBUS]]
 ### [[fake/Wireless|Wireless]]
 ### [[Mesh Networking]]
-### [[Protocol Specification]]
+### [[Declarative Protocol Specification]]
 ### [[Dataflow Tunneling]]
 ### [[Distributed Logging and Monitoring]]
 
@@ -61,6 +62,16 @@ github: https://github.com/ponyatov/fake
 ### [[Data Visualization]]
 
 ## [[Data Storage and Flow Processing]]
+### [[fake/Data Serialization|Data Serialization]]
+### [[Object Storage]]
+### [[RDBMS ORM]]
+### [[REST API]]
+
+## [[Mobile Devices]]
+### [[Mobile UI]]
+### [[Wireless Interfaces]]
+### [[Mobile Sensors]]
+### [[NFC and Payment]]
 
 ![[fake/Preface|Preface]]
 ![[fake/Scope|Scope]]
@@ -75,3 +86,4 @@ github: https://github.com/ponyatov/fake
 ![[fake/Networking|Networking]]
 ![[Native GUI]]
 ![[Data Storage and Flow Processing]]
+![[Mobile Devices]]
