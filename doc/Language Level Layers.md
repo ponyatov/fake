@@ -50,6 +50,7 @@ Language specification splitted into multiple layers in dependence with hardware
 	- mains power
 	- REPL:
 		- huge device groups, cluster & database management
+		- embedded projects build & package management
 
 ![[F0 Core Language Specification]]
 ![[F1 Language Layer for Slave Devices]]
