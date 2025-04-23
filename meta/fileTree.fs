@@ -13,7 +13,7 @@ let mkdir (name: string) =
     touch ($"{name}/.gitignore")
 
 // generic C/C++ project
-let dirs =
+let _dirs =
     [ "."
       ".vscode"
       "bin"
@@ -26,12 +26,15 @@ let dirs =
       "mk"
       "cmake" ]
 
-for d in dirs do
-    mkdir d
+let dirs () =
+    for d in _dirs do
+        mkdir d
 
-    match d with
-    | "bin"
-    | "tmp"
-    | "ref" -> File.WriteAllText($"{d}/.gitignore", "*\n")
-    | "doc" -> File.WriteAllText($"{d}/.gitignore", "html/\n")
-    | _ -> ()
+        match d with
+        | "bin"
+        | "tmp"
+        | "ref" -> File.WriteAllText($"{d}/.gitignore", "*\n")
+        | "doc" -> File.WriteAllText($"{d}/.gitignore", "html/\n")
+        | _ -> ()
+
+dirs ()
