@@ -1,1 +1,1 @@
-DOTNET_VER = 8.0
+DOTNET_VER = 9.0

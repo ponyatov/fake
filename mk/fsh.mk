@@ -7,11 +7,10 @@ dotnet: \
 	/etc/apt/sources.list.d/microsoft.list
 	$(MAKE) update .config/dotnet-tools.json
 	dotnet tool install --global fantomas
+	dotnet tool install --global Microsoft.dotnet-interactive
 /etc/apt/trusted.gpg.d/microsoft.asc:
 	sudo $(CURL) $@ $(MS_URL)/keys/microsoft.asc
 /etc/apt/sources.list.d/microsoft.list:
 	sudo $(CURL) $@ $(MS_URL)/config/debian/12/prod.list
 .config/dotnet-tools.json:
 	dotnet new tool-manifest
-
-# dotnet tool install --ignore-failed-sources --global Microsoft.dotnet-interactive --add-source https://api.nuget.org/v3/index.json
