@@ -53,6 +53,7 @@
         // "marus25.cortex-debug",
         // F#
         "ionide.ionide-fsharp",
+        // "paolodellepiane.fantomas-fmt",
         // "tintoy.msbuild-project-tools",
         // "ms-dotnettools.csdevkit",
         // "mnxn.fsharp-fsl-fsy",

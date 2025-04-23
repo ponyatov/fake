@@ -8,7 +8,7 @@ doc/                this manual
     C/              C/C++ specs & manuals
     F/              F#            manuals
 ```
-- Flang compiler prototype:
+- `Flang` compiler prototype:
 ```
 meta/               compiler prototype /F#/
 lib/                .f* modules & init files
@@ -23,7 +23,7 @@ src/                .cpp files
 ```
 - Build & support scripts:
 ```
-mk/                 GNU Make script
+mk/                 GNU Make scripts
 Makefile
 cmake/              CMake cross-compiler scripts
 CMakeLists.txt            project
