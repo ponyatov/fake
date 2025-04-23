@@ -32,6 +32,7 @@ github: https://github.com/ponyatov/fake
 ### [[Bare C]]
 ### [[fake/C++|C++]]
 ### [[fake/Rust|Rust]]
+### [[fake/Embedded JS]]
 
 ## [[OS Transparency]]
 ### [[RTOS Features]]
@@ -39,6 +40,23 @@ github: https://github.com/ponyatov/fake
 
 ## [[Domain-Specific Extensions]]
 ### [[DSL Tools]]
+### [[fake/Data Serialization|Data Serialization]]
+### [[fake/Signal Processing|Signal Processing]]
+
+## [[fake/Networking|Networking]]
+### [[fake/MODBUS|MODBUS]]
+### [[IP Stack]]
+### [[fake/Wireless|Wireless]]
+### [[Mesh Networking]]
+### [[Protocol Specification]]
+### [[Dataflow Tunneling]]
+### [[Distributed Logging and Monitoring]]
+
+## [[Native GUI]]
+### [[fake/Framebuffer|Framebuffer]]
+### [[Embedded UI]]
+### [[OS-Hosted GUI]]
+### [[]]
 
 ![[fake/Preface|Preface]]
 ![[fake/Scope|Scope]]
@@ -46,3 +64,9 @@ github: https://github.com/ponyatov/fake
 ![[Definitions and Conventions]]
 ![[Compliance]]
 ![[fake/Environment|Environment]]
+![[Language Level Layers]]
+![[Side Languages Interop]]
+![[OS Transparency]]
+![[Domain-Specific Extensions]]
+![[fake/Networking|Networking]]
+![[Native GUI]]
