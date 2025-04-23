@@ -40,8 +40,9 @@ github: https://github.com/ponyatov/fake
 
 ## [[Domain-Specific Extensions]]
 ### [[DSL Tools]]
-### [[fake/Data Serialization|Data Serialization]]
 ### [[fake/Signal Processing|Signal Processing]]
+### [[Motion Control]]
+### [[fake/Navigation]]
 
 ## [[fake/Networking|Networking]]
 ### [[fake/MODBUS|MODBUS]]
@@ -56,7 +57,10 @@ github: https://github.com/ponyatov/fake
 ### [[fake/Framebuffer|Framebuffer]]
 ### [[Embedded UI]]
 ### [[OS-Hosted GUI]]
-### [[]]
+### [[Vectored Canvas]]
+### [[Data Visualization]]
+
+## [[Data Storage and Flow Processing]]
 
 ![[fake/Preface|Preface]]
 ![[fake/Scope|Scope]]
@@ -70,3 +74,4 @@ github: https://github.com/ponyatov/fake
 ![[Domain-Specific Extensions]]
 ![[fake/Networking|Networking]]
 ![[Native GUI]]
+![[Data Storage and Flow Processing]]
