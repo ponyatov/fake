@@ -4,7 +4,7 @@
         "doc/html/**": true,
     },
     "files.watcherExclude": {
-        "ref/**": true, "target/**": true,
+        "ref/**": true, "target/**": true, "obj/**": true,
     },
     "files.associations": {
         "*.mk": "makefile",
@@ -14,6 +14,7 @@
         "*.ioc": "properties", "*.config": "properties",
         "*.s": "arm", "*.s.fix": "arm", "*.S": "arm",
         "requirements.*": "properties",
+        "*.*proj": "xml",
     },
 
     // editor
