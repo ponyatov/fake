@@ -1,5 +1,5 @@
 .PHONY : install update ref gz
-install: $(HOST)_install doc ref gz
+install: $(HOST)_install doc ref gz dotnet
 update : $(HOST)_update
 ref    : $(RF)
 gz     : $(GZ)
