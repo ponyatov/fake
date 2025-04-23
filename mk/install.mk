@@ -1,16 +1,10 @@
 .PHONY : install update ref gz
-install: $(HOST)_install $(RUSTUP) doc ref gz
-	$(RUSTUP) component add rustfmt
-	$(RUSTUP) target    add $(RTARGET)
-	$(CARGO)  install   cargo-binutils
-	$(RUSTUP) component add llvm-tools
-update : $(HOST)_update  $(RUSTUP) $(PIP)
-	$(PIP) install -U -r requirements.txt
+install: $(HOST)_install doc ref gz
+update : $(HOST)_update
 ref    : $(RF)
 gz     : $(GZ)
 
 Debian_install: Debian_update
-# sudo dpkg --add-architecture i386
 Debian_update:
 	sudo apt update
 	sudo apt install -uy `cat apt.$(HOST)` $(APT)
