@@ -73,7 +73,7 @@ github: https://github.com/ponyatov/fake
 ### [[Mobile Sensors]]
 ### [[NFC and Payment]]
 
-## [[fake/Compiler Prototype]]
+## [[Compiler Prototype]]
 
 ![[fake/Preface|Preface]]
 ![[fake/Scope|Scope]]
@@ -89,3 +89,4 @@ github: https://github.com/ponyatov/fake
 ![[Native GUI]]
 ![[Data Storage and Flow Processing]]
 ![[Mobile Devices]]
+![[Compiler Prototype]]

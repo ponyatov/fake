@@ -1,5 +1,3 @@
-# [[fake/F|F]] lang
-## Compiler Prototype
+# Compiler Prototype
 
 github: https://github.com/ponyatov/fake
-
