@@ -26,7 +26,7 @@ let _dirs =
       "mk"
       "cmake" ]
 
-let dirs () =
+let dirs =
     for d in _dirs do
         mkdir d
 
@@ -37,12 +37,12 @@ let dirs () =
         | "doc" -> File.WriteAllText($"{d}/.gitignore", "html/\n")
         | _ -> ()
 
-dirs ()
+dirs
 
 let _files = [ "Makefile"; "README.md"; "LICENSE", ".clang-format", ".prettierc" ]
 
-let files () =
+let files =
     for f in _files do
         touch f
 
-files ()
+files
