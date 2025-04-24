@@ -5,7 +5,8 @@ open System.IO
 
 // create empty file
 let touch (name: string) = //
-    File.WriteAllText(name, "")
+    if not (File.Exists name) then
+        File.WriteAllText(name, "")
 
 // create empty dir with .gitignore marker
 let mkdir (name: string) =
@@ -55,11 +56,35 @@ code meld doxygen clang-format
 g++ cmake gdb flex bison libreadline-dev"
     )
 
+let _mk =
+    [ //
+      "var"
+      "version"
+      "dirs"
+      "tool"
+      "src"
+      "fsh"
+      "install" ]
+
+let mk =
+    mkdir "mk"
+
+    File.WriteAllLines(
+        "Makefile",
+        [ for m in _mk do
+              $"include mk/{m}.mk" ],
+        Text.Encoding.UTF8
+    )
+
+    for m in _mk do
+        touch $"mk/{m}.mk"
+
 let files =
     for f in _files do
         touch f
 
     apt
+    mk
 
 [<EntryPoint>]
 let main (args: string[]) =
