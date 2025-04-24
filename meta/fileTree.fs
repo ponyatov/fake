@@ -205,8 +205,16 @@ let linux = //
         "os/linux/src/linux.cpp",
         "\
 #include \"os.hpp\"
+#include \"linux.hpp\"
 
-int main() {}
+int main(int argc, char *argv[]) {  //
+    arg(0, argv[0]);
+    for (int i = 1; i < argc; i++) {  //
+        arg(i, argv[i]);
+    }
+    return 0;
+}
+
 "
     )
 
@@ -216,8 +224,14 @@ int main() {}
 /// @defgroup linux linux
 /// @ingroup os
 
+/// @defgroup libc libc
+/// @{
+#include <stdio.h>
+#include <stdlib.h>
+#include <assert.h>
+/// @}
+
 /// @defgroup main main
-/// @ingroup core
 /// @{
 extern int main(int argc, char *argv[]);
 extern void arg(int argc, char *argv);
