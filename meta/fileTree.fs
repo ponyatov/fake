@@ -28,7 +28,7 @@ let _dirs =
       "mk"
       "cmake" ]
 
-let dirs =
+let dirs () =
     for d in _dirs do
         mkdir d
 
@@ -49,7 +49,7 @@ let _files =
       "apt.Debian" ]
 
 
-let apt = //
+let apt () = //
     File.WriteAllText(
         "apt.Debian",
         "git make curl
@@ -67,7 +67,7 @@ let _mk =
       "fsh"
       "install" ]
 
-let mk =
+let mk () =
     mkdir "mk"
 
     File.WriteAllLines( //
@@ -79,7 +79,7 @@ let mk =
     for m in _mk do
         touch $"mk/{m}.mk"
 
-let doc = //
+let doc () = //
     for d in [ "doc"; "doc/C"; "doc/F" ] do
         mkdir d
 
@@ -99,7 +99,7 @@ let _target =
       "arm-none-eabi"
       "xtensa-lx106-elf.cmake" ]
 
-let x86_64_linux_gnu = //
+let x86_64_linux_gnu () = //
     File.WriteAllText(
         "cmake/x86_64-linux-gnu.cmake",
         "\
@@ -116,7 +116,7 @@ add_link_options()
 "
     )
 
-let any_toolchain = //
+let any_toolchain () = //
     File.WriteAllText(
         "cmake/any_toolchain.cmake",
         "\
@@ -170,7 +170,7 @@ set(CMAKE_EXECUTABLE_SUFFIX_CXX ${CMAKE_EXECUTABLE_SUFFIX})
 "
     )
 
-let version = //
+let version () = //
 
     File.WriteAllText(
         "cmake/version.cmake",
@@ -200,7 +200,7 @@ set(BIN_OUTPUT_NAME \"${CMAKE_PROJECT_NAME}_${HW}_${BRANCH}_${REL}_${NOW}${CMAKE
 "
     )
 
-let linux_cpp = //
+let linux_cpp () = //
     File.WriteAllText(
         "os/linux/src/linux.cpp",
         "\
@@ -228,7 +228,7 @@ FILE *yyin = nullptr;
 "
     )
 
-let linux_hpp = //
+let linux_hpp () = //
     File.WriteAllText(
         "os/linux/inc/linux.hpp",
         "\
@@ -257,12 +257,12 @@ extern FILE *yyin;
     )
 
 
-let linux = //
-    linux_cpp
-    linux_hpp
+let linux () = //
+    linux_cpp ()
+    linux_hpp ()
 
 
-let ini = //
+let ini () = //
     File.WriteAllText(
         "lib/fake.ini",
         "\
@@ -274,9 +274,9 @@ nop halt  # command
     )
 
 
-let src = //
-    ini
-    linux
+let src () = //
+    ini ()
+    linux ()
 
     File.WriteAllText(
         "cmake/src.cmake",
@@ -326,7 +326,7 @@ include_directories(${INC})
     )
 
 
-let cmake = //
+let cmake () = //
 
     mkdir "cmake"
 
@@ -335,11 +335,11 @@ let cmake = //
 
     for t in _target do
         touch $"cmake/{t}.cmake"
-        x86_64_linux_gnu
-        any_toolchain
+        x86_64_linux_gnu ()
+        any_toolchain ()
 
-    version
-    src
+    version ()
+    src ()
 
     File.WriteAllText( //
         "CMakeLists.txt",
@@ -451,16 +451,16 @@ let _cross m g =
         $"#include \"{m}.hpp\"\n"
     )
 
-let hw = //
+let hw () = //
     for hw in [ "pc"; "f429disco"; "esp8266" ] do
         _cross hw "hw"
 
-let cpu = //
+let cpu () = //
 
     for cpu in [ "i5"; "stm32f429zi"; "lx106" ] do
         _cross cpu "cpu"
 
-let arch = //
+let arch () = //
 
     for arch in [ "x86_64"; "cortexM"; "cortexM0"; "cortexM3"; "cortexM4"; "xtensa" ] do
         _cross arch "arch"
@@ -471,57 +471,59 @@ let arch = //
                 "include arch/cortexM.mk\n"
             )
 
-let os = //
+let os () = //
 
     for os in [ "bare"; "linux"; "win32"; "rtos" ] do
         _cross os "os"
 
-let cross = //
+let cross () = //
 
     for m in [ "hw"; "cpu"; "arch"; "os" ] do
         _cross m "."
 
-    hw
-    cpu
-    arch
-    os
+    hw ()
+    cpu ()
+    arch ()
+    os ()
 
-let extensions = //
+let extensions () = //
     touch $".vscode/extensions.json"
 
-let settings = //
+let settings () = //
     touch $".vscode/settings.json"
 
-let tasks = //
+let tasks () = //
     touch $".vscode/tasks.json"
 
-let launch = //
+let launch () = //
     touch $".vscode/launch.json"
 
-let c_cpp_properties = //
+let c_cpp_properties () = //
     touch $".vscode/c_cpp_properties.json"
 
-let vscode = //
+let vscode () = //
     mkdir ".vscode"
-    extensions
-    settings
-    tasks
-    launch
-    c_cpp_properties
+    extensions ()
+    settings ()
+    tasks ()
+    launch ()
+    c_cpp_properties ()
 
-let files =
+let files () =
     for f in _files do
         touch f
 
-    apt
-    doc
-    mk
-    cmake
-    cross
-    vscode
+    apt ()
+    doc ()
+    mk ()
+    cmake ()
+    cross ()
+    vscode ()
 
 [<EntryPoint>]
 let main (args: string[]) =
-    dirs
-    files
+    dirs ()
+    files ()
+    src ()
+    linux ()
     0
