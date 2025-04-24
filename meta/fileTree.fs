@@ -159,49 +159,61 @@ project(${CMAKE_PROJECT_NAME} LANGUAGES C CXX ASM)
     )
 
 
+let _cross m g =
+    mkdir $"{g}/{m}"
 
-let cross = //
-    let _cross m g =
-        mkdir $"{g}/{m}"
+    match g with
+    | "." -> ()
+    | _ ->
+        touch $"{g}/{m}/{m}.mk"
+        touch $"{g}/{m}/{m}.cmake"
 
+    mkdir $"{g}/{m}/inc"
+    mkdir $"{g}/{m}/src"
+
+    let d =
         match g with
-        | "." -> ()
-        | _ ->
-            touch $"{g}/{m}/{m}.mk"
-            touch $"{g}/{m}/{m}.cmake"
+        | "." -> "cross"
+        | _ -> g
 
-        mkdir $"{g}/{m}/inc"
-        mkdir $"{g}/{m}/src"
+    File.WriteAllText( //
+        $"{g}/{m}/inc/{m}.hpp",
+        $"/// @defgroup {m} {m}\n/// @ingroup {d}\n"
+    )
 
-        let d =
-            match g with
-            | "." -> "cross"
-            | _ -> g
+    File.WriteAllText( //
+        $"{g}/{m}/src/{m}.cpp",
+        $"#include \"{m}.hpp\"\n"
+    )
 
-        File.WriteAllText( //
-            $"{g}/{m}/inc/{m}.hpp",
-            $"/// @defgroup {m} {m}\n/// @ingroup {d}\n"
-        )
-
-        File.WriteAllText( //
-            $"{g}/{m}/src/{m}.cpp",
-            $"#include \"{m}.hpp\"\n"
-        )
-
-    for m in [ "hw"; "cpu"; "arch"; "os" ] do
-        _cross m "."
-
+let hw = //
     for hw in [ "pc"; "f429disco"; "esp8266" ] do
         _cross hw "hw"
+
+let cpu = //
 
     for cpu in [ "i5"; "stm32f429zi"; "lx106" ] do
         _cross cpu "cpu"
 
+let arch = //
+
     for arch in [ "x86_64"; "cortexM"; "cortexM4"; "xtensa" ] do
         _cross arch "arch"
 
+let os = //
+
     for os in [ "bare"; "linux"; "win32"; "rtos" ] do
         _cross os "os"
+
+let cross = //
+
+    for m in [ "hw"; "cpu"; "arch"; "os" ] do
+        _cross m "."
+
+    hw
+    cpu
+    arch
+    os
 
 let files =
     for f in _files do
