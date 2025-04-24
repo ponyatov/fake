@@ -228,11 +228,7 @@ FILE *yyin = nullptr;
 "
     )
 
-
-let linux = //
-    linux_cpp
-
-
+let linux_hpp = //
     File.WriteAllText(
         "os/linux/inc/linux.hpp",
         "\
@@ -261,7 +257,25 @@ extern FILE *yyin;
     )
 
 
+let linux = //
+    linux_cpp
+    linux_hpp
+
+
+let ini = //
+    File.WriteAllText(
+        "lib/fake.ini",
+        "\
+#!/usr/bin/env Flang
+# line comment
+-020 +030 # integer
+nop halt  # command
+"
+    )
+
+
 let src = //
+    ini
     linux
 
     File.WriteAllText(
