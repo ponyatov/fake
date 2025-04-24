@@ -6,10 +6,9 @@
         "ms-vscode.makefile-tools",
         "IBM.output-colorizer",
         "esbenp.prettier-vscode",
-        "redhat.vscode-xml",
-        // // Linux
-        // "ms-vscode-remote.remote-ssh",
-        // "coolbear.systemd-unit-file",
+        // Linux
+        "ms-vscode-remote.remote-ssh",
+        "coolbear.systemd-unit-file",
         // "nico-castell.linux-desktop-file",
         // "ms-azuretools.vscode-docker",
         // "github.vscode-github-actions",
@@ -37,9 +36,6 @@
         "dan-c-underwood.arm",
         "zixuanwang.linkerscript",
         "ms-vscode.vscode-serial-monitor",
-        // "awsxxf.serialterminal",
-        // "ms-vscode.hexeditor",
-        // "espressif.esp-idf-extension",
         // Python
         "ms-python.python",
         "ms-python.autopep8",
@@ -53,6 +49,7 @@
         // "marus25.cortex-debug",
         // F#
         "ionide.ionide-fsharp",
+        "redhat.vscode-xml",
         // "paolodellepiane.fantomas-fmt",
         // "tintoy.msbuild-project-tools",
         // "ms-dotnettools.csdevkit",
