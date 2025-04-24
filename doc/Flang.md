@@ -1,4 +1,4 @@
-# [[fake/F|F]] lang
+# [[Flang]]
 ## fake programming language
 ### for embedded systems
 
@@ -8,7 +8,7 @@ github: https://github.com/ponyatov/fake
 
 > Martians National Standard
 > for Programming Languages
-> `Flang` *draft '25*
+> [[Flang]] *draft '25*
 >
 > Fartretariat:
 > *IoT and Arduino Stuff Trifling Association*
