@@ -158,7 +158,7 @@ project(${CMAKE_PROJECT_NAME} LANGUAGES C CXX ASM)
     """
     )
 
-let _arch = [ "x86_64"; "cortexM"; "cortexM4"; "xtensa" ]
+
 
 let cross = //
     let _cross m g =
@@ -184,11 +184,17 @@ let cross = //
     for m in [ "hw"; "cpu"; "arch"; "os" ] do
         _cross m "."
 
-    for h in [ "pc"; "f429disco"; "esp8266" ] do
-        _cross h "hw"
+    for hw in [ "pc"; "f429disco"; "esp8266" ] do
+        _cross hw "hw"
 
-    for c in [ "i5"; "stm32f429zi"; "lx106" ] do
-        _cross c "cpu"
+    for cpu in [ "i5"; "stm32f429zi"; "lx106" ] do
+        _cross cpu "cpu"
+
+    for arch in [ "x86_64"; "cortexM"; "cortexM4"; "xtensa" ] do
+        _cross arch "arch"
+
+    for os in [ "bare", "linux", "win32", "rtos" ] do
+        _cross os "os"
 
 let files =
     for f in _files do
