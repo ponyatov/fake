@@ -158,6 +158,16 @@ project(${CMAKE_PROJECT_NAME} LANGUAGES C CXX ASM)
     """
     )
 
+let _hw = [ "pc"; "f429disco"; "esp8266" ]
+let _cpu = [ "i5"; "stm32f429zi"; "lx106" ]
+let _arch = [ "x86_64"; "cortexM"; "cortexM4"; "xtensa" ]
+
+let cross = //
+    for m in [ "hw"; "cpu"; "arch"; "os" ] do
+        mkdir m
+        mkdir $"{m}/inc"
+        mkdir $"{m}/src"
+
 let files =
     for f in _files do
         touch f
@@ -166,6 +176,7 @@ let files =
     doc
     mk
     cmake
+    cross
 
 [<EntryPoint>]
 let main (args: string[]) =
