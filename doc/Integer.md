@@ -8,5 +8,3 @@
 - the bit number is a $2^n$
 	- starting from a single byte
 	- as a common smallest addressable unit in a hardware (minimal CPU register)
-
-![[arbitrary width integer]]

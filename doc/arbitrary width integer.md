@@ -2,7 +2,7 @@
 
 - the same `i/u` signed/unsigned [[fake/Integer|Integer]]
 - but with arbitrary bit-width
-	- from the u1 (single bit)
+	- from the `u1` (single bit)
 	- to any `u/iN` (bit stream fragment in memory)
 
 The common cases that forces as to include arbitrary integers into the [[F0]] language core layer:
