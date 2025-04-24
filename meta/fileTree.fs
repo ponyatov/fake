@@ -38,12 +38,28 @@ let dirs =
         | _ -> ()
 
 
-let _files = [ "Makefile"; "README.md"; "LICENSE"; ".clang-format"; ".prettierc" ]
+let _files =
+    [ "Makefile"
+      "README.md"
+      "LICENSE"
+      ".clang-format"
+      ".prettierc"
+      "apt.Debian" ]
+
+
+let apt = //
+    File.WriteAllText(
+        "apt.Debian",
+        "git make curl
+code meld doxygen clang-format
+g++ cmake gdb flex bison libreadline-dev"
+    )
 
 let files =
     for f in _files do
         touch f
 
+    apt
 
 [<EntryPoint>]
 let main (args: string[]) =
