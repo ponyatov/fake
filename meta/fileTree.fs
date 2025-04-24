@@ -193,7 +193,7 @@ let cross = //
     for arch in [ "x86_64"; "cortexM"; "cortexM4"; "xtensa" ] do
         _cross arch "arch"
 
-    for os in [ "bare", "linux", "win32", "rtos" ] do
+    for os in [ "bare"; "linux"; "win32"; "rtos" ] do
         _cross os "os"
 
 let files =
