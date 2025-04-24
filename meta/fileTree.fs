@@ -163,6 +163,13 @@ project(${CMAKE_PROJECT_NAME} LANGUAGES C CXX ASM)
 let cross = //
     let _cross m g =
         mkdir $"{g}/{m}"
+
+        match g with
+        | "." -> ()
+        | _ ->
+            touch $"{g}/{m}/{m}.mk"
+            touch $"{g}/{m}/{m}.cmake"
+
         mkdir $"{g}/{m}/inc"
         mkdir $"{g}/{m}/src"
 
