@@ -69,10 +69,9 @@ let _mk =
 let mk =
     mkdir "mk"
 
-    File.WriteAllLines(
+    File.WriteAllLines( //
         "Makefile",
-        [ for m in _mk do
-              $"include mk/{m}.mk" ],
+        [ for m in _mk -> $"include mk/{m}.mk" ],
         Text.Encoding.UTF8
     )
 
@@ -85,13 +84,78 @@ let doc = //
 
     File.WriteAllText("doc/.gitignore", "html/\n")
 
+let _cmake =
+    [ //
+      "version"
+      "src"
+      "syntax"
+      "any_toolchain" ]
+
+let cmake = //
+
+    mkdir "cmake"
+
+    for c in _cmake do
+        touch $"cmake/{c}.cmake"
+
+    File.WriteAllText( //
+        "CMakeLists.txt",
+        "cmake_minimum_required(VERSION 3.22)
+get_filename_component(CMAKE_PROJECT_NAME ${CMAKE_SOURCE_DIR} NAME_WE)
+project(${CMAKE_PROJECT_NAME} LANGUAGES C CXX ASM)
+"
+    )
+
+    File.WriteAllText( //
+        "CMakePresets.json",
+        $$"""{
+        "version": 6,
+        "buildPresets": [
+            {
+                "name"            :  "linux",
+                "configurePreset" :  "linux",
+                "targets"         : ["all","install"]
+            }
+        ],
+        "configurePresets": [
+        {
+            "name"            : "common",
+            "hidden"          :  true,
+            "binaryDir"       : "${sourceDir}/tmp/${presetName}",
+            "generator"       : "Unix Makefiles",
+            "cacheVariables"  : {
+                "CMAKE_INSTALL_PREFIX"    : "${sourceDir}/bin",
+                "CMAKE_MODULE_PATH"       : "${sourceDir}/cmake",
+                "CMAKE_COLOR_DIAGNOSTICS" :  false,
+                "CMAKE_BUILD_TYPE"        : "Debug",
+                "CMAKE_VERBOSE_MAKEFILE"  :  false
+            }
+        },
+        {
+            "name"            : "pc",
+            "inherits"        : "common",
+            "hidden"          :  true,
+            "cacheVariables"  : {"HW":"pc", "CPU":"i5", "ARCH":"x86_64"}
+        },
+        {
+            "name"            : "linux",
+            "inherits"        : "pc",
+            "toolchainFile"   : "${sourceDir}/cmake/x86_64-linux-gnu.cmake",
+            "cacheVariables"  : {"OS":"linux"}
+        }
+        ]
+    }
+    """
+    )
+
 let files =
     for f in _files do
         touch f
 
     apt
-    mk
     doc
+    mk
+    cmake
 
 [<EntryPoint>]
 let main (args: string[]) =
