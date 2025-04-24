@@ -163,15 +163,31 @@ let _cpu = [ "i5"; "stm32f429zi"; "lx106" ]
 let _arch = [ "x86_64"; "cortexM"; "cortexM4"; "xtensa" ]
 
 let cross = //
-    for m in [ "hw"; "cpu"; "arch"; "os" ] do
-        mkdir m
-        mkdir $"{m}/inc"
-        mkdir $"{m}/src"
+    let _cross m g =
+        mkdir $"{g}/{m}"
+        mkdir $"{g}/{m}/inc"
+        mkdir $"{g}/{m}/src"
+
+        let d =
+            match g with
+            | "." -> "cross"
+            | _ -> g
 
         File.WriteAllText( //
-            $"{m}/inc/{m}.hpp",
-            $"/// @defgroup {m} {m}\n/// @ingroup cross\n"
+            $"{g}/{m}/inc/{m}.hpp",
+            $"/// @defgroup {m} {m}\n/// @ingroup {d}\n"
         )
+
+        File.WriteAllText( //
+            $"{g}/{m}/src/{m}.cpp",
+            $"#include \"{m}.hpp\"\n"
+        )
+
+    for m in [ "hw"; "cpu"; "arch"; "os" ] do
+        _cross m "."
+
+    for h in _hw do
+        _cross h "hw"
 
 let files =
     for f in _files do
