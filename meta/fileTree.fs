@@ -94,10 +94,114 @@ let _cmake =
 
 let _target =
     [ //
-      "x86_64-gnu-linux"
+      "x86_64-linux-gnu"
       "i686-w64-mingw32.cmake"
       "arm-none-eabi"
       "xtensa-lx106-elf.cmake" ]
+
+let x86_64_linux_gnu = //
+    File.WriteAllText(
+        "cmake/x86_64-linux-gnu.cmake",
+        "\
+set(CMAKE_SYSTEM_NAME       Linux)
+set(CMAKE_SYSTEM_PROCESSOR  x86_64)
+set(TOOLCHAIN_PREFIX        ${ARCH}-${OS}-gnu)
+set(CMAKE_EXECUTABLE_SUFFIX \"\")
+
+include(any_toolchain)
+
+add_compile_definitions()
+add_compile_options()
+add_link_options()
+"
+    )
+
+let any_toolchain = //
+    File.WriteAllText(
+        "cmake/any_toolchain.cmake",
+        "\
+set(CMAKE_C_STANDARD   17)
+set(CMAKE_CXX_STANDARD 17)
+
+set(CMAKE_C_COMPILER_FORCED   TRUE)
+set(CMAKE_CXX_COMPILER_FORCED TRUE)
+set(CMAKE_C_COMPILER_ID       GNU)
+set(CMAKE_CXX_COMPILER_ID     GNU)
+
+set(CMAKE_C_COMPILER   ${TOOLCHAIN_PREFIX}-gcc)
+set(CMAKE_ASM_COMPILER ${CMAKE_C_COMPILER})
+set(CMAKE_CXX_COMPILER ${TOOLCHAIN_PREFIX}-g++)
+set(CMAKE_LINKER       ${CMAKE_C_COMPILER})
+set(CMAKE_OBJCOPY      ${TOOLCHAIN_PREFIX}-objcopy)
+set(CMAKE_SIZE         ${TOOLCHAIN_PREFIX}-size)
+set(CMAKE_RC_COMPILER  ${TOOLCHAIN_PREFIX}-windres)
+
+include(  os/${OS}/${OS}.cmake    )
+include(arch/${ARCH}/${ARCH}.cmake)
+include( cpu/${CPU}/${CPU}.cmake  )
+include(  hw/${HW}/${HW}.cmake    )
+
+string(TOUPPER ${HW}   HW_  )
+string(TOUPPER ${CPU}  CPU_ )
+string(TOUPPER ${ARCH} ARCH_)
+string(TOUPPER ${OS}   OS_  )
+
+add_compile_options(
+    $<$<CONFIG:Debug>:-DDEBUG>
+)
+
+add_compile_definitions(
+    ${HW_} ${CPU_} ${ARCH_} ${OS_}
+)
+add_link_options(
+    -Wl,--print-memory-usage
+)
+
+if(CMAKE_BUILD_TYPE MATCHES Debug)
+    add_compile_options(-O0 -g3)
+endif()
+if(CMAKE_BUILD_TYPE MATCHES Release)
+    add_compile_options(-Os -g0)
+endif()
+
+set(CMAKE_EXECUTABLE_SUFFIX_ASM ${CMAKE_EXECUTABLE_SUFFIX})
+set(CMAKE_EXECUTABLE_SUFFIX_C   ${CMAKE_EXECUTABLE_SUFFIX})
+set(CMAKE_EXECUTABLE_SUFFIX_CXX ${CMAKE_EXECUTABLE_SUFFIX})
+"
+    )
+
+let version = //
+
+    File.WriteAllText(
+        "cmake/version.cmake",
+        "\
+execute_process(
+    OUTPUT_VARIABLE REL
+    COMMAND git rev-parse --short=4 HEAD
+    WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+    OUTPUT_STRIP_TRAILING_WHITESPACE
+)
+
+execute_process(
+    OUTPUT_VARIABLE BRANCH
+    COMMAND git rev-parse --abbrev-ref HEAD
+    WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+    OUTPUT_STRIP_TRAILING_WHITESPACE
+)
+
+execute_process(
+    OUTPUT_VARIABLE NOW
+    COMMAND date +%y%m%d # _%H%M
+    WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+    OUTPUT_STRIP_TRAILING_WHITESPACE
+)
+
+set(BIN_OUTPUT_NAME \"${CMAKE_PROJECT_NAME}_${HW}_${BRANCH}_${REL}_${NOW}${CMAKE_EXECUTABLE_SUFFIX_C}\")
+"
+    )
+
+version
+
 
 let cmake = //
 
@@ -108,12 +212,29 @@ let cmake = //
 
     for t in _target do
         touch $"cmake/{t}.cmake"
+        x86_64_linux_gnu
+        any_toolchain
+
+    version
 
     File.WriteAllText( //
         "CMakeLists.txt",
-        "cmake_minimum_required(VERSION 3.22)
+        "\
+cmake_minimum_required(VERSION 3.22)
 get_filename_component(CMAKE_PROJECT_NAME ${CMAKE_SOURCE_DIR} NAME_WE)
 project(${CMAKE_PROJECT_NAME} LANGUAGES C CXX ASM)
+
+include(version)
+include(src)
+include(syntax)
+
+message(\"-- |\")
+message(\"-- | toolchain: \" ${CMAKE_CXX_COMPILER} \" @ \" ${CMAKE_TOOLCHAIN_FILE})
+message(\"-- |      host: \" ${CMAKE_HOST_SYSTEM_NAME}-${CMAKE_HOST_SYSTEM_VERSION})
+message(\"-- |    target: \" \"hw:\" ${HW} \" cpu:\" ${CPU} \" arch:\" ${ARCH} \" os:\" ${OS})
+message(\"-- |   startup: \" \"${S}\")
+message(\"-- |    binary: \" ${CMAKE_INSTALL_PREFIX}/${BIN_OUTPUT_NAME}${CMAKE_EXECUTABLE_SUFFIX})
+message(\"-- |\")
 "
     )
 
