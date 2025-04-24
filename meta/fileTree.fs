@@ -200,7 +200,53 @@ set(BIN_OUTPUT_NAME \"${CMAKE_PROJECT_NAME}_${HW}_${BRANCH}_${REL}_${NOW}${CMAKE
 "
     )
 
-version
+let src = //
+    File.WriteAllText(
+        "cmake/src.cmake",
+        "\
+file(GLOB LD
+    RELATIVE ${CMAKE_SOURCE_DIR}
+    hw/${HW}/*.ld
+)
+
+file(GLOB S
+    RELATIVE ${CMAKE_SOURCE_DIR}
+    hw/${HW}/*.s
+)
+
+file(GLOB C
+    RELATIVE ${CMAKE_SOURCE_DIR}
+    src/*.c*
+    # cross
+      hw/src/*.c*   hw/${HW}/src/*.c*
+     cpu/src/*.c*  cpu/${CPU}/src/*.c*
+    arch/src/*.c* arch/${ARCH}/src/*.c*
+      os/src/*.c*   os/${OS}/src/*.c*
+)
+
+file(GLOB H
+    RELATIVE ${CMAKE_SOURCE_DIR}
+    inc/*.h*
+    # cross
+      hw/inc/*.h*   hw/${HW}/inc/*.h*
+     cpu/inc/*.h*  cpu/${CPU}/inc/*.h*
+    arch/inc/*.h* arch/${ARCH}/inc/*.h*
+      os/inc/*.h*   os/${OS}/inc/*.h*
+)
+
+file(GLOB INC
+    RELATIVE ${CMAKE_SOURCE_DIR}
+    ${CMAKE_BINARY_DIR}
+    inc
+    # cross
+      hw/inc   hw/${HW}/inc
+     cpu/inc  cpu/${CPU}/inc
+    arch/inc arch/${ARCH}/inc
+      os/inc   os/${OS}/inc
+)
+include_directories(${INC})
+"
+    )
 
 
 let cmake = //
@@ -216,6 +262,7 @@ let cmake = //
         any_toolchain
 
     version
+    src
 
     File.WriteAllText( //
         "CMakeLists.txt",
@@ -235,6 +282,25 @@ message(\"-- |    target: \" \"hw:\" ${HW} \" cpu:\" ${CPU} \" arch:\" ${ARCH} \
 message(\"-- |   startup: \" \"${S}\")
 message(\"-- |    binary: \" ${CMAKE_INSTALL_PREFIX}/${BIN_OUTPUT_NAME}${CMAKE_EXECUTABLE_SUFFIX})
 message(\"-- |\")
+
+message(\"-- LD: ${LD}\")
+message(\"--  S: ${S} \")
+message(\"--  C: ${C} \")
+message(\"--  H: ${H} \")
+
+add_executable(${CMAKE_PROJECT_NAME}
+    ${C}  ${H}  # C/C++ source
+    ${S}  ${LD} # embedded/lowlevel
+    ${CP} ${CP} # parsers
+)
+
+# target_link_libraries(${CMAKE_PROJECT_NAME} -static)
+
+# target install
+set_target_properties(${CMAKE_PROJECT_NAME}
+    PROPERTIES OUTPUT_NAME ${BIN_OUTPUT_NAME}${CMAKE_EXECUTABLE_SUFFIX})
+install(TARGETS ${CMAKE_PROJECT_NAME}
+    DESTINATION ${CMAKE_INSTALL_PREFIX})
 "
     )
 
