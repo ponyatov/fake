@@ -215,6 +215,29 @@ let cross = //
     arch
     os
 
+let extensions = //
+    touch $".vscode/extensions.json"
+
+let settings = //
+    touch $".vscode/settings.json"
+
+let tasks = //
+    touch $".vscode/tasks.json"
+
+let launch = //
+    touch $".vscode/launch.json"
+
+let c_cpp_properties = //
+    touch $".vscode/c_cpp_properties.json"
+
+let vscode = //
+    mkdir ".vscode"
+    extensions
+    settings
+    tasks
+    launch
+    c_cpp_properties
+
 let files =
     for f in _files do
         touch f
@@ -224,6 +247,7 @@ let files =
     mk
     cmake
     cross
+    vscode
 
 [<EntryPoint>]
 let main (args: string[]) =
