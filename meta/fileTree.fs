@@ -200,7 +200,35 @@ set(BIN_OUTPUT_NAME \"${CMAKE_PROJECT_NAME}_${HW}_${BRANCH}_${REL}_${NOW}${CMAKE
 "
     )
 
+let linux = //
+    File.WriteAllText(
+        "os/linux/src/linux.cpp",
+        "\
+#include \"os.hpp\"
+
+int main() {}
+"
+    )
+
+    File.WriteAllText(
+        "os/linux/inc/linux.hpp",
+        "\
+/// @defgroup linux linux
+/// @ingroup os
+
+/// @defgroup main main
+/// @ingroup core
+/// @{
+extern int main(int argc, char *argv[]);
+extern void arg(int argc, char *argv);
+/// @}
+"
+    )
+
+
 let src = //
+    linux
+
     File.WriteAllText(
         "cmake/src.cmake",
         "\
