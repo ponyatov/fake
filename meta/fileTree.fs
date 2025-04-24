@@ -2,6 +2,7 @@
 
 open System
 open System.IO
+open System.Text.RegularExpressions
 
 // create empty file
 let touch (name: string) = //
@@ -197,8 +198,14 @@ let cpu = //
 
 let arch = //
 
-    for arch in [ "x86_64"; "cortexM"; "cortexM4"; "xtensa" ] do
+    for arch in [ "x86_64"; "cortexM"; "cortexM0"; "cortexM3"; "cortexM4"; "xtensa" ] do
         _cross arch "arch"
+
+        if Regex.IsMatch(arch, "cortexM[0-9]") then
+            File.WriteAllText( //
+                $"arch/{arch}/{arch}.mk",
+                "include arch/cortexM.mk\n"
+            )
 
 let os = //
 
