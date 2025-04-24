@@ -37,7 +37,6 @@ let dirs =
         | "doc" -> File.WriteAllText($"{d}/.gitignore", "html/\n")
         | _ -> ()
 
-dirs
 
 let _files = [ "Makefile"; "README.md"; "LICENSE"; ".clang-format"; ".prettierc" ]
 
@@ -45,4 +44,9 @@ let files =
     for f in _files do
         touch f
 
-files
+
+[<EntryPoint>]
+let main (args: string[]) =
+    dirs
+    files
+    0
