@@ -168,6 +168,11 @@ let cross = //
         mkdir $"{m}/inc"
         mkdir $"{m}/src"
 
+        File.WriteAllText( //
+            $"{m}/inc/{m}.hpp",
+            $"/// @defgroup {m} {m}\n/// @ingroup cross\n"
+        )
+
 let files =
     for f in _files do
         touch f
