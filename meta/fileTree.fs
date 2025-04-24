@@ -6,7 +6,7 @@ open System.IO
 // create empty file
 let touch (name: string) = //
     if not (File.Exists name) then
-        File.WriteAllText(name, "")
+        File.Create(name) |> ignore
 
 // create empty dir with .gitignore marker
 let mkdir (name: string) =
@@ -79,12 +79,19 @@ let mk =
     for m in _mk do
         touch $"mk/{m}.mk"
 
+let doc = //
+    for d in [ "doc"; "doc/C"; "doc/F" ] do
+        mkdir d
+
+    File.WriteAllText("doc/.gitignore", "html/\n")
+
 let files =
     for f in _files do
         touch f
 
     apt
     mk
+    doc
 
 [<EntryPoint>]
 let main (args: string[]) =
