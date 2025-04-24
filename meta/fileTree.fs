@@ -91,12 +91,22 @@ let _cmake =
       "syntax"
       "any_toolchain" ]
 
+let _target =
+    [ //
+      "x86_64-gnu-linux"
+      "i686-w64-mingw32.cmake"
+      "arm-none-eabi"
+      "xtensa-lx106-elf.cmake" ]
+
 let cmake = //
 
     mkdir "cmake"
 
     for c in _cmake do
         touch $"cmake/{c}.cmake"
+
+    for t in _target do
+        touch $"cmake/{t}.cmake"
 
     File.WriteAllText( //
         "CMakeLists.txt",
