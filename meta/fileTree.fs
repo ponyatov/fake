@@ -200,7 +200,7 @@ set(BIN_OUTPUT_NAME \"${CMAKE_PROJECT_NAME}_${HW}_${BRANCH}_${REL}_${NOW}${CMAKE
 "
     )
 
-let linux = //
+let linux_cpp = //
     File.WriteAllText(
         "os/linux/src/linux.cpp",
         "\
@@ -211,12 +211,27 @@ int main(int argc, char *argv[]) {  //
     arg(0, argv[0]);
     for (int i = 1; i < argc; i++) {  //
         arg(i, argv[i]);
+        yyfile = argv[i];
+        assert(yyin = fopen(yyfile, \"r\"));
+        fclose(yyin);
+        yyfile = nullptr;
     }
     return 0;
 }
 
+void arg(int argc, char *argv) {  //
+    fprintf(stderr, \"arg[%i] = <%s>\\n\", argc, argv);
+}
+
+char *yyfile = nullptr;
+FILE *yyin = nullptr;
 "
     )
+
+
+let linux = //
+    linux_cpp
+
 
     File.WriteAllText(
         "os/linux/inc/linux.hpp",
@@ -235,6 +250,12 @@ int main(int argc, char *argv[]) {  //
 /// @{
 extern int main(int argc, char *argv[]);
 extern void arg(int argc, char *argv);
+/// @}
+
+/// @defgroup skelex skelex
+/// @{
+extern char *yyfile;
+extern FILE *yyin;
 /// @}
 "
     )
