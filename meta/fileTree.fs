@@ -14,6 +14,9 @@ let mkdir (name: string) =
     Directory.CreateDirectory(name) |> ignore
     touch ($"{name}/.gitignore")
 
+let write (name: string, text: string) = //
+    File.WriteAllText(name, text)
+
 // generic C/C++ project
 let _dirs =
     [ "."
@@ -35,8 +38,8 @@ let dirs () =
         match d with
         | "bin"
         | "tmp"
-        | "ref" -> File.WriteAllText($"{d}/.gitignore", "*\n")
-        | "doc" -> File.WriteAllText($"{d}/.gitignore", "html/\n")
+        | "ref" -> write ($"{d}/.gitignore", "*\n")
+        | "doc" -> write ($"{d}/.gitignore", "html/\n")
         | _ -> ()
 
 
@@ -50,7 +53,7 @@ let _files =
 
 
 let apt () = //
-    File.WriteAllText(
+    write (
         "apt.Debian",
         "git make curl
 code meld doxygen clang-format
@@ -83,7 +86,7 @@ let doc () = //
     for d in [ "doc"; "doc/C"; "doc/F"; "doc/compiler" ] do
         mkdir d
 
-    File.WriteAllText("doc/.gitignore", "html/\n")
+    write ("doc/.gitignore", "html/\n")
 
 let _cmake =
     [ //
@@ -100,7 +103,7 @@ let _target =
       "xtensa-lx106-elf.cmake" ]
 
 let x86_64_linux_gnu () = //
-    File.WriteAllText(
+    write (
         "cmake/x86_64-linux-gnu.cmake",
         "\
 set(CMAKE_SYSTEM_NAME       Linux)
@@ -117,7 +120,7 @@ add_link_options()
     )
 
 let any_toolchain () = //
-    File.WriteAllText(
+    write (
         "cmake/any_toolchain.cmake",
         "\
 set(CMAKE_C_STANDARD   17)
@@ -172,7 +175,7 @@ set(CMAKE_EXECUTABLE_SUFFIX_CXX ${CMAKE_EXECUTABLE_SUFFIX})
 
 let version () = //
 
-    File.WriteAllText(
+    write (
         "cmake/version.cmake",
         "\
 execute_process(
@@ -201,7 +204,7 @@ set(BIN_OUTPUT_NAME \"${CMAKE_PROJECT_NAME}_${HW}_${BRANCH}_${REL}_${NOW}${CMAKE
     )
 
 let linux_cpp () = //
-    File.WriteAllText(
+    write (
         "os/linux/src/linux.cpp",
         "\
 #include \"os.hpp\"
@@ -229,7 +232,7 @@ FILE *yyin = nullptr;
     )
 
 let linux_hpp () = //
-    File.WriteAllText(
+    write (
         "os/linux/inc/linux.hpp",
         "\
 /// @defgroup linux linux
@@ -263,7 +266,7 @@ let linux () = //
 
 
 let ini () = //
-    File.WriteAllText(
+    write (
         "lib/fake.ini",
         "\
 #!/usr/bin/env Flang
@@ -278,7 +281,7 @@ let src () = //
     ini ()
     linux ()
 
-    File.WriteAllText(
+    write (
         "cmake/src.cmake",
         "\
 file(GLOB LD
@@ -341,7 +344,7 @@ let cmake () = //
     version ()
     src ()
 
-    File.WriteAllText( //
+    write ( //
         "CMakeLists.txt",
         "\
 cmake_minimum_required(VERSION 3.22)
@@ -381,7 +384,7 @@ install(TARGETS ${CMAKE_PROJECT_NAME}
 "
     )
 
-    File.WriteAllText( //
+    write ( //
         "CMakePresets.json",
         $$"""{
         "version": 6,
@@ -441,12 +444,12 @@ let _cross m g =
         | "." -> "cross"
         | _ -> g
 
-    File.WriteAllText( //
+    write ( //
         $"{g}/{m}/inc/{m}.hpp",
         $"/// @defgroup {m} {m}\n/// @ingroup {d}\n"
     )
 
-    File.WriteAllText( //
+    write ( //
         $"{g}/{m}/src/{m}.cpp",
         $"#include \"{m}.hpp\"\n"
     )
@@ -466,7 +469,7 @@ let arch () = //
         _cross arch "arch"
 
         if Regex.IsMatch(arch, "cortexM[0-9]") then
-            File.WriteAllText( //
+            write ( //
                 $"arch/{arch}/{arch}.mk",
                 "include arch/cortexM.mk\n"
             )
