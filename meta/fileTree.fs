@@ -80,7 +80,7 @@ let mk () =
         touch $"mk/{m}.mk"
 
 let doc () = //
-    for d in [ "doc"; "doc/C"; "doc/F" ] do
+    for d in [ "doc"; "doc/C"; "doc/F"; "doc/compiler" ] do
         mkdir d
 
     File.WriteAllText("doc/.gitignore", "html/\n")
