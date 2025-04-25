@@ -10,4 +10,14 @@ Second edition
 *[[Alfred V. Aho]], [[Monica S. Lam]], [[Ravi Sethi]], [[Jeffrey D. Ullman]]*
 ISBN 0-321-48681-1
 
-##### 
+##### concepts
+**[[lc/Programming Language Concepts for Software Developers]]**
+*[[Peter Sestoft]]*
+
+##### gcbook
+![[gcbook.png]]
+**[[The Garbage Collection Handbook]]**
+**The art of automatic memory management**
+Second edition
+*[[Richard Jones]], [[Antony Hosking]], [[Eliot Moss]]*
+https://gchandbook.org/
