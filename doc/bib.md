@@ -8,3 +8,6 @@
 **[[dragon/Compilers Principles Techniques and Tools]]**
 Second edition
 *[[Alfred V. Aho]], [[Monica S. Lam]], [[Ravi Sethi]], [[Jeffrey D. Ullman]]*
+ISBN 0-321-48681-1
+
+##### 
