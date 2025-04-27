@@ -181,8 +181,6 @@ add_link_options(
 "
     )
 
-arm_none_eabi ()
-
 let any_toolchain () = //
     write (
         "cmake/any_toolchain.cmake",
@@ -588,9 +586,10 @@ let hw () = //
     for hw in _hw do
         _cross hw "hw"
 
-let cpu () = //
+    write ("hw/.gitignore", ".mxproject\n")
 
-    for cpu in [ "i5"; "stm32f429zi"; "stm32f030f4"; "lx106" ] do
+let cpu () = //
+    for cpu in [ "i5"; "stm32f429zit"; "stm32f030f4p"; "lx106" ] do
         _cross cpu "cpu"
 
 let arch () = //
