@@ -2,19 +2,47 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name"         : "cortex",
+            "type"         : "cppdbg",
+            "request"      : "launch",
+            "program"      : "${command:cmake.launchTargetPath}",
+            "preLaunchTask": "CMake: build",
+            "cwd"          : "${workspaceFolder}",
+            "MIMode": "gdb",
+            "setupCommands": [
+                {"text": "-enable-pretty-printing", "ignoreFailures": true}
+            ],
+            "miDebuggerPath"           : "gdb-multiarch",
+            "miDebuggerArgs"           : "--silent",
+            "miDebuggerServerAddress"  : "localhost:12345",
+            "useExtendedRemote"        : true,
+            "stopAtEntry"              : false, // don't enable!
+            "postRemoteConnectCommands": [
+                {"text": "monitor reset halt"},
+                {"text": "load"},
+                {"text": "set substitute-path /home/pere/src/newlib-salsa ${userHome}/em/ref/newlib-salsa"},
+                // {"text": "b Reset_Handler"},
+                // {"text": "b DefaultHandler"},
+                // {"text": "b SystemInit"},
+                // {"text": "b __libc_init_array"},
+                // {"text": "b main"},
+                {"text": "monitor reset halt"}, // req
+            ],
+        },
+        {
             "name"         : "linux",
             "type"         : "cppdbg",
             "request"      : "launch",
             "program"      : "${command:cmake.launchTargetPath}",
             "preLaunchTask": "CMake: build",
-            "args": ["${workspaceFolder}/lib/${workspaceFolderBasename}.ini"],
             "cwd"          : "${workspaceFolder}",
-            "externalConsole": false,
-            "stopAtEntry": true,
             "MIMode": "gdb",
             "setupCommands": [
                 {"text": "-enable-pretty-printing", "ignoreFailures": true}
-            ]
+            ],
+            "args": ["${workspaceFolder}/lib/${workspaceFolderBasename}.ini"],
+            "externalConsole": false,
+            "stopAtEntry": true,
         }
     ]
 }

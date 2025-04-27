@@ -431,16 +431,13 @@ install(TARGETS ${CMAKE_PROJECT_NAME}
 let _cross m g =
     mkdir $"{g}/{m}"
 
-    match g with
-    | "." -> ()
-    | "hw" ->
+    if g <> "." then
+        touch $"{g}/{m}/{m}.mk"
+        touch $"{g}/{m}/{m}.cmake"
+
+    if g = "hw" then
         touch $"{g}/{m}/{m}.gdb"
         touch $"{g}/{m}/{m}.ocd"
-        touch $"{g}/{m}/{m}.mk"
-        touch $"{g}/{m}/{m}.cmake"
-    | _ ->
-        touch $"{g}/{m}/{m}.mk"
-        touch $"{g}/{m}/{m}.cmake"
 
     mkdir $"{g}/{m}/inc"
     mkdir $"{g}/{m}/src"
@@ -521,7 +518,63 @@ let tasks () = //
     touch $".vscode/tasks.json"
 
 let launch () = //
-    touch $".vscode/launch.json"
+
+    let lhdr name =
+        $$"""
+        {
+            "name"         : "{{name}}",
+            "type"         : "cppdbg",
+            "request"      : "launch",
+            "program"      : "${command:cmake.launchTargetPath}",
+            "preLaunchTask": "CMake: build",
+            "cwd"          : "${workspaceFolder}",
+            "MIMode": "gdb",
+            "setupCommands": [
+                {"text": "-enable-pretty-printing", "ignoreFailures": true}
+            ],"""
+
+    let linux =
+        lhdr "linux"
+        + """
+            "args": ["${workspaceFolder}/lib/${workspaceFolderBasename}.ini"],
+            "externalConsole": false,
+            "stopAtEntry": true,
+        }"""
+
+    let cortex =
+        lhdr "cortex"
+        + """
+            "miDebuggerPath"           : "gdb-multiarch",
+            "miDebuggerArgs"           : "--silent",
+            "miDebuggerServerAddress"  : "localhost:12345",
+            "useExtendedRemote"        : true,
+            "stopAtEntry"              : false, // don't enable!
+            "postRemoteConnectCommands": [
+                {"text": "monitor reset halt"},
+                {"text": "load"},
+                {"text": "set substitute-path /home/pere/src/newlib-salsa ${userHome}/em/ref/newlib-salsa"},
+                // {"text": "b Reset_Handler"},
+                // {"text": "b DefaultHandler"},
+                // {"text": "b SystemInit"},
+                // {"text": "b __libc_init_array"},
+                // {"text": "b main"},
+                {"text": "monitor reset halt"}, // req
+            ],
+        },"""
+
+    let json =
+        "\
+{
+    \"version\": \"0.2.0\",
+    \"configurations\": ["
+        + cortex
+        + linux
+        + "
+    ]
+}
+"
+
+    write (".vscode/launch.json", json)
 
 let c_cpp_properties () = //
     touch $".vscode/c_cpp_properties.json"
