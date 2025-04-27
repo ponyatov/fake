@@ -1,6 +1,6 @@
 include(arch/cortexM/cortexM.cmake)
 
-set(MCPU -march=armv6e-m   -mcpu=cortex-m0 )
+set(MCPU -march=armv6-m   -mcpu=cortex-m0 )
 
 add_compile_options( ${MCPU} ${MFPU} )
 
