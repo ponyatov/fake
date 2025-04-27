@@ -162,14 +162,6 @@ add_link_options   ( ${MCPU} ${MFPU} )
 "
     )
 
-    write (
-        "cpu/stm32f030f4p/stm32f030f4p.cmake",
-        "\
-add_compile_definitions(
-    STM32F030x6
-)
-"
-    )
 
     write (
         "arch/cortexM/cortexM.cmake",
@@ -654,9 +646,43 @@ let hw () = //
 
     write ("hw/.gitignore", ".mxproject\n")
 
+let stm32f429zit () = //
+    write ("cpu/stm32f429zit/stm32f429zit.cmake", "")
+
+let stm32f030f4p () = //
+    write (
+        "cpu/stm32f030f4p/stm32f030f4p.cmake",
+        "\
+add_compile_definitions(
+    STM32F030x6
+)
+"
+    )
+
 let cpu () = //
     for cpu in [ "i5"; "stm32f429zit"; "stm32f030f4p"; "lx106" ] do
         _cross cpu "cpu"
+
+    stm32f429zit ()
+    stm32f030f4p ()
+
+let x86_64 () = //
+    ()
+
+let cortexM () = //
+    ()
+
+let cortexM0 () = //
+    ()
+
+let cortexM3 () = //
+    ()
+
+let cortexM4 () = //
+    ()
+
+let xtensa () = //
+    ()
 
 let arch () = //
 
@@ -681,6 +707,13 @@ QEMU    = qemu-system-arm
 "
             )
         | _ -> ()
+
+    x86_64 ()
+    cortexM ()
+    cortexM0 ()
+    cortexM3 ()
+    cortexM4 ()
+    xtensa ()
 
 
 let os () = //
