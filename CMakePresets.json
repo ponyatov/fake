@@ -1,28 +1,28 @@
 {
-        "version": 6,
-        "buildPresets": [
-                        {
-                "name"            :  "f429disco",
-                "configurePreset" :  "f429disco",
-                "targets"         : ["all","install"]
-            },
-            {
-                "name"            :  "pillF030",
-                "configurePreset" :  "pillF030",
-                "targets"         : ["all","install"]
-            },
-            {
-                "name"            :  "pc",
-                "configurePreset" :  "pc",
-                "targets"         : ["all","install"]
-            },
-            {
-                "name"            :  "esp8266",
-                "configurePreset" :  "esp8266",
-                "targets"         : ["all","install"]
-            }
-        ],
-        "configurePresets": [
+    "version": 6,
+    "buildPresets": [
+        {
+            "name"            :  "f429disco",
+            "configurePreset" :  "f429disco",
+            "targets"         : ["all","install"]
+        },
+        {
+            "name"            :  "pillF030",
+            "configurePreset" :  "pillF030",
+            "targets"         : ["all","install"]
+        },
+        {
+            "name"            :  "esp8266",
+            "configurePreset" :  "esp8266",
+            "targets"         : ["all","install"]
+        },
+        {
+            "name"            :  "linux",
+            "configurePreset" :  "linux",
+            "targets"         : ["all","install"]
+        }
+    ],
+    "configurePresets": [
         {
             "name"            : "common",
             "hidden"          :  true,
@@ -60,7 +60,7 @@
             "inherits"        : "common",
             "hidden"          :  true,
             "toolchainFile"   : "${sourceDir}/cmake/xtensa-lx106-elf.cmake",
-            "cacheVariables"  : {"CPU":"lx106", "ARCH":"xtensa"}
+            "cacheVariables"  : {"ARCH":"xtensa","OS":"rtos"}
         },
         {
             "name"            : "pc",
@@ -71,22 +71,22 @@
         {
             "name"            : "pillF030",
             "inherits"        : "cortexM0",
-            "cacheVariables"  : {"HW":"pillF030","OS":"bare"}
+            "cacheVariables"  : {"HW":"pillF030"}
         },
-            {
+        {
             "name"            : "f429disco",
             "inherits"        : "cortexM4",
-            "cacheVariables"  : {"HW":"f429disco","OS":"bare"}
+            "cacheVariables"  : {"HW":"f429disco"}
         },
-            {
-            "name"            : "xtensa",
-            "inherits"        : "esp8266",
-            "cacheVariables"  : {"HW":"xtensa","OS":"rtos"}
+        {
+            "name"            : "esp8266",
+            "inherits"        : "xtensa",
+            "cacheVariables"  : {"HW":"esp8266","CPU":"lx106"}
         },
-            {
+        {
             "name"            : "linux",
             "inherits"        : "pc",
             "cacheVariables"  : {"OS":"linux"}
         }
-        ]
-    }
+    ]
+}

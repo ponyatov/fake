@@ -410,13 +410,20 @@ install(TARGETS ${CMAKE_PROJECT_NAME}
     )
 
     let _build hw = //
-        $$"""            {
-                "name"            :  "{{hw}}",
-                "configurePreset" :  "{{hw}}",
-                "targets"         : ["all","install"]
-            }"""
+        $$"""{
+            "name"            :  "{{hw}}",
+            "configurePreset" :  "{{hw}}",
+            "targets"         : ["all","install"]
+        }"""
 
-    let builders = (String.concat ",\n" [ for hw in _hw -> _build hw ])
+    let builders =
+        (String.concat
+            ",\n        "
+            ([ //
+               for hw in _hw do
+                   if hw <> "pc" then
+                       _build hw ]
+             @ [ _build "linux" ]))
 
     let _config hw inher vars = //
         $$"""{
@@ -427,24 +434,24 @@ install(TARGETS ${CMAKE_PROJECT_NAME}
 
     let configs =
         String.concat
-            ",\n            "
+            ",\n        "
             [ //
               for hw, inher, vars in
                   [ //
-                    ("pillF030", "cortexM0", """{"HW":"pillF030","OS":"bare"}""")
-                    ("f429disco", "cortexM4", """{"HW":"f429disco","OS":"bare"}""")
-                    ("xtensa", "esp8266", """{"HW":"xtensa","OS":"rtos"}""")
+                    ("pillF030", "cortexM0", """{"HW":"pillF030"}""")
+                    ("f429disco", "cortexM4", """{"HW":"f429disco"}""")
+                    ("esp8266", "xtensa", """{"HW":"esp8266","CPU":"lx106"}""")
                     ("linux", "pc", """{"OS":"linux"}""") ] ->  //
                   (_config hw inher vars) ]
 
     write ( //
         "CMakePresets.json",
         $$"""{
-        "version": 6,
-        "buildPresets": [
-            {{builders}}
-        ],
-        "configurePresets": [
+    "version": 6,
+    "buildPresets": [
+        {{builders}}
+    ],
+    "configurePresets": [
         {
             "name"            : "common",
             "hidden"          :  true,
@@ -482,7 +489,7 @@ install(TARGETS ${CMAKE_PROJECT_NAME}
             "inherits"        : "common",
             "hidden"          :  true,
             "toolchainFile"   : "${sourceDir}/cmake/xtensa-lx106-elf.cmake",
-            "cacheVariables"  : {"CPU":"lx106", "ARCH":"xtensa"}
+            "cacheVariables"  : {"ARCH":"xtensa","OS":"rtos"}
         },
         {
             "name"            : "pc",
@@ -491,9 +498,9 @@ install(TARGETS ${CMAKE_PROJECT_NAME}
             "cacheVariables"  : {"HW":"pc", "CPU":"i5", "ARCH":"x86_64"}
         },
         {{configs}}
-        ]
-    }
-    """
+    ]
+}
+"""
     )
 
 
