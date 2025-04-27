@@ -143,26 +143,6 @@ add_link_options()
     )
 
 let arm_none_eabi () =
-    write (
-        "arch/cortexM0/cortexM0.cmake",
-        "\
-include(arch/cortexM/cortexM.cmake)
-
-set(MCPU -march=armv6-m   -mcpu=cortex-m0 )
-
-add_compile_options( ${MCPU} ${MFPU} )
-
-add_compile_definitions(
-    # PREFETCH_ENABLE=1
-    # INSTRUCTION_CACHE_ENABLE=1
-    # DATA_CACHE_ENABLE=1
-)
-
-add_link_options   ( ${MCPU} ${MFPU} )
-"
-    )
-
-
 
     write (
         "cmake/arm-none-eabi.cmake", //
@@ -657,7 +637,7 @@ let x86_64 () = //
 let cortexM () = //
     write (
         "arch/cortexM/cortexM.cmake",
-        "
+        "\
 add_compile_options(
     -mthumb
 )
@@ -672,7 +652,24 @@ add_link_options(
     )
 
 let cortexM0 () = //
-    ()
+    write (
+        "arch/cortexM0/cortexM0.cmake",
+        "\
+include(arch/cortexM/cortexM.cmake)
+
+set(MCPU -march=armv6-m   -mcpu=cortex-m0 )
+
+add_compile_options( ${MCPU} ${MFPU} )
+
+add_compile_definitions(
+    # PREFETCH_ENABLE=1
+    # INSTRUCTION_CACHE_ENABLE=1
+    # DATA_CACHE_ENABLE=1
+)
+
+add_link_options   ( ${MCPU} ${MFPU} )
+"
+    )
 
 let cortexM3 () = //
     ()
@@ -680,7 +677,7 @@ let cortexM3 () = //
 let cortexM4 () = //
     write (
         "arch/cortexM4/cortexM4.cmake",
-        "
+        "\
 include(arch/cortexM/cortexM.cmake)
 
 set(MCPU -march=armv7e-m   -mcpu=cortex-m4)
