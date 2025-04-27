@@ -57,7 +57,7 @@ let apt () = //
         "\
 git make curl
 code meld doxygen clang-format
-g++ cmake gdb flex bison libreadline-dev
+g++ cmake gdb flex bison libreadline-dev ragel lemon
 "
     )
 
@@ -433,6 +433,11 @@ let _cross m g =
 
     match g with
     | "." -> ()
+    | "hw" ->
+        touch $"{g}/{m}/{m}.gdb"
+        touch $"{g}/{m}/{m}.ocd"
+        touch $"{g}/{m}/{m}.mk"
+        touch $"{g}/{m}/{m}.cmake"
     | _ ->
         touch $"{g}/{m}/{m}.mk"
         touch $"{g}/{m}/{m}.cmake"
@@ -454,6 +459,7 @@ let _cross m g =
         $"{g}/{m}/src/{m}.cpp",
         $"#include \"{m}.hpp\"\n"
     )
+
 
 let hw () = //
     for hw in [ "pc"; "f429disco"; "esp8266"; "pillF030" ] do
@@ -479,7 +485,7 @@ let arch () = //
         match arch with
         | "cortexM" ->
             write (
-                $"arch/cortexM/cortexM.mk",
+                "arch/cortexM/cortexM.mk",
                 "\
 TARGET  = arm-none-eabi
 APT    += $(target)-gcc gdb-multiarch qemu-system-arm
