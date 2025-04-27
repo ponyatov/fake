@@ -141,6 +141,48 @@ add_link_options()
 "
     )
 
+let arm_none_eabi () =
+    write (
+        "cmake/arm-none-eabi.cmake", //
+        "\
+set(CMAKE_SYSTEM_NAME       Generic)
+set(CMAKE_SYSTEM_PROCESSOR  arm)
+set(TOOLCHAIN_PREFIX        arm-none-eabi)
+set(CMAKE_CROSS_COMPILING   true)
+set(CMAKE_EXECUTABLE_SUFFIX \".elf\")
+
+include(any_toolchain)
+
+add_compile_definitions(
+    CORTEX ${SERIES}
+)
+
+add_compile_options(
+    -mthumb
+    -ffunction-sections -fdata-sections
+    $<$<COMPILE_LANGUAGE:CXX>:-nostdinc++>
+    $<$<COMPILE_LANGUAGE:CXX>:-fno-rtti>
+    $<$<COMPILE_LANGUAGE:CXX>:-fno-exceptions>
+    $<$<COMPILE_LANGUAGE:CXX>:-fno-threadsafe-statics>
+    $<$<COMPILE_LANGUAGE:ASM>:-x$<SEMICOLON>assembler-with-cpp>
+    $<$<COMPILE_LANGUAGE:ASM>:-MMD>
+    $<$<COMPILE_LANGUAGE:ASM>:-MP>
+)
+
+set(CMAKE_TRY_COMPILE_TARGET_TYPE STATIC_LIBRARY)
+add_link_options(
+    -mthumb
+    -T ${CMAKE_SOURCE_DIR}/hw/${HW}/${CPU_}x_FLASH.ld
+    --specs=nano.specs
+    -Wl,--start-group -lc -lm -lnosys   -Wl,--end-group
+    -Wl,--start-group -lstdc++ -lsupc++ -Wl,--end-group
+    -Wl,-Map=${CMAKE_PROJECT_NAME}.map -Wl,--gc-sections
+)
+"
+    )
+
+arm_none_eabi ()
+
 let any_toolchain () = //
     write (
         "cmake/any_toolchain.cmake",
@@ -350,8 +392,8 @@ include_directories(${INC})
 "
     )
 
-let _hw_cortex = [ "f429disco"; "pillF030" ]
-let _hw = _hw_cortex @ [ "pc"; "esp8266" ]
+let _hw_cortex = [ "pillF030"; "f429disco" ]
+let _hw = _hw_cortex @ [ "esp8266"; "pc" ]
 
 
 let cmake () = //
@@ -364,6 +406,7 @@ let cmake () = //
     for t in _target do
         touch $"cmake/{t}.cmake"
         x86_64_linux_gnu ()
+        arm_none_eabi ()
         any_toolchain ()
 
     version ()
@@ -438,8 +481,8 @@ install(TARGETS ${CMAKE_PROJECT_NAME}
             [ //
               for hw, inher, vars in
                   [ //
-                    ("pillF030", "cortexM0", """{"HW":"pillF030"}""")
-                    ("f429disco", "cortexM4", """{"HW":"f429disco"}""")
+                    ("pillF030", "cortexM0", """{"HW":"pillF030","CPU":"stm32f030f4p","SERIES":"STM32F0"}""")
+                    ("f429disco", "cortexM4", """{"HW":"f429disco","CPU":"stm32f429zit","SERIES":"STM32F4"}""")
                     ("esp8266", "xtensa", """{"HW":"esp8266","CPU":"lx106"}""")
                     ("linux", "pc", """{"OS":"linux"}""") ] ->  //
                   (_config hw inher vars) ]
@@ -466,35 +509,35 @@ install(TARGETS ${CMAKE_PROJECT_NAME}
             }
         },
         {
-            "name"            : "cortexM",
-            "inherits"        : "common",
-            "hidden"          :  true,
-            "toolchainFile"   : "${sourceDir}/cmake/arm-none-eabi.cmake",
+            "name"            :  "cortexM",
+            "inherits"        :  "common",
+            "hidden"          :   true,
+            "toolchainFile"   :  "${sourceDir}/cmake/arm-none-eabi.cmake",
             "cacheVariables"  : {"OS":"bare"}
         },
         {
-            "name"            : "cortexM0",
-            "inherits"        : "cortexM",
-            "hidden"          :  true,
+            "name"            :  "cortexM0",
+            "inherits"        :  "cortexM",
+            "hidden"          :   true,
             "cacheVariables"  : {"ARCH":"cortexM0"}
         },
         {
-            "name"            : "cortexM4",
-            "inherits"        : "cortexM",
-            "hidden"          :  true,
+            "name"            :  "cortexM4",
+            "inherits"        :  "cortexM",
+            "hidden"          :   true,
             "cacheVariables"  : {"ARCH":"cortexM4"}
         },
         {
-            "name"            : "xtensa",
-            "inherits"        : "common",
-            "hidden"          :  true,
-            "toolchainFile"   : "${sourceDir}/cmake/xtensa-lx106-elf.cmake",
+            "name"            :  "xtensa",
+            "inherits"        :  "common",
+            "hidden"          :   true,
+            "toolchainFile"   :  "${sourceDir}/cmake/xtensa-lx106-elf.cmake",
             "cacheVariables"  : {"ARCH":"xtensa","OS":"rtos"}
         },
         {
-            "name"            : "pc",
-            "inherits"        : "common",
-            "hidden"          :  true,
+            "name"            :  "pc",
+            "inherits"        :  "common",
+            "hidden"          :   true,
             "cacheVariables"  : {"HW":"pc", "CPU":"i5", "ARCH":"x86_64"}
         },
         {{configs}}
