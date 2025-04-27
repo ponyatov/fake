@@ -1,0 +1,7 @@
+Found 1 stlink programmers
+  version:    V2J17S4
+  serial:     303030303030303030303031
+  flash:      16384 (pagesize: 1024)
+  sram:       4096
+  chipid:     0x0444
+  descr:      F0xx small

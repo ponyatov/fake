@@ -51,13 +51,14 @@ let _files =
       ".prettierc"
       "apt.Debian" ]
 
-
 let apt () = //
     write (
         "apt.Debian",
-        "git make curl
+        "\
+git make curl
 code meld doxygen clang-format
-g++ cmake gdb flex bison libreadline-dev"
+g++ cmake gdb flex bison libreadline-dev
+"
     )
 
 let _mk =
@@ -455,13 +456,14 @@ let _cross m g =
     )
 
 let hw () = //
-    for hw in [ "pc"; "f429disco"; "esp8266" ] do
+    for hw in [ "pc"; "f429disco"; "esp8266"; "pillF030" ] do
         _cross hw "hw"
 
 let cpu () = //
 
-    for cpu in [ "i5"; "stm32f429zi"; "lx106" ] do
+    for cpu in [ "i5"; "stm32f429zi"; "stm32f030f4"; "lx106" ] do
         _cross cpu "cpu"
+
 
 let arch () = //
 
@@ -473,6 +475,20 @@ let arch () = //
                 $"arch/{arch}/{arch}.mk",
                 "include arch/cortexM.mk\n"
             )
+
+        match arch with
+        | "cortexM" ->
+            write (
+                $"arch/cortexM/cortexM.mk",
+                "\
+TARGET  = arm-none-eabi
+APT    += $(target)-gcc gdb-multiarch qemu-system-arm
+APT    += openocd stlink-tools dfu-util
+QEMU    = qemu-system-arm
+"
+            )
+        | _ -> ()
+
 
 let os () = //
 
