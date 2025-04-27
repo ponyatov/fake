@@ -71,6 +71,25 @@ let _mk =
       "fsh"
       "install" ]
 
+let patch () = //
+    write (
+        "mk/patch.mk",
+        "\
+#!/usr/bin/make -f
+
+PATCH = $(wildcard *.patch               )
+FILES = $(patsubst %.patch,%    ,$(PATCH))
+FIXES = $(patsubst %.patch,%.fix,$(PATCH))
+
+.PHONY: all
+all:
+\tdos2unix $(FILES)
+\t$(MAKE) -f $(MAKEFILE_LIST) $(FIXES)
+%.fix: %
+\tpatch -u $< $<.patch && touch $@
+"
+    )
+
 let mk () =
     mkdir "mk"
 
@@ -82,6 +101,8 @@ let mk () =
 
     for m in _mk do
         touch $"mk/{m}.mk"
+
+    patch ()
 
 let doc () = //
     for d in [ "doc"; "doc/C"; "doc/F"; "doc/compiler" ] do
