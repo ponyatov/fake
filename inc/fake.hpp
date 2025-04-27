@@ -12,6 +12,7 @@ void initialise_monitor_handles(void);
 #include <string.h>
 
 extern void setup(int argc, char *argv[]);
+extern void arg(int argc, char *argv);
 extern void loop(void);
 
 #ifdef __cplusplus
