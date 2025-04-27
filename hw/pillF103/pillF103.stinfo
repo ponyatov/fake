@@ -1,0 +1,7 @@
+Found 1 stlink programmers
+  version:    V2J37S7
+  serial:     21003500072D343632525544
+  flash:      65536 (pagesize: 1024)
+  sram:       20480
+  chipid:     0x0410
+  descr:      F1xx Medium-density
