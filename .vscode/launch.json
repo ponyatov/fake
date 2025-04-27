@@ -25,7 +25,9 @@
                 // {"text": "b DefaultHandler"},
                 // {"text": "b SystemInit"},
                 // {"text": "b __libc_init_array"},
-                {"text": "b main"},
+                // {"text": "b main"},
+                {"text": "b setup"},
+                {"text": "b loop"},
                 {"text": "monitor reset halt"}, // req
             ],
         },
@@ -34,7 +36,7 @@
             "type"         : "cppdbg",
             "request"      : "launch",
             "program"      : "${command:cmake.launchTargetPath}",
-            "preLaunchTask": "CMake: build",
+            // "preLaunchTask": "CMake: build",
             "cwd"          : "${workspaceFolder}",
             "MIMode": "gdb",
             "setupCommands": [

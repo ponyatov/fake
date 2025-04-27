@@ -340,9 +340,42 @@ nop halt  # command
     )
 
 
+let hpp () = //
+    write (
+        "inc/fake.hpp",
+        "\
+#pragma once
+
+#ifdef __cplusplus
+extern \"C\" {
+#endif
+
+extern void setup();
+extern void loop();
+
+#ifdef __cplusplus
+} // extern \"C\"
+#endif
+"
+    )
+
+let cpp () = //
+    write (
+        "src/fake.cpp",
+        "\
+#include \"fake.hpp\"
+
+void setup() {}
+void loop() {}
+"
+    )
+
 let src () = //
     ini ()
     linux ()
+
+    hpp ()
+    cpp ()
 
     write (
         "cmake/src.cmake",
@@ -833,6 +866,7 @@ let tasks () = //
 
 let launch () = //
 
+
     let lhdr name =
         $$"""
         {
@@ -840,7 +874,7 @@ let launch () = //
             "type"         : "cppdbg",
             "request"      : "launch",
             "program"      : "${command:cmake.launchTargetPath}",
-            "preLaunchTask": "CMake: build",
+            // "preLaunchTask": "CMake: build",
             "cwd"          : "${workspaceFolder}",
             "MIMode": "gdb",
             "setupCommands": [
@@ -871,7 +905,9 @@ let launch () = //
                 // {"text": "b DefaultHandler"},
                 // {"text": "b SystemInit"},
                 // {"text": "b __libc_init_array"},
-                {"text": "b main"},
+                // {"text": "b main"},
+                {"text": "b setup"},
+                {"text": "b loop"},
                 {"text": "monitor reset halt"}, // req
             ],
         },"""
@@ -889,6 +925,8 @@ let launch () = //
 "
 
     write (".vscode/launch.json", json)
+
+launch ()
 
 let c_cpp_properties () = //
     touch $".vscode/c_cpp_properties.json"
