@@ -464,7 +464,11 @@ let _cross m g =
         touch $"hw/{m}/{m}.ocd"
 
         if List.contains m _hw_cortex then
-            touch $"hw/{m}/patch.mk"
+            File.CreateSymbolicLink( //
+                $"hw/{m}/patch.mk",
+                "../../mk/patch.mk"
+            )
+            |> ignore
 
     mkdir $"{g}/{m}/inc"
     mkdir $"{g}/{m}/src"
