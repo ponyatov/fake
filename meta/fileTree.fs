@@ -350,6 +350,9 @@ include_directories(${INC})
 "
     )
 
+let _hw_cortex = [ "f429disco"; "pillF030" ]
+let _hw = _hw_cortex @ [ "pc"; "esp8266" ]
+
 
 let cmake () = //
 
@@ -406,16 +409,40 @@ install(TARGETS ${CMAKE_PROJECT_NAME}
 "
     )
 
+    let _build hw = //
+        $$"""            {
+                "name"            :  "{{hw}}",
+                "configurePreset" :  "{{hw}}",
+                "targets"         : ["all","install"]
+            }"""
+
+    let builders = (String.concat ",\n" [ for hw in _hw -> _build hw ])
+
+    let _config hw inher vars = //
+        $$"""{
+            "name"            : "{{hw}}",
+            "inherits"        : "{{inher}}",
+            "cacheVariables"  : {{vars}}
+        }"""
+
+    let configs =
+        String.concat
+            ",\n            "
+            [ //
+              for hw, inher, vars in
+                  [ //
+                    ("pillF030", "cortexM0", """{"HW":"pillF030","OS":"bare"}""")
+                    ("f429disco", "cortexM4", """{"HW":"f429disco","OS":"bare"}""")
+                    ("xtensa", "esp8266", """{"HW":"xtensa","OS":"rtos"}""")
+                    ("linux", "pc", """{"OS":"linux"}""") ] ->  //
+                  (_config hw inher vars) ]
+
     write ( //
         "CMakePresets.json",
         $$"""{
         "version": 6,
         "buildPresets": [
-            {
-                "name"            :  "linux",
-                "configurePreset" :  "linux",
-                "targets"         : ["all","install"]
-            }
+            {{builders}}
         ],
         "configurePresets": [
         {
@@ -432,25 +459,43 @@ install(TARGETS ${CMAKE_PROJECT_NAME}
             }
         },
         {
+            "name"            : "cortexM",
+            "inherits"        : "common",
+            "hidden"          :  true,
+            "toolchainFile"   : "${sourceDir}/cmake/arm-none-eabi.cmake",
+            "cacheVariables"  : {"OS":"bare"}
+        },
+        {
+            "name"            : "cortexM0",
+            "inherits"        : "cortexM",
+            "hidden"          :  true,
+            "cacheVariables"  : {"ARCH":"cortexM0"}
+        },
+        {
+            "name"            : "cortexM4",
+            "inherits"        : "cortexM",
+            "hidden"          :  true,
+            "cacheVariables"  : {"ARCH":"cortexM4"}
+        },
+        {
+            "name"            : "xtensa",
+            "inherits"        : "common",
+            "hidden"          :  true,
+            "toolchainFile"   : "${sourceDir}/cmake/xtensa-lx106-elf.cmake",
+            "cacheVariables"  : {"CPU":"lx106", "ARCH":"xtensa"}
+        },
+        {
             "name"            : "pc",
             "inherits"        : "common",
             "hidden"          :  true,
             "cacheVariables"  : {"HW":"pc", "CPU":"i5", "ARCH":"x86_64"}
         },
-        {
-            "name"            : "linux",
-            "inherits"        : "pc",
-            "toolchainFile"   : "${sourceDir}/cmake/x86_64-linux-gnu.cmake",
-            "cacheVariables"  : {"OS":"linux"}
-        }
+        {{configs}}
         ]
     }
     """
     )
 
-
-let _hw_cortex = [ "f429disco"; "pillF030" ]
-let _hw = _hw_cortex @ [ "pc"; "esp8266" ]
 
 let _cross m g =
     mkdir $"{g}/{m}"

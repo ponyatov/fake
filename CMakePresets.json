@@ -1,9 +1,24 @@
 {
         "version": 6,
         "buildPresets": [
+                        {
+                "name"            :  "f429disco",
+                "configurePreset" :  "f429disco",
+                "targets"         : ["all","install"]
+            },
             {
-                "name"            :  "linux",
-                "configurePreset" :  "linux",
+                "name"            :  "pillF030",
+                "configurePreset" :  "pillF030",
+                "targets"         : ["all","install"]
+            },
+            {
+                "name"            :  "pc",
+                "configurePreset" :  "pc",
+                "targets"         : ["all","install"]
+            },
+            {
+                "name"            :  "esp8266",
+                "configurePreset" :  "esp8266",
                 "targets"         : ["all","install"]
             }
         ],
@@ -22,17 +37,56 @@
             }
         },
         {
+            "name"            : "cortexM",
+            "inherits"        : "common",
+            "hidden"          :  true,
+            "toolchainFile"   : "${sourceDir}/cmake/arm-none-eabi.cmake",
+            "cacheVariables"  : {"OS":"bare"}
+        },
+        {
+            "name"            : "cortexM0",
+            "inherits"        : "cortexM",
+            "hidden"          :  true,
+            "cacheVariables"  : {"ARCH":"cortexM0"}
+        },
+        {
+            "name"            : "cortexM4",
+            "inherits"        : "cortexM",
+            "hidden"          :  true,
+            "cacheVariables"  : {"ARCH":"cortexM4"}
+        },
+        {
+            "name"            : "xtensa",
+            "inherits"        : "common",
+            "hidden"          :  true,
+            "toolchainFile"   : "${sourceDir}/cmake/xtensa-lx106-elf.cmake",
+            "cacheVariables"  : {"CPU":"lx106", "ARCH":"xtensa"}
+        },
+        {
             "name"            : "pc",
             "inherits"        : "common",
             "hidden"          :  true,
             "cacheVariables"  : {"HW":"pc", "CPU":"i5", "ARCH":"x86_64"}
         },
         {
+            "name"            : "pillF030",
+            "inherits"        : "cortexM0",
+            "cacheVariables"  : {"HW":"pillF030","OS":"bare"}
+        },
+            {
+            "name"            : "f429disco",
+            "inherits"        : "cortexM4",
+            "cacheVariables"  : {"HW":"f429disco","OS":"bare"}
+        },
+            {
+            "name"            : "xtensa",
+            "inherits"        : "esp8266",
+            "cacheVariables"  : {"HW":"xtensa","OS":"rtos"}
+        },
+            {
             "name"            : "linux",
             "inherits"        : "pc",
-            "toolchainFile"   : "${sourceDir}/cmake/x86_64-linux-gnu.cmake",
             "cacheVariables"  : {"OS":"linux"}
         }
         ]
     }
-    
