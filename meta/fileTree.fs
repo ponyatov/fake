@@ -867,11 +867,11 @@ let launch () = //
                 {"text": "monitor reset halt"},
                 {"text": "load"},
                 {"text": "set substitute-path /home/pere/src/newlib-salsa ${userHome}/em/ref/newlib-salsa"},
-                {"text": "b Reset_Handler"},
+                // {"text": "b Reset_Handler"},
                 // {"text": "b DefaultHandler"},
                 // {"text": "b SystemInit"},
                 // {"text": "b __libc_init_array"},
-                // {"text": "b main"},
+                {"text": "b main"},
                 {"text": "monitor reset halt"}, // req
             ],
         },"""
