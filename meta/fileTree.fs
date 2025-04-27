@@ -605,11 +605,28 @@ let _cross m g =
     )
 
 
+let pillF030 () = //
+    write (
+        "hw/pillF030/pillF030.ocd",
+        "\
+gdb_port 12345
+source [find interface/stlink-v2.cfg]
+adapter   speed  1800
+transport select hla_swd
+source [find target/stm32f0x.cfg]
+
+gdb_memory_map    enable
+gdb_flash_program enable
+"
+    )
+
 let hw () = //
     for hw in _hw do
         _cross hw "hw"
 
     write ("hw/.gitignore", ".mxproject\n")
+
+    pillF030 ()
 
 let stm32f429zit () = //
     write ("cpu/stm32f429zit/stm32f429zit.cmake", "")
@@ -804,7 +821,7 @@ let tasks () = //
             "label"          : "openocd: debug",
             "type"           : "shell",
             "group"          : {"kind": "build", "isDefault": true},
-            "dependsOn"      : "CMake: build",
+            // "dependsOn"      : "CMake: build",
             "command"        : "openocd -f ${workspaceFolder}/hw/${command:cmake.activeConfigurePresetName}/${command:cmake.activeConfigurePresetName}.ocd -c \"program ${command:cmake.launchTargetPath} verify reset\"",
             "problemMatcher" : [],
             "presentation"   : {"showReuseMessage": false, "focus": false, "reveal": "silent", "close": true}
@@ -850,7 +867,7 @@ let launch () = //
                 {"text": "monitor reset halt"},
                 {"text": "load"},
                 {"text": "set substitute-path /home/pere/src/newlib-salsa ${userHome}/em/ref/newlib-salsa"},
-                // {"text": "b Reset_Handler"},
+                {"text": "b Reset_Handler"},
                 // {"text": "b DefaultHandler"},
                 // {"text": "b SystemInit"},
                 // {"text": "b __libc_init_array"},
