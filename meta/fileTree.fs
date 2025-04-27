@@ -681,7 +681,21 @@ source [find target/stm32f0x.cfg]
 
 gdb_memory_map    enable
 gdb_flash_program enable
-arm semihosting   enable
+"
+    )
+
+let pillF103 () = //
+    write (
+        "hw/pillF103/pillF103.ocd",
+        "\
+gdb_port 12345
+source [find interface/stlink-v2.cfg]
+adapter   speed  1800
+transport select hla_swd
+source [find target/stm32f1x.cfg]
+
+gdb_memory_map    enable
+gdb_flash_program enable
 "
     )
 
@@ -692,6 +706,7 @@ let hw () = //
     write ("hw/.gitignore", ".mxproject\n")
 
     pillF030 ()
+    pillF103 ()
 
 let stm32f429zit () = //
     write ("cpu/stm32f429zit/stm32f429zit.cmake", "")
