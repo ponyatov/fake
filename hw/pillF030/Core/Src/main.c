@@ -87,7 +87,9 @@ int main(void)
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   /* USER CODE BEGIN 2 */
-  setup();
+  int argc = 2;
+  char *argv[] = {"fake", "lib/fake.ini"};
+  setup(argc, argv);
   /* USER CODE END 2 */
 
   /* Infinite loop */

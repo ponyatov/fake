@@ -19,7 +19,6 @@
             "stopAtEntry"              : false, // don't enable!
             "postRemoteConnectCommands": [
                 {"text": "monitor reset halt"},
-                {"text": "monitor arm semihosting enable"},
                 {"text": "load"},
                 {"text": "set substitute-path /home/pere/src/newlib-salsa ${userHome}/em/ref/newlib-salsa"},
                 // {"text": "b Reset_Handler"},
@@ -30,6 +29,7 @@
                 {"text": "b setup"},
                 {"text": "b loop"},
                 {"text": "monitor reset halt"}, // req
+                {"text": "monitor arm semihosting enable"},
             ],
         },
         {

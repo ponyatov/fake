@@ -3,13 +3,16 @@
 #ifdef __cplusplus
 extern "C" {
 #else
+extern
 #endif
-extern void initialise_monitor_handles(void);
+void initialise_monitor_handles(void);
 
-// #include <stdio.h>
+#include <stdio.h>
+#include <unistd.h>
+#include <string.h>
 
-extern void setup();
-extern void loop();
+extern void setup(int argc, char *argv[]);
+extern void loop(void);
 
 #ifdef __cplusplus
 }  // extern "C"

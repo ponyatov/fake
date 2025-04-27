@@ -88,6 +88,7 @@ all:
 \t$(MAKE) -f $(MAKEFILE_LIST) $(FIXES)
 %.fix: %
 \tpatch -u $< $<.patch && touch $@
+\trm Core/Src/syscalls.c
 "
     )
 
@@ -175,9 +176,9 @@ set(CMAKE_TRY_COMPILE_TARGET_TYPE STATIC_LIBRARY)
 add_link_options(
     -mthumb
     -T ${CMAKE_SOURCE_DIR}/hw/${HW}/${CPU_}x_FLASH.ld
-    # --specs=nano.specs
-    --specs=nosys.specs -lrdimon
-    -Wl,--start-group -lc -lm -lnosys   -Wl,--end-group
+    # --specs=nano.specs -lnosys
+    --specs=rdimon.specs
+    -Wl,--start-group -lc -lm  -lrdimon -Wl,--end-group
     -Wl,--start-group -lstdc++ -lsupc++ -Wl,--end-group
     -Wl,-Map=${CMAKE_PROJECT_NAME}.map -Wl,--gc-sections
 )
@@ -350,13 +351,20 @@ let hpp () = //
 
 #ifdef __cplusplus
 extern \"C\" {
+#else
+extern
 #endif
+void initialise_monitor_handles(void);
 
-extern void setup();
-extern void loop();
+#include <stdio.h>
+#include <unistd.h>
+#include <string.h>
+
+extern void setup(int argc, char *argv[]);
+extern void loop(void);
 
 #ifdef __cplusplus
-} // extern \"C\"
+}  // extern \"C\"
 #endif
 "
     )
@@ -367,8 +375,17 @@ let cpp () = //
         "\
 #include \"fake.hpp\"
 
-void setup() {}
-void loop() {}
+void setup(int argc, char *argv[]) {
+    initialise_monitor_handles();
+    for (int i = 0; i < argc; i++) {
+        write(0, argv[i], strlen(argv[i]));
+        write(0, \"\\n\", 1);
+    }
+}
+
+void loop(void) {  //
+    printf(\"hello world!\\n\");
+}
 "
     )
 
