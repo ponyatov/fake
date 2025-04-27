@@ -740,11 +740,12 @@ add_compile_options(
     )
 
 let cpu () = //
-    for cpu in [ "i5"; "stm32f429zit"; "stm32f030f4p"; "lx106" ] do
+    for cpu in [ "i5"; "stm32f429zit"; "stm32f030f4p"; "stm32f103c8t"; "lx106" ] do
         _cross cpu "cpu"
 
     stm32f429zit ()
     stm32f030f4p ()
+    stm32f103c8t ()
 
 let x86_64 () = //
     ()
@@ -787,7 +788,25 @@ add_link_options   ( ${MCPU} ${MFPU} )
     )
 
 let cortexM3 () = //
-    ()
+    write (
+        "arch/cortexM3/cortexM3.cmake",
+        "\
+include(arch/cortexM/cortexM.cmake)
+
+set(MCPU -march=armv7-m -mcpu=cortex-m3)
+set(FCPU -mfloat-abi=soft)
+
+add_compile_options(
+    ${MCPU} ${MFPU}
+)
+
+add_compile_definitions(
+)
+
+add_link_options(
+    ${MCPU} ${MFPU}
+)"
+    )
 
 let cortexM4 () = //
     write (
