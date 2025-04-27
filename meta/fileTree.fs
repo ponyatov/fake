@@ -725,6 +725,20 @@ add_compile_options(
 "
     )
 
+let stm32f103c8t () = //
+    write (
+        "cpu/stm32f103c8t/stm32f103c8t.cmake",
+        "\
+add_compile_definitions(
+    STM32F103xx
+)
+
+add_compile_options(
+    -Os
+)
+"
+    )
+
 let cpu () = //
     for cpu in [ "i5"; "stm32f429zit"; "stm32f030f4p"; "lx106" ] do
         _cross cpu "cpu"
