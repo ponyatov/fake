@@ -730,7 +730,7 @@ let stm32f103c8t () = //
         "cpu/stm32f103c8t/stm32f103c8t.cmake",
         "\
 add_compile_definitions(
-    STM32F103xx
+    STM32F103xB
 )
 
 add_compile_options(
@@ -738,6 +738,7 @@ add_compile_options(
 )
 "
     )
+
 
 let cpu () = //
     for cpu in [ "i5"; "stm32f429zit"; "stm32f030f4p"; "stm32f103c8t"; "lx106" ] do
@@ -805,7 +806,8 @@ add_compile_definitions(
 
 add_link_options(
     ${MCPU} ${MFPU}
-)"
+)
+"
     )
 
 let cortexM4 () = //
