@@ -11,7 +11,6 @@ add_compile_definitions(
 )
 
 add_compile_options(
-    -mthumb
     -ffunction-sections -fdata-sections
     $<$<COMPILE_LANGUAGE:CXX>:-nostdinc++>
     $<$<COMPILE_LANGUAGE:CXX>:-fno-rtti>

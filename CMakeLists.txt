@@ -11,13 +11,9 @@ message("-- | toolchain: " ${CMAKE_CXX_COMPILER} " @ " ${CMAKE_TOOLCHAIN_FILE})
 message("-- |      host: " ${CMAKE_HOST_SYSTEM_NAME}-${CMAKE_HOST_SYSTEM_VERSION})
 message("-- |    target: " "hw:" ${HW} " cpu:" ${CPU} " arch:" ${ARCH} " os:" ${OS})
 message("-- |   startup: " "${S}")
+message("-- |    linker: " "${LD}")
 message("-- |    binary: " ${CMAKE_INSTALL_PREFIX}/${BIN_OUTPUT_NAME}${CMAKE_EXECUTABLE_SUFFIX})
 message("-- |")
-
-message("-- LD: ${LD}")
-message("--  S: ${S} ")
-message("--  C: ${C} ")
-message("--  H: ${H} ")
 
 add_executable(${CMAKE_PROJECT_NAME}
     ${C}  ${H}  # C/C++ source
