@@ -163,21 +163,6 @@ add_link_options   ( ${MCPU} ${MFPU} )
     )
 
 
-    write (
-        "arch/cortexM/cortexM.cmake",
-        "
-add_compile_options(
-    -mthumb
-)
-
-add_compile_definitions(
-    USE_HAL_DRIVER
-)
-
-add_link_options(
-)
-"
-    )
 
     write (
         "cmake/arm-none-eabi.cmake", //
@@ -670,7 +655,21 @@ let x86_64 () = //
     ()
 
 let cortexM () = //
-    ()
+    write (
+        "arch/cortexM/cortexM.cmake",
+        "
+add_compile_options(
+    -mthumb
+)
+
+add_compile_definitions(
+    USE_HAL_DRIVER
+)
+
+add_link_options(
+)
+"
+    )
 
 let cortexM0 () = //
     ()
@@ -679,7 +678,26 @@ let cortexM3 () = //
     ()
 
 let cortexM4 () = //
-    ()
+    write (
+        "arch/cortexM4/cortexM4.cmake",
+        "
+include(arch/cortexM/cortexM.cmake)
+
+set(MCPU -march=armv7e-m   -mcpu=cortex-m4)
+set(FCPU -mfpu=fpv4-sp-d16 -mfloat-abi=hard)
+
+add_compile_options(
+    ${MCPU} ${MFPU}
+)
+
+add_compile_definitions(
+)
+
+add_link_options(
+    ${MCPU} ${MFPU}
+)
+"
+    )
 
 let xtensa () = //
     ()
