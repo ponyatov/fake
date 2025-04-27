@@ -11,6 +11,7 @@ add_compile_definitions(
 )
 
 add_compile_options(
+    -mthumb
     -ffunction-sections -fdata-sections
     $<$<COMPILE_LANGUAGE:CXX>:-nostdinc++>
     $<$<COMPILE_LANGUAGE:CXX>:-fno-rtti>
@@ -25,10 +26,11 @@ set(CMAKE_TRY_COMPILE_TARGET_TYPE STATIC_LIBRARY)
 add_link_options(
     -mthumb
     -T ${CMAKE_SOURCE_DIR}/hw/${HW}/${CPU_}x_FLASH.ld
-    --specs=nano.specs -specs=rdimon.specs
-    # -lnosys
-    -lc -lrdimon
-    # -Wl,--start-group -lc -lm    -Wl,--end-group
-    # -Wl,--start-group -lstdc++ -lsupc++ -Wl,--end-group
-    # -Wl,-Map=${CMAKE_PROJECT_NAME}.map -Wl,--gc-sections
+    # --specs=nano.specs -specs=rdimon.specs
+    # --specs=rdimon.specs -lrdimon
+    -specs=nosys.specs -lrdimon
+    # -specs=nosys.specs --specs=nano.specs -specs=rdimon.specs
+    -Wl,--start-group -lc -lm -lnosys   -Wl,--end-group
+    -Wl,--start-group -lstdc++ -lsupc++ -Wl,--end-group
+    -Wl,-Map=${CMAKE_PROJECT_NAME}.map -Wl,--gc-sections
 )

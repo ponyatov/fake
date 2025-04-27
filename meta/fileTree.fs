@@ -160,6 +160,7 @@ add_compile_definitions(
 )
 
 add_compile_options(
+    -mthumb
     -ffunction-sections -fdata-sections
     $<$<COMPILE_LANGUAGE:CXX>:-nostdinc++>
     $<$<COMPILE_LANGUAGE:CXX>:-fno-rtti>
@@ -900,6 +901,7 @@ let launch () = //
             "stopAtEntry"              : false, // don't enable!
             "postRemoteConnectCommands": [
                 {"text": "monitor reset halt"},
+                {"text": "monitor arm semihosting enable"},
                 {"text": "load"},
                 {"text": "set substitute-path /home/pere/src/newlib-salsa ${userHome}/em/ref/newlib-salsa"},
                 // {"text": "b Reset_Handler"},
