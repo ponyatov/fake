@@ -650,6 +650,7 @@ source [find target/stm32f0x.cfg]
 
 gdb_memory_map    enable
 gdb_flash_program enable
+arm semihosting   enable
 "
     )
 

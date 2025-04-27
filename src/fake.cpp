@@ -1,4 +1,7 @@
 #include "fake.hpp"
 
-void setup() {}
-void loop() {}
+void setup() {  //
+    initialise_monitor_handles();
+}
+void loop() {  //
+}
