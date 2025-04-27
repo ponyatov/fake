@@ -753,7 +753,67 @@ let settings () = //
     touch $".vscode/settings.json"
 
 let tasks () = //
-    touch $".vscode/tasks.json"
+    write (
+        $".vscode/tasks.json",
+        $$"""\
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label"          : "project: install",
+            "type"           : "shell",
+            "command"        : "make install",
+            "presentation"   : {"focus": true},
+            "problemMatcher" : []
+        },
+        {
+            "label"          : "project: update",
+            "type"           : "shell",
+            "command"        : "make update",
+            "presentation"   : {"focus": true},
+            "problemMatcher" : []
+        },
+        {
+            "label"          : "git: whoami",
+            "type"           : "shell",
+            "command"        : "make `whoami`",
+            "problemMatcher" : []
+        },
+        {
+            "label"          : "git: dev",
+            "type"           : "shell",
+            "command"        : "make dev",
+            "problemMatcher" : []
+        },
+        {
+            "label"          : "git: checkout .vscode",
+            "type"           : "shell",
+            "command"        : "git checkout .vscode/settings.json",
+            "problemMatcher" : []
+        },
+        {
+            "type"           : "cmake",
+            "label"          : "cmake: build",
+            "command"        : "build",
+            "targets"        : ["all"],
+            "preset"         : "${command:cmake.activeBuildPresetName}",
+            "group"          : "build",
+            "problemMatcher" : [],
+            "promptOnClose"  : false
+        },
+        {
+            "label"          : "openocd: debug",
+            "type"           : "shell",
+            "group"          : {"kind": "build", "isDefault": true},
+            "dependsOn"      : "CMake: build",
+            "command"        : "openocd -f ${workspaceFolder}/hw/${command:cmake.activeConfigurePresetName}/${command:cmake.activeConfigurePresetName}.ocd -c \"program ${command:cmake.launchTargetPath} verify reset\"",
+            "problemMatcher" : [],
+            "presentation"   : {"showReuseMessage": false, "focus": false, "reveal": "silent", "close": true}
+        },
+    ]
+}
+"""
+    )
 
 let launch () = //
 
