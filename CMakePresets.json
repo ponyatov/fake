@@ -7,6 +7,11 @@
             "targets"         : ["all","install"]
         },
         {
+            "name"            :  "pillF103",
+            "configurePreset" :  "pillF103",
+            "targets"         : ["all","install"]
+        },
+        {
             "name"            :  "f429disco",
             "configurePreset" :  "f429disco",
             "targets"         : ["all","install"]
@@ -50,6 +55,12 @@
             "cacheVariables"  : {"ARCH":"cortexM0"}
         },
         {
+            "name"            :  "cortexM3",
+            "inherits"        :  "cortexM",
+            "hidden"          :   true,
+            "cacheVariables"  : {"ARCH":"cortexM3"}
+        },
+        {
             "name"            :  "cortexM4",
             "inherits"        :  "cortexM",
             "hidden"          :   true,
@@ -72,6 +83,11 @@
             "name"            : "pillF030",
             "inherits"        : "cortexM0",
             "cacheVariables"  : {"HW":"pillF030","CPU":"stm32f030f4p","SERIES":"STM32F0"}
+        },
+        {
+            "name"            : "pillF103",
+            "inherits"        : "cortexM3",
+            "cacheVariables"  : {"HW":"pillF103","CPU":"stm32f103c8t","SERIES":"STM32F3"}
         },
         {
             "name"            : "f429disco",

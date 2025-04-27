@@ -475,9 +475,8 @@ include_directories(${INC})
 "
     )
 
-let _hw_cortex = [ "pillF030"; "f429disco" ]
+let _hw_cortex = [ "pillF030"; "pillF103"; "f429disco" ]
 let _hw = _hw_cortex @ [ "esp8266"; "pc" ]
-
 
 let cmake () = //
 
@@ -561,6 +560,7 @@ install(TARGETS ${CMAKE_PROJECT_NAME}
               for hw, inher, vars in
                   [ //
                     ("pillF030", "cortexM0", """{"HW":"pillF030","CPU":"stm32f030f4p","SERIES":"STM32F0"}""")
+                    ("pillF103", "cortexM3", """{"HW":"pillF103","CPU":"stm32f103c8t","SERIES":"STM32F3"}""")
                     ("f429disco", "cortexM4", """{"HW":"f429disco","CPU":"stm32f429zit","SERIES":"STM32F4"}""")
                     ("esp8266", "xtensa", """{"HW":"esp8266","CPU":"lx106"}""")
                     ("linux", "pc", """{"OS":"linux"}""") ] ->  //
@@ -599,6 +599,12 @@ install(TARGETS ${CMAKE_PROJECT_NAME}
             "inherits"        :  "cortexM",
             "hidden"          :   true,
             "cacheVariables"  : {"ARCH":"cortexM0"}
+        },
+        {
+            "name"            :  "cortexM3",
+            "inherits"        :  "cortexM",
+            "hidden"          :   true,
+            "cacheVariables"  : {"ARCH":"cortexM3"}
         },
         {
             "name"            :  "cortexM4",
