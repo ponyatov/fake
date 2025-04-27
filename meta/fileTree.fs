@@ -449,6 +449,9 @@ install(TARGETS ${CMAKE_PROJECT_NAME}
     )
 
 
+let _hw_cortex = [ "f429disco"; "pillF030" ]
+let _hw = _hw_cortex @ [ "pc"; "esp8266" ]
+
 let _cross m g =
     mkdir $"{g}/{m}"
 
@@ -457,8 +460,11 @@ let _cross m g =
         touch $"{g}/{m}/{m}.cmake"
 
     if g = "hw" then
-        touch $"{g}/{m}/{m}.gdb"
-        touch $"{g}/{m}/{m}.ocd"
+        touch $"hw/{m}/{m}.gdb"
+        touch $"hw/{m}/{m}.ocd"
+
+        if List.contains m _hw_cortex then
+            touch $"hw/{m}/patch.mk"
 
     mkdir $"{g}/{m}/inc"
     mkdir $"{g}/{m}/src"
@@ -480,14 +486,13 @@ let _cross m g =
 
 
 let hw () = //
-    for hw in [ "pc"; "f429disco"; "esp8266"; "pillF030" ] do
+    for hw in _hw do
         _cross hw "hw"
 
 let cpu () = //
 
     for cpu in [ "i5"; "stm32f429zi"; "stm32f030f4"; "lx106" ] do
         _cross cpu "cpu"
-
 
 let arch () = //
 
