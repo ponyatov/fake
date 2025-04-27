@@ -14,5 +14,5 @@ void arg(int argc, char *argv) {
 }
 
 void loop(void) {  //
-    printf("hello world!\n");
+    arg(0, (char *)"hello world!");
 }

@@ -227,10 +227,10 @@ add_link_options(
 )
 
 if(CMAKE_BUILD_TYPE MATCHES Debug)
-    add_compile_options(-O0 -g3)
+    add_compile_options(-g3)
 endif()
 if(CMAKE_BUILD_TYPE MATCHES Release)
-    add_compile_options(-Os -g0)
+    add_compile_options(-g0)
 endif()
 
 set(CMAKE_EXECUTABLE_SUFFIX_ASM ${CMAKE_EXECUTABLE_SUFFIX})
@@ -390,7 +390,7 @@ void arg(int argc, char *argv) {
 }
 
 void loop(void) {  //
-    printf(\"hello world!\\n\");
+    arg(0, (char *)\"hello world!\");
 }
 "
     )
@@ -696,6 +696,10 @@ let stm32f030f4p () = //
         "\
 add_compile_definitions(
     STM32F030x6
+)
+
+add_compile_options(
+    -Os
 )
 "
     )
