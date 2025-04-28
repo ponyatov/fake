@@ -998,8 +998,8 @@ let files () =
 
 [<EntryPoint>]
 let main (args: string[]) =
-    dirs ()
-    files ()
-    src ()
-    linux ()
+    // dirs ()
+    // files ()
+    // src ()
+    // linux ()
     0
