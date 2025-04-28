@@ -6,6 +6,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <Compile Include="meta/fileTreeLib.fs" />
         <Compile Include="meta/fileTree.fs" />
     </ItemGroup>
 

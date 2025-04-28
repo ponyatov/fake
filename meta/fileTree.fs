@@ -1,21 +1,9 @@
 // build project file tree
 
+open fileTreeLib
 open System
 open System.IO
 open System.Text.RegularExpressions
-
-// create empty file
-let touch (name: string) = //
-    if not (File.Exists name) then
-        File.Create(name) |> ignore
-
-// create empty dir with .gitignore marker
-let mkdir (name: string) =
-    Directory.CreateDirectory(name) |> ignore
-    touch ($"{name}/.gitignore")
-
-let write (name: string, text: string) = //
-    File.WriteAllText(name, text)
 
 // generic C/C++ project
 
@@ -770,7 +758,7 @@ add_compile_options(
 )
 
 add_compile_definitions(
-    USE_HAL_DRIVER
+    USE_HAL_DRIVER USE_FULL_LL_DRIVER
 )
 
 add_link_options(
