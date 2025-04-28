@@ -7,6 +7,7 @@ add_library(stm32cubemx INTERFACE)
 enable_language(C ASM)
 
 target_compile_definitions(stm32cubemx INTERFACE 
+	USE_FULL_LL_DRIVER 
 	USE_HAL_DRIVER 
 	STM32F429xx
     $<$<CONFIG:Debug>:DEBUG>
@@ -26,7 +27,11 @@ target_sources(stm32cubemx INTERFACE
     ../../Core/Src/fmc.c
     ../../Core/Src/stm32f4xx_it.c
     ../../Core/Src/stm32f4xx_hal_msp.c
+    ../../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_ll_gpio.c
     ../../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_ll_fmc.c
+    ../../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_ll_rcc.c
+    ../../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_ll_utils.c
+    ../../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_ll_exti.c
     ../../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc.c
     ../../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc_ex.c
     ../../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash.c
