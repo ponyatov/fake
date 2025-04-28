@@ -10,4 +10,4 @@ all:
 	$(MAKE) -f $(MAKEFILE_LIST) $(FIXES)
 %.fix: %
 	patch -u $< $<.patch && touch $@
-	rm Core/Src/syscalls.c
+# rm Core/Src/syscalls.c
