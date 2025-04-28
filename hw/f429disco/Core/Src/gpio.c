@@ -59,6 +59,8 @@
      PC7   ------> LTDC_G6
      PC9   ------> I2C3_SDA
      PA8   ------> I2C3_SCL
+     PA9   ------> USART1_TX
+     PA10   ------> USART1_RX
      PA11   ------> LTDC_R4
      PA12   ------> LTDC_R5
      PC10   ------> LTDC_R2
@@ -229,6 +231,14 @@ void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   GPIO_InitStruct.Alternate = GPIO_AF4_I2C3;
   HAL_GPIO_Init(I2C3_SCL_GPIO_Port, &GPIO_InitStruct);
+
+  /*Configure GPIO pins : PAPin PAPin */
+  GPIO_InitStruct.Pin = STLINK_RX_Pin|STLINK_TX_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
+  GPIO_InitStruct.Alternate = GPIO_AF7_USART1;
+  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
   /*Configure GPIO pins : PDPin PDPin */
   GPIO_InitStruct.Pin = G7_Pin|B2_Pin;
