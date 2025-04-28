@@ -1,3 +1,0 @@
-// sample
-printfn "Hello F#";;
-

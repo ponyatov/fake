@@ -1,5 +1,6 @@
 // build project file tree
 
+open cross
 open fileTreeLib
 open System
 open System.IO
@@ -463,8 +464,6 @@ include_directories(${INC})
 "
     )
 
-let _hw_cortex = [ "pillF030"; "pillF103"; "f429disco" ]
-let _hw = _hw_cortex @ [ "esp8266"; "pc" ]
 
 let cmake () = //
 
@@ -619,44 +618,6 @@ install(TARGETS ${CMAKE_PROJECT_NAME}
 """
     )
 
-
-let _cross m g =
-    mkdir $"{g}/{m}"
-
-    if g <> "." then
-        touch $"{g}/{m}/{m}.mk"
-        touch $"{g}/{m}/{m}.cmake"
-
-    if g = "hw" then
-        touch $"hw/{m}/{m}.gdb"
-        touch $"hw/{m}/{m}.ocd"
-
-        if List.contains m _hw_cortex then
-            File.CreateSymbolicLink( //
-                $"hw/{m}/patch.mk",
-                "../../mk/patch.mk"
-            )
-            |> ignore
-
-    mkdir $"{g}/{m}/inc"
-    mkdir $"{g}/{m}/src"
-
-    let d =
-        match g with
-        | "." -> "cross"
-        | _ -> g
-
-    write ( //
-        $"{g}/{m}/inc/{m}.hpp",
-        $"/// @defgroup {m} {m}\n/// @ingroup {d}\n"
-    )
-
-    write ( //
-        $"{g}/{m}/src/{m}.cpp",
-        $"#include \"{m}.hpp\"\n"
-    )
-
-
 let pillF030 () = //
     write (
         "hw/pillF030/pillF030.ocd",
@@ -739,7 +700,7 @@ add_compile_options(
 
 
 let cpu () = //
-    for cpu in [ "i5"; "stm32f429zit"; "stm32f030f4p"; "stm32f103c8t"; "lx106" ] do
+    for cpu in _cpu do
         _cross cpu "cpu"
 
     stm32f429zit ()
@@ -835,7 +796,7 @@ let xtensa () = //
 
 let arch () = //
 
-    for arch in [ "x86_64"; "cortexM"; "cortexM0"; "cortexM3"; "cortexM4"; "xtensa" ] do
+    for arch in _arch do
         _cross arch "arch"
 
         if Regex.IsMatch(arch, "cortexM[0-9]") then
