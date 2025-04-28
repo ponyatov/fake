@@ -1,5 +1,5 @@
---- STM32F429ZITx_FLASH.ld	2025-04-28 15:09:21.059616762 +0400
-+++ STM32F429ZITx_FLASH.ld.fix	2025-04-28 15:09:21.059616762 +0400
+--- STM32F429ZITx_FLASH.ld	2025-04-28 15:17:54.455596596 +0400
++++ STM32F429ZITx_FLASH.ld.fix	2025-04-28 15:17:54.455596596 +0400
 @@ -1,69 +1,28 @@
  /*
  ******************************************************************************
@@ -115,7 +115,7 @@
 +  _sixram = LOADADDR(.xram);
 +
 +  /* External RAM section */
-+  .xram :
++  .xram (NOLOAD) :
 +  {
 +    . = ALIGN(0x10);
 +    _sxram = .;       /* create a global symbol at xram start */

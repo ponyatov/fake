@@ -154,7 +154,7 @@ SECTIONS
   _sixram = LOADADDR(.xram);
 
   /* External RAM section */
-  .xram :
+  .xram (NOLOAD) :
   {
     . = ALIGN(0x10);
     _sxram = .;       /* create a global symbol at xram start */
