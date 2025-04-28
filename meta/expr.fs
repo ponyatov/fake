@@ -18,3 +18,8 @@ let rec eval (e: expr) : int =
 eval c17
 eval m34
 eval pm7910
+c17 // 17
+let x = Var "X" // X
+let e3a = Prim("+", CstI 3, Var "a") // 3+a
+let b9a = Prim("+", Prim("*", Var "b", CstI 9), Var "a") // b*9+a
+let env = [ ("a", 3); ("c", 78); ("baf", 666); ("b", 111) ]
