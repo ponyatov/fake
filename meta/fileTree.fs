@@ -709,7 +709,17 @@ let hw () = //
     pillF103 ()
 
 let stm32f429zit () = //
-    write ("cpu/stm32f429zit/stm32f429zit.cmake", "")
+    write (
+        "cpu/stm32f429zit/stm32f429zit.cmake",
+        "\
+add_compile_definitions(
+    STM32F429xx
+)
+
+add_compile_options(
+)
+"
+    )
 
 let stm32f030f4p () = //
     write (
