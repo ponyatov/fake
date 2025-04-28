@@ -38,6 +38,9 @@
         * Output
         * EVENT_OUT
         * EXTI
+     PF7   ------> SPI5_SCK
+     PF8   ------> SPI5_MISO
+     PF9   ------> SPI5_MOSI
      PF10   ------> LTDC_DE
      PA3   ------> LTDC_B5
      PA4   ------> LTDC_VSYNC
@@ -93,6 +96,14 @@ void MX_GPIO_Init(void)
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOG, LD3_Pin|LD4_Pin, GPIO_PIN_RESET);
+
+  /*Configure GPIO pins : PFPin PFPin PFPin */
+  GPIO_InitStruct.Pin = SPI5_SCK_Pin|SPI5_MISO_Pin|SPI5_MOSI_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  GPIO_InitStruct.Alternate = GPIO_AF5_SPI5;
+  HAL_GPIO_Init(GPIOF, &GPIO_InitStruct);
 
   /*Configure GPIO pin : PtPin */
   GPIO_InitStruct.Pin = ENABLE_Pin;
