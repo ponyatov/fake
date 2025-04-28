@@ -6,16 +6,12 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <OutputType>Exe</OutputType>
-        <TargetFramework>net9.0</TargetFramework>
-        <!-- FROM HERE.... -->
         <PublishSingleFile>true</PublishSingleFile>
         <SelfContained>true</SelfContained>
         <RuntimeIdentifier>linux-x64</RuntimeIdentifier>
         <PublishReadyToRun>true</PublishReadyToRun>
         <PublishTrimmed>true</PublishTrimmed>
         <SatelliteResourceLanguages>en-US</SatelliteResourceLanguages>
-        <!-- TO HERE -->
     </PropertyGroup>
 
     <PropertyGroup>
