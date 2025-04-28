@@ -22,6 +22,7 @@ MEMORY
 FLASH  (rx)      : ORIGIN =  0x8000000, LENGTH = 2048K
 RAM    (xrw)     : ORIGIN = 0x20000000, LENGTH =  192K
 CCMRAM (xrw)     : ORIGIN = 0x10000000, LENGTH =   64K
+XRAM   (xrw)     : ORIGIN = 0x60000000, LENGTH =    8M
 }
 
 /* Define output sections */
@@ -149,6 +150,20 @@ SECTIONS
     . = . + _Min_Stack_Size;
     . = ALIGN(8);
   } >RAM
+
+  _sixram = LOADADDR(.xram);
+
+  /* External RAM section */
+  .xram :
+  {
+    . = ALIGN(0x10);
+    _sxram = .;       /* create a global symbol at xram start */
+    *(.xram)
+    *(.xram*)
+
+    . = ALIGN(0x10);
+    _exram = .;       /* create a global symbol at xram end */
+  } >XRAM AT> FLASH
 
   /* Remove information from the standard libraries */
   /DISCARD/ :
