@@ -1,8 +1,5 @@
 module expr
 
-type Bool = 
-    | true | false
-
 type expr =
     | CstI of int
     | Prim of string * expr * expr
@@ -30,11 +27,11 @@ let rec eval (e: expr) (env: env) : int =
     match e with
     | CstI i -> i
 
-    | Var v -> lookup env v         // existing variable
+    | Var v -> lookup env v // existing variable
     | Let(v, rhs, body) ->
-        let value =  eval rhs   env // eval binding value
-        let envx  = (v, value)::env // extend environment
-            in eval body envx       // evaluate in nested env
+        let value = eval rhs env // eval binding value
+        let envx = (v, value) :: env in // extend environment
+        eval body envx // evaluate in nested env
 
     | Prim("+", e1, e2) -> eval e1 env + eval e2 env
     | Prim("*", e1, e2) -> eval e1 env * eval e2 env
@@ -53,3 +50,16 @@ let e3a = Prim("+", CstI 3, Var "a") // 3+a
 let b9a = Prim("+", Prim("*", Var "b", CstI 9), Var "a") // b*9+a
 // eval e3a glob // 6
 // eval b9a glob // 1002
+
+let rec closedin (e: expr) (vars: string list) : bool =
+    match e with
+    | CstI i -> true // primitives always closed
+    | Var v -> List.contains v vars // var name in list?
+    | Let(v, rhs, body) -> // nested scope check:
+        let varx = v :: vars in // extend scope env
+
+        closedin rhs varx //     rhc is closed
+        && closedin body varx // and body is closed
+    | Prim(_, e1, e2) -> // any binop expression
+        closedin e1 vars // \ both subtrees
+        && closedin e2 vars // / are closed
