@@ -49,6 +49,10 @@
      PB1   ------> LTDC_R6
      PB10   ------> LTDC_G4
      PB11   ------> LTDC_G5
+     PB12   ------> USB_OTG_HS_ID
+     PB13   ------> USB_OTG_HS_VBUS
+     PB14   ------> USB_OTG_HS_DM
+     PB15   ------> USB_OTG_HS_DP
      PG6   ------> LTDC_R7
      PG7   ------> LTDC_CLK
      PC6   ------> LTDC_HSYNC
@@ -163,6 +167,21 @@ void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = LL_GPIO_PULL_NO;
   GPIO_InitStruct.Alternate = LL_GPIO_AF_14;
   LL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+
+  /**/
+  GPIO_InitStruct.Pin = OTG_HS_ID_Pin|OTG_HS_DM_Pin|OTG_HS_DP_Pin;
+  GPIO_InitStruct.Mode = LL_GPIO_MODE_ALTERNATE;
+  GPIO_InitStruct.Speed = LL_GPIO_SPEED_FREQ_LOW;
+  GPIO_InitStruct.OutputType = LL_GPIO_OUTPUT_PUSHPULL;
+  GPIO_InitStruct.Pull = LL_GPIO_PULL_NO;
+  GPIO_InitStruct.Alternate = LL_GPIO_AF_12;
+  LL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+
+  /**/
+  GPIO_InitStruct.Pin = VBUS_HS_Pin;
+  GPIO_InitStruct.Mode = LL_GPIO_MODE_INPUT;
+  GPIO_InitStruct.Pull = LL_GPIO_PULL_NO;
+  LL_GPIO_Init(VBUS_HS_GPIO_Port, &GPIO_InitStruct);
 
   /**/
   GPIO_InitStruct.Pin = TE_Pin;
