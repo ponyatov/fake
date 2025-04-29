@@ -1,9 +1,13 @@
 module expr
 
+type Bool = 
+    | true | false
+
 type expr =
     | CstI of int
     | Prim of string * expr * expr
     | Var of string
+    | Let of string * expr * expr
 
 let c17 = CstI 17
 let m34 = Prim("-", CstI 3, CstI 4)
@@ -25,7 +29,13 @@ let rec lookup (env: env) (name: string) =
 let rec eval (e: expr) (env: env) : int =
     match e with
     | CstI i -> i
-    | Var v -> lookup env v
+
+    | Var v -> lookup env v         // existing variable
+    | Let(v, rhs, body) ->
+        let value =  eval rhs   env // eval binding value
+        let envx  = (v, value)::env // extend environment
+            in eval body envx       // evaluate in nested env
+
     | Prim("+", e1, e2) -> eval e1 env + eval e2 env
     | Prim("*", e1, e2) -> eval e1 env * eval e2 env
     | Prim("-", e1, e2) -> eval e1 env - eval e2 env
