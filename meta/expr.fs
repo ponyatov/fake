@@ -51,10 +51,11 @@ let b9a = Prim("+", Prim("*", Var "b", CstI 9), Var "a") // b*9+a
 // eval e3a glob // 6
 // eval b9a glob // 1002
 
+// expression closed in variables set
 let rec closedin (e: expr) (vars: string list) : bool =
     match e with
     | CstI i -> true // primitives always closed
-    | Var v -> List.contains v vars // var name in list?
+    | Var v -> List.contains v vars // var name must be in list
     | Let(v, rhs, body) -> // nested scope check:
         let varx = v :: vars in // extend scope env
 
@@ -63,3 +64,20 @@ let rec closedin (e: expr) (vars: string list) : bool =
     | Prim(_, e1, e2) -> // any binop expression
         closedin e1 vars // \ both subtrees
         && closedin e2 vars // / are closed
+
+// expression closed if closed in empty var set []
+let closed (e: expr) = closedin e []
+
+type texpr = (* target expressions *)
+    | TCstI of int (* constant index in runtime *)
+    | TVar of int (* index into runtime environment *)
+    | TLet of texpr * texpr (* erhs and ebody *)
+    | TPrim of string * texpr * texpr
+
+
+/// sestoft#2.4 deBruijn indexing
+let rec tcomp (e: expr) (vars: string list) : texpr = //
+    TCstI 0
+
+let teval (te: texpr) (addrs: int list) : int = //
+    0
