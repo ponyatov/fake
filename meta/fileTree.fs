@@ -648,6 +648,21 @@ gdb_flash_program enable
 "
     )
 
+let f429disco () = //
+    write (
+        "hw/f429disco/f429disco.ocd",
+        "\
+gdb_port 12345
+source [find interface/stlink-v2.cfg]
+adapter   speed  1800
+transport select hla_swd
+source [find target/stm32f4x.cfg]
+
+gdb_memory_map    enable
+gdb_flash_program enable
+"
+    )
+
 let hw () = //
     for hw in _hw do
         _cross hw "hw"
@@ -656,6 +671,7 @@ let hw () = //
 
     pillF030 ()
     pillF103 ()
+    f429disco ()
 
 let stm32f429zit () = //
     write (
