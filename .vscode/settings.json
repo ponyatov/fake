@@ -98,6 +98,7 @@
         "editor.formatOnSave"    :  true
         // "diffEditor.ignoreTrimWhitespace": false
     },
+    "FSharp.FSIExtraInteractiveParameters": [],
 
     // MinGW/MSYS2
     "terminal.integrated.defaultProfile.windows": "UCRT64",

@@ -827,8 +827,7 @@ QEMU    = qemu-system-arm
 
 
 let os () = //
-
-    for os in [ "bare"; "linux"; "win32"; "rtos" ] do
+    for os in _os do
         _cross os "os"
 
 let cross () = //
