@@ -35,10 +35,9 @@ let rec eval (e: expr) (env: env) : int =
 // eval m34 // -1
 // eval pm7910 // 73
 
-let x = Var "x"
 let baf = Var "baf"
-// eval x // not found
-// eval baf /// 666
+// eval baf empty // not found
+// eval baf glob  // 666
 
 let e3a = Prim("+", CstI 3, Var "a") // 3+a
 let b9a = Prim("+", Prim("*", Var "b", CstI 9), Var "a") // b*9+a
