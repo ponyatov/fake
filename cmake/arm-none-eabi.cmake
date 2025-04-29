@@ -26,9 +26,10 @@ set(CMAKE_TRY_COMPILE_TARGET_TYPE STATIC_LIBRARY)
 add_link_options(
     -mthumb
     -T ${CMAKE_SOURCE_DIR}/hw/${HW}/${CPU_}x_FLASH.ld
-    # --specs=nano.specs -lnosys
-    --specs=rdimon.specs
-    -Wl,--start-group -lc -lm  -lrdimon -Wl,--end-group
+    --specs=nano.specs
+    -Wl,--start-group -lc -lm  -lnosys  -Wl,--end-group
+    # --specs=rdimon.specs
+    # -Wl,--start-group -lc -lm  -lrdimon -Wl,--end-group
     -Wl,--start-group -lstdc++ -lsupc++ -Wl,--end-group
     -Wl,-Map=${CMAKE_PROJECT_NAME}.map -Wl,--gc-sections
 )

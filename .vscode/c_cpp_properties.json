@@ -16,6 +16,7 @@
                 "${appInclude}"
             ],
             "defines": [
+                "USE_HAL_DRIVER", "USE_FULL_LL_DRIVER",
                 "JSVAR_XMEM"
             ]
         }
