@@ -14,7 +14,7 @@
         "*.ioc": "properties", "*.config": "properties",
         "*.s": "arm", "*.s.fix": "arm", "*.S": "arm",
         "requirements.*": "properties",
-        "*.*proj": "xml",
+        "*.*proj": "xml", ".fsi": "fsharp",
     },
 
     // editor
@@ -98,7 +98,10 @@
         "editor.formatOnSave"    :  true
         // "diffEditor.ignoreTrimWhitespace": false
     },
-    "FSharp.FSIExtraInteractiveParameters": [],
+    "FSharp.FSIExtraInteractiveParameters": [
+        "--lib:${workspaceFolder}/meta",
+        "--use:${workspaceFolder}/.fsi",
+    ],
 
     // MinGW/MSYS2
     "terminal.integrated.defaultProfile.windows": "UCRT64",
