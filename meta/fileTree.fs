@@ -653,7 +653,7 @@ let f429disco () = //
         "hw/f429disco/f429disco.ocd",
         "\
 gdb_port 12345
-source [find interface/stlink-v2.cfg]
+source [find interface/stlink.cfg]
 adapter   speed  1800
 transport select hla_swd
 source [find target/stm32f4x.cfg]
