@@ -22,7 +22,19 @@ and VarDecl =
 and FunDecl = //
     TypeSpec * Id * Params * CompoundStatement
 
-and Id = string
+and Id = //
+    string
+
+and IdRef = //
+    { Id: string }
 
 and Params = //
     VarDecl list
+
+and Statement =
+    | ExpressionStatement of ExpressionStatement
+    | CompoundStatement of CompoundStatement
+    | IfStatement of IfStatement
+    | WhileStatement of WhileStatement
+    | ReturnStatement of Expression option
+    | BreakStatement
