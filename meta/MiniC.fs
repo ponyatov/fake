@@ -20,7 +20,7 @@ and VarDecl =
     | ArrayDecl of TypeSpec * Id
 
 and FunDecl = //
-    TypeSpec * Id * Params * CompoundStatement
+    TypeSpec * Id * Params * Compound
 
 and Id = //
     string
@@ -32,9 +32,10 @@ and Params = //
     VarDecl list
 
 and Statement =
-    | ExpressionStatement of ExpressionStatement
-    | CompoundStatement of CompoundStatement
-    | IfStatement of IfStatement
-    | WhileStatement of WhileStatement
-    | ReturnStatement of Expression option
-    | BreakStatement
+    | Expression of Expression
+    | Compound of Compound
+    | If of If
+    | While of While
+    | Return of Expression option
+    | Break
+
