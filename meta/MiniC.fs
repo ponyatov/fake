@@ -39,3 +39,9 @@ and Statement =
     | Return of Expression option
     | Break
 
+and Expression =
+    | Expression of Expression
+    | Nop
+
+and Compound = //
+    Locals * Statement list
