@@ -5,14 +5,14 @@
         <TargetFramework>net9.0</TargetFramework>
     </PropertyGroup>
 
-    <PropertyGroup>
+    <!-- <PropertyGroup>
         <PublishSingleFile>true</PublishSingleFile>
         <SelfContained>true</SelfContained>
         <RuntimeIdentifier>linux-x64</RuntimeIdentifier>
         <PublishReadyToRun>true</PublishReadyToRun>
         <PublishTrimmed>true</PublishTrimmed>
         <SatelliteResourceLanguages>en-US</SatelliteResourceLanguages>
-    </PropertyGroup>
+    </PropertyGroup> -->
 
     <PropertyGroup>
         <PackageId>fakeLanguage</PackageId>
@@ -31,13 +31,24 @@
         <ProjectReference Include="compiler/compiler.fsproj" />
     </ItemGroup>
 
+    <PropertyGroup>
+        <FsLexToolExe>fslex.dll</FsLexToolExe>
+        <FsYaccToolExe>fsyacc.dll</FsYaccToolExe>
+        <FsLexOutputFolder>$(IntermediateOutputPath)tmp/</FsLexOutputFolder>
+        <FsYaccOutputFolder>$(IntermediateOutputPath)tmp/</FsYaccOutputFolder>
+    </PropertyGroup>
+
     <ItemGroup>
-        <FsLex Include="Lexer.fsl">
-            <OtherFlags>--module Lexer --unicode</OtherFlags>
+        <PackageReference Include="FsLexYacc" Version="11.3.0" />
+        <FsLex Include="meta/Lexer.fsl">
+            <OtherFlags>--module Lexer --unicode </OtherFlags>
         </FsLex>
-        <FsYacc Include="Parser.fsy">
+        <FsYacc Include="meta/Parser.fsy">
             <OtherFlags>--module Parser</OtherFlags>
         </FsYacc>
+        <Compile Include="tmp/Parser.fsi" />
+        <Compile Include="tmp/Parser.fs" />
+        <Compile Include="tmp/Lexer.fs" />
     </ItemGroup>
 
 </Project>
