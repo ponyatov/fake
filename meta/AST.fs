@@ -1,6 +1,6 @@
 // http://timjones.io/blog/archive/2014/04/13/writing-a-minic-to-msil-compiler-in-fsharp-part-0-introduction
 
-module miniC
+module AST
 
 // http://timjones.io/blog/archive/2014/04/20/writing-a-minic-to-msil-compiler-in-fsharp-part-1-defining-the-abstract-syntax-tree
 
@@ -47,7 +47,3 @@ and Literal = //
     | BoolLiteral of bool
     | IntLiteral of int
     | FloatLiteral of float
-
-open Piglet.Parser
-
-let configurator = ParserFactory.Configure<obj>()
