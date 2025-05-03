@@ -36,3 +36,12 @@ and BinaryOperator = //
     | Subtract
     | Multiply
     | Divide
+
+and UnaryOperator = //
+    | Not
+    | Negate
+
+and Literal = //
+    | BoolLiteral of bool
+    | IntLiteral of int
+    | FloatLiteral of float
