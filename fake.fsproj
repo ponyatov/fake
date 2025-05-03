@@ -43,7 +43,7 @@
     <ItemGroup>
         <PackageReference Include="FsLexYacc" Version="11.3.0" />
         <FsLex Include="meta/Lexer.fsl">
-            <OtherFlags>--module Lexer --unicode </OtherFlags>
+            <OtherFlags>--module Lexer --unicode</OtherFlags>
         </FsLex>
         <FsYacc Include="meta/Parser.fsy">
             <OtherFlags>--module Parser</OtherFlags>

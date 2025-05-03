@@ -50,10 +50,10 @@
         // F#
         "ionide.ionide-fsharp",
         "redhat.vscode-xml",
+        "mnxn.fsharp-fsl-fsy",
         // "paolodellepiane.fantomas-fmt",
         // "tintoy.msbuild-project-tools",
         // "ms-dotnettools.csdevkit",
-        // "mnxn.fsharp-fsl-fsy",
         // LLVM
         "rreverser.llvm",
         "revng.llvm-ir",
