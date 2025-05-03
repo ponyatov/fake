@@ -22,6 +22,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <Compile Include="meta/MiniC.fs" />
         <Compile Include="lib/hello.fs" />
         <Compile Include="meta/cross.fs" />
         <Compile Include="meta/fileTreeLib.fs" />
