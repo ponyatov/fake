@@ -1,0 +1,15 @@
+%{
+    open AST
+%}
+
+%token <int>    INT
+%token <string> OP
+%token EOF LPAREN RPAREN
+
+%start syntax
+%type <int> syntax
+
+%%
+syntax: expr EOF {$1}
+expr  : INT      {$1}
+      | LPAREN expr RPAREN {$2}

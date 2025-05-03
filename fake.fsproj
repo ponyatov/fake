@@ -26,7 +26,6 @@
     </PropertyGroup>
 
     <!-- <ItemGroup>
-        <Compile Include="meta/AST.fs" />
         <Compile Include="lib/hello.fs" />
         <Compile Include="meta/cross.fs" />
         <Compile Include="meta/fileTreeLib.fs" />
@@ -48,9 +47,11 @@
         <FsYacc Include="meta/Parser.fsy">
             <OtherFlags>--module Parser</OtherFlags>
         </FsYacc>
+        <Compile Include="meta/AST.fs" />
         <Compile Include="tmp/Parser.fsi" />
         <Compile Include="tmp/Parser.fs" />
         <Compile Include="tmp/Lexer.fs" />
+        <Compile Include="meta/ParsEval.fs" />
     </ItemGroup>
 
 </Project>
