@@ -13,6 +13,10 @@
         <PublishTrimmed>true</PublishTrimmed>
         <SatelliteResourceLanguages>en-US</SatelliteResourceLanguages>
     </PropertyGroup> -->
+    <!-- <ItemGroup>
+        <EmbeddedResource Include="lib/fake.ini" />
+        <ProjectReference Include="compiler/compiler.fsproj" />
+    </ItemGroup> -->
 
     <PropertyGroup>
         <PackageId>fakeLanguage</PackageId>
@@ -21,15 +25,13 @@
         <Company>Horizon LLC</Company>
     </PropertyGroup>
 
-    <ItemGroup>
+    <!-- <ItemGroup>
         <Compile Include="meta/AST.fs" />
         <Compile Include="lib/hello.fs" />
         <Compile Include="meta/cross.fs" />
         <Compile Include="meta/fileTreeLib.fs" />
         <Compile Include="meta/fileTree.fs" />
-        <EmbeddedResource Include="lib/fake.ini" />
-        <ProjectReference Include="compiler/compiler.fsproj" />
-    </ItemGroup>
+    </ItemGroup> -->
 
     <PropertyGroup>
         <FsLexToolExe>fslex.dll</FsLexToolExe>
