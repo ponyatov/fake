@@ -7,9 +7,17 @@
 %token EOF LPAREN RPAREN
 
 %start syntax
-%type <int> syntax
+%type <AST.Expr> syntax
 
 %%
-syntax: expr EOF {$1}
-expr  : INT      {$1}
-      | LPAREN expr RPAREN {$2}
+syntax: expr EOF            {$1}
+expr  : INT                 {IntLiteral $1}
+      | LPAREN expr RPAREN  {$2}
+      | expr OP expr    {
+        match $2 with
+        | "+" -> BinExpr ($1 , Add, $3)
+        | "-" -> BinExpr ($1 , Sub, $3)
+        | "*" -> BinExpr ($1 , Mul, $3)
+        | "/" -> BinExpr ($1 , Div, $3)
+        | _ -> failwith $2
+      }

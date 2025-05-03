@@ -5,14 +5,13 @@ open Parser
 let lexeme lexbuf = LexBuffer<_>.LexemeString lexbuf
 }
 
-let sign       = ['+' '-']
 let digit      = ['0'-'9']
 let operator   = ['+' '-' '*' '/']
-let whitespace = [' ' '\t']
+let whitespace = [' ' '\t' '\r' '\n']
 
 rule tokenize = parse
 | whitespace    { tokenize lexbuf }
-| sign?digit+   { INT ( System.Int32.Parse( lexeme lexbuf ) ) }
+| digit+        { INT ( System.Int32.Parse( lexeme lexbuf ) ) }
 | operator      { OP  ( lexeme lexbuf ) }
 | '('           { LPAREN }
 | ')'           { RPAREN }

@@ -32,17 +32,28 @@ and IdentifierRef = //
 and Parameters = //
     VariableDeclaration list
 
-and Operator = //
-    | Equal
+and BinOp = //
     | Add
-    | Subtract
-    | Multiply
-    | Divide
+    | Sub
+    | Mul
+    | Div
+
+and Pfx = //
+    | Plus
+    | Minus
 
 and Literal = //
     | BoolLiteral of bool
     | IntLiteral of int
     | FloatLiteral of float
 
-and EOF = //
-    EOF
+and Expr = //
+    | Literal of Literal
+    | BinExpr of BinExpr
+    | PfxExpr of PfxExpr
+
+and BinExpr = //
+    Expr * BinOp * Expr
+
+and PfxExpr = //
+    Pfx * Expr
