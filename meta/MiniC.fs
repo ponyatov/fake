@@ -45,3 +45,7 @@ and Literal = //
     | BoolLiteral of bool
     | IntLiteral of int
     | FloatLiteral of float
+
+open Piglet.Parser
+
+let configurator = ParserFactory.Configure<obj>()
