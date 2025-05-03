@@ -3,45 +3,36 @@
 // http://timjones.io/blog/archive/2014/04/20/writing-a-minic-to-msil-compiler-in-fsharp-part-1-defining-the-abstract-syntax-tree
 
 type Program = //
-    Decl list
+    Declaration list
 
-and Decl =
-    | VarDecl of VarDecl
-    | FunDecl of FunDecl
+and Declaration = //
+    | VariableDeclaration of VariableDeclaration
+    | FunctionDeclaration of FunctionDeclaration
 
-and TypeSpec =
+and TypeSpec = //
     | Void
     | Bool
     | Int
     | Float
 
-and VarDecl =
-    | ScalarDecl of TypeSpec * Id
-    | ArrayDecl of TypeSpec * Id
+and VariableDeclaration = //
+    TypeSpec * Identifier
 
-and FunDecl = //
-    TypeSpec * Id * Params * Compound
+and FunctionDeclaration = //
+    TypeSpec * Identifier * Parameters * Parameters
 
-and Id = //
+and Identifier = //
     string
 
-and IdRef = //
-    { Id: string }
+and IdentifierRef = //
+    { Identifier: string }
 
-and Params = //
-    VarDecl list
+and Parameters = //
+    VariableDeclaration list
 
-and Statement =
-    | Expression of Expression
-    | Compound of Compound
-    | If of If
-    | While of While
-    | Return of Expression option
-    | Break
-
-and Expression =
-    | Expression of Expression
-    | Nop
-
-and Compound = //
-    Locals * Statement list
+and BinaryOperator = //
+    | Equal
+    | Add
+    | Subtract
+    | Multiply
+    | Divide
