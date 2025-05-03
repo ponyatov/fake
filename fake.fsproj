@@ -31,4 +31,10 @@
         <ProjectReference Include="compiler/compiler.fsproj" />
     </ItemGroup>
 
+    <ItemGroup>
+        <FsLex Include="Lexer.fsl">
+            <OtherFlags>--module Lexer --unicode</OtherFlags>
+        </FsLex>
+    </ItemGroup>
+
 </Project>
