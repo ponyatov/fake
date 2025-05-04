@@ -7,15 +7,19 @@ let lexeme lexbuf = LexBuffer<_>.LexemeString lexbuf
 
 let whitespace = [' ' '\t' '\r' '\n']
 let digit      = ['0'-'9']
+let alpha      = ['a'-'z' 'A'-'Z' '_'        ]
+let alnum      = ['a'-'z' 'A'-'Z' '_' '0'-'9']
 
 rule tokenize = parse
 | whitespace    { tokenize lexbuf }
 | digit+        { INT ( System.Int32.Parse( lexeme lexbuf ) ) }
+| alpha alnum*  { ID  ( lexeme lexbuf ) }
 
 | '+'           { ADD }
 | '-'           { SUB }
 | '*'           { MUL }
 | '/'           { DIV }
+| '='           { EQ  }
 
 | eof           { EOF }
 | _             { lexeme lexbuf |> sprintf "Parsing error: %s" |> failwith }

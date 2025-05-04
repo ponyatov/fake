@@ -6,16 +6,13 @@ module Torben.AST
 type AST = //
     Expr list
 
-and Literal = //
-    | Int of int
-    | Float of float
-    | Bool of bool
-
 and Expr = //
-    | Literal of Literal
+    | Int of int
     | Add of Expr * Expr
     | Sub of Expr * Expr
     | Mul of Expr * Expr
     | Div of Expr * Expr
     | Plus of Expr
     | Minus of Expr
+    | Var of string
+    | Set of string * Expr
