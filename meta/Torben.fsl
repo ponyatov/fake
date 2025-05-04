@@ -1,0 +1,14 @@
+// {
+// open FSharp.Text.Lexing
+// open TorbenParser
+
+// let lexeme lexbuf = LexBuffer<_>.LexemeString lexbuf
+// }
+
+let digit      = ['0'-'9']
+let operator   = ['+' '-' '*' '/']
+let whitespace = [' ' '\t' '\r' '\n']
+
+rule tokenize = parse
+| whitespace    { tokenize lexbuf }
+| _             { lexeme lexbuf |> sprintf "Parsing error: %s" |> failwith }

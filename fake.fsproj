@@ -41,17 +41,33 @@
 
     <ItemGroup>
         <PackageReference Include="FsLexYacc" Version="11.3.0" />
+    </ItemGroup>
+
+    <!-- <ItemGroup>
         <FsLex Include="meta/Lexer.fsl">
-            <OtherFlags>--module Lexer --unicode</OtherFlags>
+            <OtherFlags>module Lexer unicode</OtherFlags>
         </FsLex>
         <FsYacc Include="meta/Parser.fsy">
-            <OtherFlags>--module Parser</OtherFlags>
+            <OtherFlags>module Parser</OtherFlags>
         </FsYacc>
         <Compile Include="meta/AST.fs" />
         <Compile Include="tmp/Parser.fsi" />
         <Compile Include="tmp/Parser.fs" />
         <Compile Include="tmp/Lexer.fs" />
         <Compile Include="meta/ParsEval.fs" />
+    </ItemGroup> -->
+
+    <ItemGroup>
+        <FsLex Include="meta/Torben.fsl">
+            <OtherFlags>--module TorbenLexer --unicode -o tmp/TorbenLexer.fs</OtherFlags>
+        </FsLex>
+        <FsYacc Include="meta/Torben.fsy">
+            <OtherFlags>--module TorbenParser -o tmp/TorbenParser.fs</OtherFlags>
+        </FsYacc>
+        <Compile Include="meta/Torben.AST.fs" />
+        <Compile Include="tmp/TorbenParser.fsi" />
+        <Compile Include="tmp/TorbenLexer.fsi" />
+        <Compile Include="meta/Torben.fs" />
     </ItemGroup>
 
 </Project>

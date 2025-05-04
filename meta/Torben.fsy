@@ -1,0 +1,10 @@
+// %{
+// %}
+
+%token <int> INT
+
+%start syntax
+%type <unit> syntax
+
+%%
+syntax: INT {}
