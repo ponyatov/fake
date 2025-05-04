@@ -14,6 +14,10 @@
 syntax:             {      [  ] }
       | syntax expr { $1 @ [$2] }
 
-expr  : ADD expr    { Pfx     ( Add , $2 ) }
-      | SUB expr    { Pfx     ( Sub , $2 ) }
-      | INT         { Literal ( Int   $1 ) }
+expr  : INT             { Literal ( Int $1 ) }
+      | ADD expr        { Plus  $2 }
+      | SUB expr        { Minus $2 }
+      | expr ADD expr   { Add ( $1 , $3 ) }
+      | expr SUB expr   { Sub ( $1 , $3 ) }
+      | expr MUL expr   { Mul ( $1 , $3 ) }
+      | expr DIV expr   { Div ( $1 , $3 ) }

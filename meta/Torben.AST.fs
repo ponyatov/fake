@@ -13,11 +13,9 @@ and Literal = //
 
 and Expr = //
     | Literal of Literal
-    | Infix of Expr * Op * Expr
-    | Pfx of Op * Expr
-
-and Op = //
-    | Add
-    | Sub
-    | Mul
-    | Div
+    | Add of Expr * Expr
+    | Sub of Expr * Expr
+    | Mul of Expr * Expr
+    | Div of Expr * Expr
+    | Plus of Expr
+    | Minus of Expr
