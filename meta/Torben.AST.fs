@@ -4,6 +4,9 @@
 module Torben.AST
 
 type AST = //
+    Expr list
+
+and Expr = //
     | Literal of Literal
 
 and Op = //

@@ -13,4 +13,5 @@ let digit      = ['0'-'9']
 rule tokenize = parse
 | whitespace    { tokenize lexbuf }
 | sign?digit+   { INT ( System.Int32.Parse( lexeme lexbuf ) ) }
+| eof           { EOF }
 | _             { lexeme lexbuf |> sprintf "Parsing error: %s" |> failwith }

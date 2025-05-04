@@ -3,9 +3,14 @@
 %}
 
 %token <int> INT
+%token       EOF
 
 %start syntax
-%type <Torben.AST.AST> syntax
+%type <Torben.AST.Expr list>  syntax
+%type <Torben.AST.Expr> expr
 
 %%
-syntax: INT { Literal ( Int $1 ) }
+syntax: expr        {      [$1] }
+      | syntax expr { $1 @ [$2] }
+
+expr  : INT { Literal ( Int $1 ) }
