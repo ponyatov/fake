@@ -2,12 +2,12 @@ module Torben.REPL
 
 open System
 open FSharp.Text.Lexing
-open TorbenLexer
+open Torben.Lexer
 open TorbenParser
 
 let evaluate (input: string) =
     let lexbuf = LexBuffer<char>.FromString input
-    let output = TorbenParser.syntax TorbenLexer.tokenize lexbuf
+    let output = TorbenParser.syntax Torben.Lexer.tokenize lexbuf
     string output
 
 [<EntryPoint>]

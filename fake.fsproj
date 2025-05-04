@@ -59,7 +59,7 @@
 
     <ItemGroup>
         <FsLex Include="meta/Torben.fsl">
-            <OtherFlags>--module TorbenLexer --unicode -o tmp/Torben.Lexer.fs</OtherFlags>
+            <OtherFlags>--module Torben.Lexer --unicode -o tmp/Torben.Lexer.fs</OtherFlags>
         </FsLex>
         <FsYacc Include="meta/Torben.fsy">
             <OtherFlags>--module TorbenParser -o tmp/Torben.Parser.fs</OtherFlags>

@@ -8,4 +8,4 @@
 %type <TorbenAST.AST> syntax
 
 %%
-syntax: INT {Int $1}
+syntax: INT { Literal ( Int $1 ) }

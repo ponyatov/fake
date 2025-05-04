@@ -4,7 +4,7 @@
 module TorbenAST
 
 type AST = //
-    Literal
+    | Literal of Literal
 
 and Op = //
     | Add
