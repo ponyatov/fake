@@ -67,6 +67,8 @@
         <Compile Include="meta/Torben.AST.fs" />
         <Compile Include="tmp/TorbenParser.fsi" />
         <Compile Include="tmp/TorbenLexer.fsi" />
+        <Compile Include="tmp/TorbenParser.fs" />
+        <Compile Include="tmp/TorbenLexer.fs" />
         <Compile Include="meta/Torben.fs" />
     </ItemGroup>
 

@@ -1,9 +1,9 @@
-// {
-// open FSharp.Text.Lexing
-// open TorbenParser
+{
+open FSharp.Text.Lexing
+open TorbenParser
 
-// let lexeme lexbuf = LexBuffer<_>.LexemeString lexbuf
-// }
+let lexeme lexbuf = LexBuffer<_>.LexemeString lexbuf
+}
 
 let digit      = ['0'-'9']
 let operator   = ['+' '-' '*' '/']

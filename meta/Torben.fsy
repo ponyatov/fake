@@ -1,10 +1,10 @@
-// %{
-// %}
+%{
+%}
 
 %token <int> INT
 
 %start syntax
-%type <unit> syntax
+%type <int> syntax
 
 %%
-syntax: INT {}
+syntax: INT {$1}

@@ -5,7 +5,7 @@ open TorbenParser
 
 let evaluate (input: string) =
     let lexbuf = LexBuffer<char>.FromString input
-    let output = TorbenParser.syntax Lexer.tokenize lexbuf
+    let output = TorbenParser.syntax TorbenLexer.tokenize lexbuf
     string output
 
 [<EntryPoint>]
