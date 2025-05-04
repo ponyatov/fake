@@ -1,6 +1,6 @@
 {
 open FSharp.Text.Lexing
-open TorbenParser
+open Torben.Parser
 
 let lexeme lexbuf = LexBuffer<_>.LexemeString lexbuf
 }
