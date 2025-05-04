@@ -6,12 +6,16 @@ let lexeme lexbuf = LexBuffer<_>.LexemeString lexbuf
 }
 
 let whitespace = [' ' '\t' '\r' '\n']
-let sign       = ['+' '-']
 let digit      = ['0'-'9']
-// let operator   = ['+' '-' '*' '/']
 
 rule tokenize = parse
 | whitespace    { tokenize lexbuf }
-| sign?digit+   { INT ( System.Int32.Parse( lexeme lexbuf ) ) }
+| digit+        { INT ( System.Int32.Parse( lexeme lexbuf ) ) }
+
+| '+'           { ADD }
+| '-'           { SUB }
+| '*'           { MUL }
+| '/'           { DIV }
+
 | eof           { EOF }
 | _             { lexeme lexbuf |> sprintf "Parsing error: %s" |> failwith }

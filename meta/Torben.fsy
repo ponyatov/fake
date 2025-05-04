@@ -2,15 +2,18 @@
     open Torben.AST
 %}
 
-%token <int> INT
-%token       EOF
+%token <int>    INT
+%token          ADD SUB MUL DIV
+%token          EOF
 
 %start syntax
-%type <Torben.AST.Expr list>  syntax
+%type <Torben.AST.AST>  syntax
 %type <Torben.AST.Expr> expr
 
 %%
-syntax: expr        {      [$1] }
+syntax:             {      [  ] }
       | syntax expr { $1 @ [$2] }
 
-expr  : INT { Literal ( Int $1 ) }
+expr  : ADD expr    { Pfx     ( Add , $2 ) }
+      | SUB expr    { Pfx     ( Sub , $2 ) }
+      | INT         { Literal ( Int   $1 ) }
