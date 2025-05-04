@@ -64,7 +64,7 @@
         <FsYacc Include="meta/Torben.fsy">
             <OtherFlags>--module TorbenParser -o tmp/TorbenParser.fs</OtherFlags>
         </FsYacc>
-        <Compile Include="meta/Torben.AST.fs" />
+        <Compile Include="meta/TorbenAST.fs" />
         <Compile Include="tmp/TorbenParser.fsi" />
         <Compile Include="tmp/TorbenLexer.fsi" />
         <Compile Include="tmp/TorbenParser.fs" />

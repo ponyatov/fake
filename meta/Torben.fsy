@@ -1,10 +1,11 @@
 %{
+    open TorbenAST
 %}
 
 %token <int> INT
 
 %start syntax
-%type <int> syntax
+%type <TorbenAST.AST> syntax
 
 %%
-syntax: INT {$1}
+syntax: INT {Int $1}
