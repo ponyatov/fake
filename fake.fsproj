@@ -59,17 +59,17 @@
 
     <ItemGroup>
         <FsLex Include="meta/Torben.fsl">
-            <OtherFlags>--module TorbenLexer --unicode -o tmp/TorbenLexer.fs</OtherFlags>
+            <OtherFlags>--module TorbenLexer --unicode -o tmp/Torben.Lexer.fs</OtherFlags>
         </FsLex>
         <FsYacc Include="meta/Torben.fsy">
-            <OtherFlags>--module TorbenParser -o tmp/TorbenParser.fs</OtherFlags>
+            <OtherFlags>--module TorbenParser -o tmp/Torben.Parser.fs</OtherFlags>
         </FsYacc>
-        <Compile Include="meta/TorbenAST.fs" />
-        <Compile Include="tmp/TorbenParser.fsi" />
-        <Compile Include="tmp/TorbenLexer.fsi" />
-        <Compile Include="tmp/TorbenParser.fs" />
-        <Compile Include="tmp/TorbenLexer.fs" />
-        <Compile Include="meta/Torben.fs" />
+        <Compile Include="meta/Torben.AST.fs" />
+        <Compile Include="tmp/Torben.Parser.fsi" />
+        <Compile Include="tmp/Torben.Lexer.fsi" />
+        <Compile Include="tmp/Torben.Parser.fs" />
+        <Compile Include="tmp/Torben.Lexer.fs" />
+        <Compile Include="meta/Torben.REPL.fs" />
     </ItemGroup>
 
 </Project>

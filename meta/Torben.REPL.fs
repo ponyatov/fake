@@ -1,3 +1,5 @@
+module Torben.REPL
+
 open System
 open FSharp.Text.Lexing
 open TorbenLexer
