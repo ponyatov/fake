@@ -1,7 +1,7 @@
 // Torben Ægidius Mogensen
 // Introduction to Compiler Design
 
-module TorbenAST
+module Torben.AST
 
 type AST = //
     | Literal of Literal
