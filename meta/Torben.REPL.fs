@@ -5,7 +5,7 @@ open FSharp.Text.Lexing
 open Torben.Lexer
 open Torben.Parser
 
-let evaluate (input: string) =
+let parse (input: string) =
     let lexbuf = LexBuffer<char>.FromString input
     let output = Torben.Parser.syntax Torben.Lexer.tokenize lexbuf
     string output
@@ -20,7 +20,7 @@ let main argv =
         let input = Console.ReadLine()
 
         try
-            let result = evaluate input
+            let result = parse input
             printfn "%s" result
         with ex ->
             printfn "%s" (ex.ToString())
