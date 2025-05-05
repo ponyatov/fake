@@ -21,11 +21,11 @@ syntax:             {      [  ] }
       | syntax expr { $1 @ [$2] }
 
 expr  : INT                 { Int   $1 }
-      | ID                  { Var   $1 }
       | ADD expr %prec PFX  { Plus  $2 }
       | SUB expr %prec PFX  { Minus $2 }
       | expr ADD expr       { Add ( $1 , $3 ) }
       | expr SUB expr       { Sub ( $1 , $3 ) }
       | expr MUL expr       { Mul ( $1 , $3 ) }
       | expr DIV expr       { Div ( $1 , $3 ) }
+      | ID                  { Var   $1 }
       | ID EQ expr          { Set ( $1 , $3 ) }
