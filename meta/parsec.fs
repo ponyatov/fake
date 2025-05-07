@@ -2,11 +2,14 @@
 
 open System
 
-let parseA (str: string) =
-    if String.IsNullOrEmpty(str) then
+type stream = (bool * string)
+
+let parseA (str: string) : stream =
+    match str with
+    | str when String.IsNullOrEmpty(str) -> //
         (false, "")
-    else if str.[0] = 'A' then
+    | str when str.[0] = 'A' -> //
         let remaining = str.[1..]
         (true, remaining)
-    else
+    | _ -> //
         (false, str)
