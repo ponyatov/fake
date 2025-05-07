@@ -20,6 +20,21 @@ let parseA (str: istream) : pstate =
     | _ -> //
         (false, str)
 
-/// parse given char
-let pchar (c:char,str:istream) : pstate =
 
+type ParseResult<'a> =
+    | Success of 'a
+    | Failure of string
+
+/// parse given char
+let pchar (c: char, str: string) =
+    if String.IsNullOrEmpty(str) then
+        Failure "No more input"
+    else
+        let first = str.[0]
+
+        if first = c then
+            let remaining = str.[1..]
+            Success(c, remaining)
+        else
+            let msg = sprintf "Expecting '%c'. Got '%c'" c first
+            Failure msg
