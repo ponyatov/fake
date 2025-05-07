@@ -20,13 +20,12 @@ let parseA (str: istream) : pstate =
     | _ -> //
         (false, str)
 
-
 type ParseResult<'a> =
     | Success of 'a
     | Failure of string
 
 /// parse given char
-let pchar ((c: char), (str: string)) =
+let pchar (c: char) (str: string) =
     if String.IsNullOrEmpty(str) then
         Failure "No more input"
     else
