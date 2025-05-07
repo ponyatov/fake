@@ -1,7 +1,5 @@
 /*
 ******************************************************************************
-**  File        : LinkerScript.ld
-**  Author		: STM32CubeMX
 **  Abstract    : Linker script for STM32F429ZITx series
 **                2048Kbytes FLASH and 256Kbytes RAM
 ******************************************************************************

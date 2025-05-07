@@ -2,9 +2,15 @@
 
 open System
 
-type stream = (bool * string)
+/// input chars/tokens stream
+/// (treat string as a simplest case)
+type istream = string
 
-let parseA (str: string) : stream =
+/// parser state shoud be passed across parsec stages
+type pstate = (bool * istream)
+
+/// parsec stage: single 'A' char
+let parseA (str: istream) : pstate =
     match str with
     | str when String.IsNullOrEmpty(str) -> //
         (false, "")
@@ -13,3 +19,7 @@ let parseA (str: string) : stream =
         (true, remaining)
     | _ -> //
         (false, str)
+
+/// parse given char
+let pchar (c:char,str:istream) : pstate =
+
