@@ -46,11 +46,20 @@
         {
             "label"          : "openocd: debug",
             "type"           : "shell",
-            "group"          : {"kind": "build", "isDefault": true},
+            "group"          : {"kind": "build", "isDefault": false},
             // "dependsOn"      : "CMake: build",
             "command"        : "openocd -f ${workspaceFolder}/hw/${command:cmake.activeConfigurePresetName}/${command:cmake.activeConfigurePresetName}.ocd -c \"program ${command:cmake.launchTargetPath} verify reset\"",
             "problemMatcher" : [],
             "presentation"   : {"showReuseMessage": false, "focus": false, "reveal": "silent", "close": false}
+        },
+        {
+            "label"          : "dotnet: run",
+            "type"           : "shell",
+            "command"        : ["dotnet run",
+                                "--project ${workspaceFolderBasename}.fsproj"
+                               ],
+            "problemMatcher" : [],
+            "group"          : {"kind": "build", "isDefault": true},
         },
     ]
 }

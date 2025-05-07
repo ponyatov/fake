@@ -10,11 +10,7 @@ let parse (input: string) =
     let output = Torben.Parser.syntax Torben.Lexer.tokenize lexbuf
     string output
 
-[<EntryPoint>]
-let main argv =
-
-    printfn "Press Ctrl+c to Exit"
-
+let repl =
     while true do
         printf "fake> "
         let input = Console.ReadLine()
@@ -25,4 +21,10 @@ let main argv =
         with ex ->
             printfn "%s" (ex.ToString())
 
-    0 // return an integer exit code
+    0
+
+[<EntryPoint>]
+let main argv =
+
+    printfn "Press Ctrl+c to Exit"
+    repl

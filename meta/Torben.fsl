@@ -21,5 +21,6 @@ rule tokenize = parse
 | '/'           { DIV }
 | '='           { EQ  }
 
-| eof           { EOF }
+| ".repl"       { REPL }
+| eof           { EOF  }
 | _             { lexeme lexbuf |> sprintf "Parsing error: %s" |> failwith }

@@ -5,7 +5,7 @@
 %token <int>    INT
 %token <string> ID
 %token          ADD SUB MUL DIV EQ
-%token          EOF
+%token          EOF REPL
 
 %start syntax
 %type <Torben.AST.AST>  syntax
