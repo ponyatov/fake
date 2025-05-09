@@ -7,5 +7,9 @@
 	<buildSpec>
 	</buildSpec>
 	<natures>
+		<nature>org.eclipse.m2e.core.maven2Nature</nature>
+		<nature>org.eclipse.jdt.core.javanature</nature>
+		<nature>org.metaborg.spoofax.eclipse.nature</nature>
+		<nature>org.metaborg.spoofax.eclipse.meta.nature</nature>
 	</natures>
 </projectDescription>

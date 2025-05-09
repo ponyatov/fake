@@ -4,4 +4,5 @@
 obj/
 bin/
 .metadata/
+fake/
 !.gitignore
