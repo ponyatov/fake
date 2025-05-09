@@ -10,4 +10,3 @@
 	- ends with 128 bits
 		- largest hardware register (pair) in top-most CPUs
 		- supported in a [[LLVM/LLVM|LLVM]] system
-
