@@ -1,7 +1,0 @@
-module Refactoring
-
-menus
-
-  menu: "Refactoring"
-
-  action: "Rename" = rename-menu-action
