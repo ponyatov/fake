@@ -1,5 +1,5 @@
-PROJECT_NAME           = "Flang"
-PROJECT_BRIEF          = "fake programming language for embedded systems"
+PROJECT_NAME           = "F/lang"
+PROJECT_BRIEF          = "programming language for embedded systems"
 PROJECT_LOGO           = vscode/logo.png
 OUTPUT_DIRECTORY       = doc
 HTML_OUTPUT            = html
