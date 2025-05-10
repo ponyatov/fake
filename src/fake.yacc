@@ -1,3 +1,5 @@
+    /// @file
+    /// @brief `F` syntax parser
 %{
     #include "fake.hpp"
 %}

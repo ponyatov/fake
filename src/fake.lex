@@ -1,3 +1,5 @@
+    /// @file
+    /// @brief `F` lexer
 %{
     #include "fake.hpp"
     char *yyfile = nullptr;

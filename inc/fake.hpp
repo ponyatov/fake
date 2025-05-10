@@ -1,6 +1,9 @@
 #pragma once
+/// @file
+/// @brief @ref vm headers
 
 /// @defgroup libc libc
+/// @brief standard headers
 /// @{
 #include <stdio.h>
 #include <stdlib.h>
@@ -9,12 +12,15 @@
 /// @}
 
 /// @defgroup main main
+/// @brief POSIX entry point
 /// @{
 extern int main(int argc, char *argv[]);
 extern void arg(int argc, char *argv);
 /// @}
 
 /// @defgroup vm vm
+/// @brief Virtual FORTH Machine
+/// @details bytecode interpreter
 /// @{
 
 /// @defgroup config config
@@ -45,6 +51,7 @@ extern addr Ip;      ///< instruction pointer
 /// @}
 
 /// @defgroup skelex skelex
+/// @brief `lex`/`yacc` lexical skeleton
 /// @{
 extern int yylex();
 extern int yylineno;

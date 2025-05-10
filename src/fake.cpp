@@ -1,3 +1,6 @@
+/// @file
+/// @brief @ref vm core code
+
 #include "fake.hpp"
 
 int main(int argc, char *argv[]) {
