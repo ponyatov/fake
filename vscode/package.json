@@ -1,0 +1,44 @@
+{
+    "name":        "fake",
+    "displayName": "Flang",
+    "description": "F.lang script engine",
+    "version":     "0.0.1",
+    "icon":        "logo.png",
+    "publisher":   "dponyatov",
+    "license":     "MIT",
+    "engines": {
+        "vscode": "^1.75.0"
+    },
+    "categories": [
+        "Programming Languages", "Debuggers"
+    ],
+    "keywords": [
+        "CLI", "FORTH", "REPL", "OS", "script", "interpreter"
+    ],
+    "bugs": {
+        "url": "https://github.com/ponyatov/fake/issue"
+    },
+    "homepage": "https://github.com/ponyatov/fake",
+    "repository": {
+        "type": "git",
+        "url" : "https://github.com/ponyatov/fake/tree/dponyatov/vscode"
+    },
+    "activationEvents": [
+        "workspaceContains:lib/*.fk"
+    ],
+    "extensionDependencies": [
+    ],
+    "main": "./extension.js",
+    "contributes": {
+        "grammars": [{
+            "language": "flang",
+            "scopeName": "source.flang",
+            "path": "./fake.tmLanguage.json"
+        }],
+        "languages": [{
+            "id": "flang",
+            "extensions": [".ini", ".f"],
+            "configuration": "./fake.languageConfiguration.json"
+        }]
+    }
+}

@@ -10,5 +10,5 @@
 
 %%
 REPL: | REPL ex
-ex  : INT
-    | ID
+ex    : INT
+      | ID

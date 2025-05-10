@@ -6,6 +6,7 @@ int main(int argc, char *argv[]) {
         arg(i, argv[i]);
         yyfile = argv[i];
         assert(yyin = fopen(yyfile, "r"));
+        yyparse();
         fclose(yyin);
         yyfile = nullptr;
     }
@@ -13,4 +14,9 @@ int main(int argc, char *argv[]) {
 
 void arg(int argc, char *argv) {  //
     fprintf(stderr, "arg[%i] = <%s>\n", argc, argv);
+}
+
+void yyerror(const char *msg) {
+    fprintf("\n\n%s:%i %s [%s]\n\n", yyfile, yylineno, msg, yytext);
+    exit(-1);
 }
