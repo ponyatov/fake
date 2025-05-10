@@ -24,7 +24,8 @@
         "url" : "https://github.com/ponyatov/fake/tree/dponyatov/vscode"
     },
     "activationEvents": [
-        "workspaceContains:lib/*.fk"
+        "workspaceContains:lib/*.ini",
+        "workspaceContains:lib/*.f"
     ],
     "extensionDependencies": [
     ],
