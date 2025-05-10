@@ -1,1 +1,0 @@
-include arch/cortexM.mk
