@@ -2,26 +2,6 @@
     "version": 6,
     "buildPresets": [
         {
-            "name"            :  "pillF030",
-            "configurePreset" :  "pillF030",
-            "targets"         : ["all","install"]
-        },
-        {
-            "name"            :  "pillF103",
-            "configurePreset" :  "pillF103",
-            "targets"         : ["all","install"]
-        },
-        {
-            "name"            :  "f429disco",
-            "configurePreset" :  "f429disco",
-            "targets"         : ["all","install"]
-        },
-        {
-            "name"            :  "esp8266",
-            "configurePreset" :  "esp8266",
-            "targets"         : ["all","install"]
-        },
-        {
             "name"            :  "linux",
             "configurePreset" :  "linux",
             "targets"         : ["all","install"]
@@ -42,62 +22,10 @@
             }
         },
         {
-            "name"            :  "cortexM",
-            "inherits"        :  "common",
-            "hidden"          :   true,
-            "toolchainFile"   :  "${sourceDir}/cmake/arm-none-eabi.cmake",
-            "cacheVariables"  : {"OS":"bare"}
-        },
-        {
-            "name"            :  "cortexM0",
-            "inherits"        :  "cortexM",
-            "hidden"          :   true,
-            "cacheVariables"  : {"ARCH":"cortexM0"}
-        },
-        {
-            "name"            :  "cortexM3",
-            "inherits"        :  "cortexM",
-            "hidden"          :   true,
-            "cacheVariables"  : {"ARCH":"cortexM3"}
-        },
-        {
-            "name"            :  "cortexM4",
-            "inherits"        :  "cortexM",
-            "hidden"          :   true,
-            "cacheVariables"  : {"ARCH":"cortexM4"}
-        },
-        {
-            "name"            :  "xtensa",
-            "inherits"        :  "common",
-            "hidden"          :   true,
-            "toolchainFile"   :  "${sourceDir}/cmake/xtensa-lx106-elf.cmake",
-            "cacheVariables"  : {"ARCH":"xtensa","OS":"rtos"}
-        },
-        {
             "name"            :  "pc",
             "inherits"        :  "common",
             "hidden"          :   true,
             "cacheVariables"  : {"HW":"pc", "CPU":"i5", "ARCH":"x86_64"}
-        },
-        {
-            "name"            : "pillF030",
-            "inherits"        : "cortexM0",
-            "cacheVariables"  : {"HW":"pillF030","CPU":"stm32f030f4p","SERIES":"STM32F0"}
-        },
-        {
-            "name"            : "pillF103",
-            "inherits"        : "cortexM3",
-            "cacheVariables"  : {"HW":"pillF103","CPU":"stm32f103c8t","SERIES":"STM32F3"}
-        },
-        {
-            "name"            : "f429disco",
-            "inherits"        : "cortexM4",
-            "cacheVariables"  : {"HW":"f429disco","CPU":"stm32f429zit","SERIES":"STM32F4"}
-        },
-        {
-            "name"            : "esp8266",
-            "inherits"        : "xtensa",
-            "cacheVariables"  : {"HW":"esp8266","CPU":"lx106"}
         },
         {
             "name"            : "linux",
