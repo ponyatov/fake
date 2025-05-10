@@ -1,7 +1,7 @@
 {
     "name":        "flang",
     "displayName": "F/lang",
-    "description": "Fake prototype",
+    "description": "fake prototype",
     "version":     "0.0.1",
     "icon":        "logo.png",
     "publisher":   "dponyatov",
