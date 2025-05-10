@@ -22,6 +22,7 @@ an [a-zA-Z_0-9]
 
 "nop"       { yylval.o = Op::nop;  return CMD; }
 "halt"      { yylval.o = Op::halt; return CMD; }
+"repl"      { yylval.o = Op::repl; return CMD; }
 
 {s}?{n}+    { yylval.n = atoi(yytext); return INT; }
 {a}{an}*    { yylval.s = yytext; return ID; }

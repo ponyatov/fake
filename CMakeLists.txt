@@ -21,7 +21,7 @@ add_executable(${CMAKE_PROJECT_NAME}
     ${CP} ${CP} # parsers
 )
 
-# target_link_libraries(${CMAKE_PROJECT_NAME} -static)
+target_link_libraries(${CMAKE_PROJECT_NAME} ${Readline_LIBRARY})
 
 include(cross)
 include(install)

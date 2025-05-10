@@ -42,6 +42,9 @@ void excmd(Op op) {
         case Op::halt:
             halt();
             break;
+        case Op::repl:
+            repl();
+            break;
         default:
             abort();
     }
@@ -56,4 +59,11 @@ void nop() {
 void halt() {
     if (trace) fprintf(stderr, NOPARAM "halt\n");
     exit(0);
+}
+
+void repl() {
+    if (trace) fprintf(stderr, NOPARAM "repl\n");
+    while (true) {
+
+    }
 }

@@ -55,6 +55,7 @@ extern addr Ip;      ///< instruction pointer
 enum class Op {
     nop = 0x00,
     halt = 0xFF,
+    repl = 0xEE,
 };
 
 extern void nop();   ///< `( -- )` do nothing
@@ -71,6 +72,7 @@ extern bool trace;    ///< execution trace
 /// @defgroup interpreter interpreter
 /// @{
 extern void excmd(Op cmd);  ///< run single command
+extern void repl();         ///< `( -- )` run CLI interface
 /// @}
 
 /// @}
@@ -86,4 +88,6 @@ extern FILE *yyin;
 extern int yyparse();
 extern void yyerror(const char *msg);
 #include "fake.yacc.hpp"
+#include <readline/readline.h>
+#include <readline/history.h>
 /// @}
