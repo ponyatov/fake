@@ -2,6 +2,7 @@
     // files
     "files.exclude": {
         "doc/html/**": true,
+        ".metadata": true,
     },
     "files.watcherExclude": {
         "ref/**": true, "target/**": true, "obj/**": true,

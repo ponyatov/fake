@@ -2,23 +2,16 @@
 
 open System
 
-/// input chars/tokens stream
-/// (treat string as a simplest case)
-type istream = string
-
-/// parser state shoud be passed across parsec stages
-type pstate = (bool * istream)
-
 /// parsec stage: single 'A' char
-let parseA (str: istream) : pstate =
-    match str with
-    | str when String.IsNullOrEmpty(str) -> //
+let parseA (str:string) (bool*string)=
+    if String.IsNullOrEmpty(str) then
         (false, "")
-    | str when str.[0] = 'A' -> //
+    else if str.[0] = 'A' then
         let remaining = str.[1..]
         (true, remaining)
-    | _ -> //
+    else
         (false, str)
+// parseA ""
 
 type ParseResult<'a> =
     | Success of 'a
