@@ -48,6 +48,20 @@ extern addr Ip;      ///< instruction pointer
 
 /// @}
 
+/// @defgroup command command
+/// @{
+
+/// @brief opcode
+enum class Op {
+    nop = 0x00,
+    halt = 0xFF,
+};
+
+extern void nop();   ///< `( -- )` do nothing
+extern void halt();  ///< `( -- )` stop system
+
+/// @}
+
 /// @}
 
 /// @defgroup skelex skelex
