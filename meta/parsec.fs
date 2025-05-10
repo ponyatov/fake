@@ -2,6 +2,8 @@
 
 open System
 
+// https://fsharpforfunandprofit.com/posts/understanding-parser-combinators/#parsing-a-hard-coded-character
+
 /// parsec stage: single 'A' char
 let parseA (str:string) (bool*string)=
     if String.IsNullOrEmpty(str) then
@@ -11,22 +13,31 @@ let parseA (str:string) (bool*string)=
         (true, remaining)
     else
         (false, str)
-// parseA ""
+// parseA "" -> (false, "")
+// parseA "ASD" -> (true, "SD")
+// parseA "SD" -> (false, "SD")
+
+// https://fsharpforfunandprofit.com/posts/understanding-parser-combinators/#parsing-a-specified-character
+
+let pchar (charToMatch,str) =
+  if String.IsNullOrEmpty(str) then
+    let msg = "No more input"
+    (msg,"")
+  else
+    let first = str.[0]
+    if first = charToMatch then
+      let remaining = str.[1..]
+      let msg = sprintf "Found %c" charToMatch
+      (msg,remaining)
+    else
+      let msg = sprintf "Expecting '%c'. Got '%c'" charToMatch first
+      (msg,str)
+
+// pchar('A',"ABC") -> ("Found A", "BC")
+// pchar('A', "BC") -> ("Expecting 'A'. Got 'B'", "BC")
+
+// https://fsharpforfunandprofit.com/posts/understanding-parser-combinators/#returning-a-successfailure
 
 type ParseResult<'a> =
-    | Success of 'a
-    | Failure of string
-
-/// parse given char
-let pchar (c: char) (str: string) =
-    if String.IsNullOrEmpty(str) then
-        Failure "No more input"
-    else
-        let first = str.[0]
-
-        if first = c then
-            let remaining = str.[1..]
-            Success(c, remaining)
-        else
-            let msg = sprintf "Expecting '%c'. Got '%c'" c first
-            Failure msg
+  | Success of 'a
+  | Failure of string
