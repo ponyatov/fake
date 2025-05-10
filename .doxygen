@@ -1,6 +1,6 @@
 PROJECT_NAME           = "Flang"
 PROJECT_BRIEF          = "fake programming language for embedded systems"
-PROJECT_LOGO           = doc/logo.png
+PROJECT_LOGO           = vscode/logo.png
 OUTPUT_DIRECTORY       = doc
 HTML_OUTPUT            = html
 INPUT                  = README.md doc lib inc src hw cpu arch os
