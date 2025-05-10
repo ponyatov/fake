@@ -12,6 +12,7 @@
 
 %%
 REPL: | REPL ex
-ex    : INT         { fprintf(stderr,"int:%i\t",$1); }
-      | ID          { fprintf(stderr, "id:%s\t",$1); }
-      | CMD         { fprintf(stderr,"cmd:%.2X\t",$1); }
+ex    : INT         { if (trace) fprintf(stderr,"int:%i\t",$1); }
+      | ID          { if (trace) fprintf(stderr, "id:%s\t",$1); }
+      | CMD         { if (compile) M[Cp++] = (byte)$1;
+                      else         excmd($1);        }

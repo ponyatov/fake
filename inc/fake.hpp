@@ -62,6 +62,17 @@ extern void halt();  ///< `( -- )` stop system
 
 /// @}
 
+/// @defgroup compiler compiler
+/// @{
+extern bool compile;  ///< compile/interpret state
+extern bool trace;    ///< execution trace
+/// @}
+
+/// @defgroup interpreter interpreter
+/// @{
+extern void excmd(Op cmd);  ///< run single command
+/// @}
+
 /// @}
 
 /// @defgroup skelex skelex

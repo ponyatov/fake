@@ -28,3 +28,32 @@ void yyerror(const char *msg) {
 byte M[Msz];
 addr Cp = 0;
 addr Ip = 0;
+
+bool compile = false;
+
+bool trace = true;
+
+void excmd(Op op) {
+    if (trace) fprintf(stderr, "\n%.4X: %.2X ", Ip, op);
+    switch (op) {
+        case Op::nop:
+            nop();
+            break;
+        case Op::halt:
+            halt();
+            break;
+        default:
+            abort();
+    }
+}
+
+#define NOPARAM "     "
+
+void nop() {
+    if (trace) fprintf(stderr, NOPARAM "nop");
+}
+
+void halt() {
+    if (trace) fprintf(stderr, NOPARAM "halt\n");
+    exit(0);
+}
