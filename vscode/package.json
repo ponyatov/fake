@@ -1,7 +1,7 @@
 {
-    "name":        "fake",
-    "displayName": "Flang",
-    "description": "F.lang script engine",
+    "name":        "flang",
+    "displayName": "F/lang",
+    "description": "Fake prototype",
     "version":     "0.0.1",
     "icon":        "logo.png",
     "publisher":   "dponyatov",
@@ -34,12 +34,12 @@
         "grammars": [{
             "language": "flang",
             "scopeName": "source.flang",
-            "path": "./fake.tmLanguage.json"
+            "path": "./F.tmLanguage.json"
         }],
         "languages": [{
             "id": "flang",
             "extensions": [".ini", ".f"],
-            "configuration": "./fake.languageConfiguration.json"
+            "configuration": "./F.languageConfiguration.json"
         }]
     }
 }

@@ -1,6 +1,6 @@
 {
     "version": "0.0.1",
-    "scopeName": "source.fake",
+    "scopeName": "source.flang",
     "fileTypes": [".ini", ".f"],
     "information_for_contributors": [
         "CLI/REPL/FORTH"
@@ -15,30 +15,30 @@
     ],
     "repository": {
         "comment": {
-            "name": "comment.line.fake",
+            "name": "comment.line.flang",
             "match": "\\s*((#).*)$"
         },
         "keyword": {
-            "name": "keyword.control.fake",
+            "name": "keyword.control.flang",
             "match": "\\b(nop|halt)\\b"
         },
         "type": {
-            "name": "constant.language.fake",
+            "name": "constant.language.flang",
             "match": "\\b(char|int)\\b"
         },
         "var": {
-            "name": "storage.type.fake",
+            "name": "storage.type.flang",
             "match": "\\b(let)\\b"
         },
         "string": {
-            "name": "string.quoted.double.fake",
+            "name": "string.quoted.double.flang",
             "begin": "\"",
             "beginCaptures": {
-                "0": {"name": "punctuation.definition.string.begin.fake"}
+                "0": {"name": "punctuation.definition.string.begin.flang"}
             },
             "end": "\"",
             "endCaptures": {
-                "0": {"name": "punctuation.definition.string.end.fake"}
+                "0": {"name": "punctuation.definition.string.end.flang"}
             },
             "patterns": [
                 {"include": "#string_escaped_char"}
@@ -48,11 +48,11 @@
             "patterns": [
                 {
                     "match": "(?x)\\\\ (\n\\\\\t\t\t |\n[abefnprtv'\"?]   |\n[0-3]\\d{,2}\t |\n[4-7]\\d?\t\t|\nx[a-fA-F0-9]{,2} |\nu[a-fA-F0-9]{,4} |\nU[a-fA-F0-9]{,8} )",
-                    "name": "constant.character.escape.fake"
+                    "name": "constant.character.escape.flang"
                 },
                 {
                     "match": "\\\\.",
-                    "name": "invalid.illegal.unknown-escape.fake"
+                    "name": "invalid.illegal.unknown-escape.flang"
                 }
             ]
         },
@@ -82,11 +82,11 @@
             ]
         },
         "number": {
-            "name": "constant.numeric.fake",
+            "name": "constant.numeric.flang",
             "match": "[+-]?(0x[0-9A-Fa-f]+|0b[01]+|[0-9]+)([eE][+-]?[0-9]+)?"
         },
         "label": {
-            "name": "variable.other.fake",
+            "name": "variable.other.flang",
             "match": "^\\s*[a-z]+:"
         }
     }
