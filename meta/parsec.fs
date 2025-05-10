@@ -4,7 +4,7 @@ open System
 
 // https://fsharpforfunandprofit.com/posts/understanding-parser-combinators/#parsing-a-hard-coded-character
 
-/// parsec stage: single 'A' char
+// parsec stage: single 'A' char
 let parseA (str:string) (bool*string)=
     if String.IsNullOrEmpty(str) then
         (false, "")
@@ -19,7 +19,7 @@ let parseA (str:string) (bool*string)=
 
 // https://fsharpforfunandprofit.com/posts/understanding-parser-combinators/#parsing-a-specified-character
 
-let pchar (charToMatch,str) =
+let pchar (charToMatch, str) =
   if String.IsNullOrEmpty(str) then
     let msg = "No more input"
     (msg,"")
@@ -41,3 +41,18 @@ let pchar (charToMatch,str) =
 type ParseResult<'a> =
   | Success of 'a
   | Failure of string
+
+let pchar (charToMatch, str) =
+  if String.IsNullOrEmpty(str) then
+    Failure "No more input"
+  else
+    let first = str.[0]
+    if first = charToMatch then
+      let remaining = str.[1..]
+      Success (charToMatch,remaining)
+    else
+      let msg = sprintf "Expecting '%c'. Got '%c'" charToMatch first
+      Failure msg
+
+// pchar('A',"ABC") -> Success ('A', "BC")
+// pchar('A', "BC") -> Failure "Expecting 'A'. Got 'B'"
