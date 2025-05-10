@@ -5,12 +5,43 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <assert.h>
+#include <stdint.h>
 /// @}
 
 /// @defgroup main main
 /// @{
 extern int main(int argc, char *argv[]);
 extern void arg(int argc, char *argv);
+/// @}
+
+/// @defgroup vm vm
+/// @{
+
+/// @defgroup config config
+/// @{
+
+/// main memory size, bytes
+#define Msz 0x10000
+/// return stack size, cells
+#define Rsz 0x100
+/// data stack size, ints
+#define Dsz 0x10
+
+/// @}
+
+/// @defgroup memory memory
+/// @{
+
+typedef uint8_t byte;   ///< `u8`
+typedef uint16_t addr;  ///< `u16` VM memory address
+typedef int32_t cell;   ///< `i32` VM integers
+
+extern byte M[Msz];  ///< main VM memory
+extern addr Cp;      ///< compiler pointer
+extern addr Ip;      ///< instruction pointer
+
+/// @}
+
 /// @}
 
 /// @defgroup skelex skelex

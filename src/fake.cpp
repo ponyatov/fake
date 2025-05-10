@@ -10,6 +10,7 @@ int main(int argc, char *argv[]) {
         fclose(yyin);
         yyfile = nullptr;
     }
+    return 0;
 }
 
 void arg(int argc, char *argv) {  //
@@ -20,3 +21,7 @@ void yyerror(const char *msg) {
     fprintf(stderr, "\n\n%s:%i %s [%s]\n\n", yyfile, yylineno, msg, yytext);
     exit(-1);
 }
+
+byte M[Msz];
+addr Cp = 0;
+addr Ip = 0;

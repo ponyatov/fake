@@ -4,4 +4,5 @@ include mk/dirs.mk
 include mk/tool.mk
 include mk/src.mk
 include mk/fsh.mk
+include mk/doc.mk
 include mk/install.mk

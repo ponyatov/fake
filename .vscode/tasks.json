@@ -28,6 +28,12 @@
             "problemMatcher" : []
         },
         {
+            "label"          : "doxy: gen",
+            "type"           : "shell",
+            "command"        : "make doxy",
+            "problemMatcher" : []
+        },
+        {
             "label"          : "git: checkout .vscode",
             "type"           : "shell",
             "command"        : "git checkout .vscode/settings.json",
