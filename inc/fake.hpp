@@ -57,6 +57,14 @@ extern byte Dp;      ///< @ref D pointer
 /// @brief opcode
 enum class Op {
     nop = 0x00,
+    dup = 0x10,
+    drop = 0x11,
+    swap = 0x12,
+    over = 0x13,
+    rrot = 0x14,
+    lrot = 0x15,
+    pick = 0x16,
+    depth = 0x17,
     dot = 0xD0,
     repl = 0xEE,
     halt = 0xFF,
@@ -71,6 +79,16 @@ extern void halt();  ///< `( -- )` stop system
 /// @defgroup stack stack
 /// @{
 extern void push(cell n);  ///< `( -- n)` push cell
+extern cell top();         ///< `( n -- n )` copy top element
+extern cell pop();         ///< `( n -- )` get top element
+extern void dup();         ///< `( n -- n n )`
+extern void drop();        ///< `( n1 n2 -- n1 )`
+extern void swap();        ///< `( n1 n2 -- n2 n1 )`
+extern void over();        ///< `( n1 n2 -- n1 n2 n1 )`
+extern void rrot();        ///< `( n1 n2 n3 -- n2 n3 n1 )`
+extern void lrot();        ///< `( n1 n2 n3 -- n3 n1 n2 )`
+extern void pick();        ///< `( ... idx -- ... ni )`
+extern void depth();       ///< `( ... -- ... Dp )`
 /// @}
 
 /// @defgroup debug debug

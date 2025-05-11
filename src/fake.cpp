@@ -33,10 +33,80 @@ addr Ip = 0;
 cell D[Dsz];
 byte Dp = 0;
 
+void dot() {
+    if (trace) fprintf(stderr, "dot\n");
+    fprintf(stderr, "\n[ ");
+    for (int i = 0; i < Dp; i++) fprintf(stderr, "%i ", D[i]);
+    fprintf(stderr, "]\n");
+}
+
 void push(cell n) {
-    if (trace) fprintf(stderr, "push %i\n", n);
     assert(Dp < Dsz);
+    if (trace) fprintf(stderr, "\tpush\t%i\n", n);
     D[Dp++] = n;
+}
+
+cell top() {
+    assert(Dp > 0);
+    cell n = D[Dp - 1];
+    if (trace) fprintf(stderr, "\ttop\t%i\n", n);
+    return n;
+}
+
+cell pop() {
+    assert(Dp > 0);
+    cell n = D[--Dp];
+    if (trace) fprintf(stderr, "\tpop\t%i\n", n);
+    return n;
+}
+
+void dup() {
+    assert(Dp > 0);
+    if (trace) fprintf(stderr, "dup\t%i\n", D[Dp - 1]);
+    push(top());
+}
+
+void drop() {
+    assert(Dp > 0);
+    if (trace) fprintf(stderr, "drop\t%i\n", D[Dp - 1]);
+    pop();
+}
+
+void swap() {
+    assert(Dp >= 2);
+    if (trace) fprintf(stderr, "swap\t%i %i\n", D[Dp - 2], D[Dp - 1]);
+    cell n2 = pop(), n1 = pop();
+    push(n2);
+    push(n1);
+}
+
+void over() {
+    assert(Dp >= 2);
+    if (trace) fprintf(stderr, "over\t%i %i\n", D[Dp - 2], D[Dp - 1]);
+    push(Dp - 2);
+}
+
+void rrot() {
+    if (trace)
+        fprintf(stderr, "rrot\t%i %i %i\n", D[Dp - 3], D[Dp - 2], D[Dp - 1]);
+}
+
+void lrot() {
+    if (trace)
+        fprintf(stderr, "lrot\t%i %i %i\n", D[Dp - 3], D[Dp - 2], D[Dp - 1]);
+}
+
+void pick() {
+    assert(Dp >= 2);
+    int idx = pop();
+    assert(Dp > idx);
+    if (trace) fprintf(stderr, "pick\t%i\n", idx);
+    push(D[Dp - idx]);
+}
+
+void depth() {
+    if (trace)
+        fprintf(stderr, "rrot\t%i %i %i\n", D[Dp - 3], D[Dp - 2], D[Dp - 1]);
 }
 
 bool compile = false;
@@ -55,6 +125,33 @@ void excmd(Op op) {
         case Op::repl:
             repl();
             break;
+        case Op::dot:
+            dot();
+            break;
+        case Op::dup:
+            dup();
+            break;
+        case Op::drop:
+            drop();
+            break;
+        case Op::swap:
+            swap();
+            break;
+        case Op::over:
+            over();
+            break;
+        case Op::rrot:
+            rrot();
+            break;
+        case Op::lrot:
+            lrot();
+            break;
+        case Op::pick:
+            pick();
+            break;
+        case Op::depth:
+            depth();
+            break;
         default:
             abort();
     }
@@ -69,12 +166,6 @@ void nop() {
 void halt() {
     if (trace) fprintf(stderr, NOPARAM "halt\n");
     exit(0);
-}
-
-void dot() {
-    fprintf(stderr, "\n[ ");
-    for (int i = 0; i < Dp; i++) fprintf(stderr, "%i ", D[i]);
-    fprintf(stderr, "]\n");
 }
 
 void highlight(char *line) {
