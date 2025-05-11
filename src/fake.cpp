@@ -86,6 +86,12 @@ void over() {
     push(Dp - 2);
 }
 
+void press() {
+    assert(Dp >= 2);
+    if (trace) fprintf(stderr, "press\t%i %i\n", D[Dp - 2], D[Dp - 1]);
+    D[Dp-2] = D[Dp-1]; Dp--;
+}
+
 void rrot() {
     if (trace)
         fprintf(stderr, "rrot\t%i %i %i\n", D[Dp - 3], D[Dp - 2], D[Dp - 1]);
@@ -98,15 +104,15 @@ void lrot() {
 
 void pick() {
     assert(Dp >= 2);
+    if (trace) fprintf(stderr, "pick\t%i\n", D[Dp - 1]);
     int idx = pop();
     assert(Dp > idx);
-    if (trace) fprintf(stderr, "pick\t%i\n", idx);
-    push(D[Dp - idx]);
+    push(D[Dp - idx - 1]);
 }
 
 void depth() {
-    if (trace)
-        fprintf(stderr, "rrot\t%i %i %i\n", D[Dp - 3], D[Dp - 2], D[Dp - 1]);
+    if (trace) fprintf(stderr, "depth\t%i\n", Dp);
+    push(Dp);
 }
 
 bool compile = false;
@@ -139,6 +145,9 @@ void excmd(Op op) {
             break;
         case Op::over:
             over();
+            break;
+        case Op::press:
+            press();
             break;
         case Op::rrot:
             rrot();

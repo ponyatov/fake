@@ -61,10 +61,11 @@ enum class Op {
     drop = 0x11,
     swap = 0x12,
     over = 0x13,
-    rrot = 0x14,
-    lrot = 0x15,
-    pick = 0x16,
-    depth = 0x17,
+    press = 0x14,
+    rrot = 0x15,
+    lrot = 0x16,
+    pick = 0x17,
+    depth = 0x18,
     dot = 0xD0,
     repl = 0xEE,
     halt = 0xFF,
@@ -85,6 +86,7 @@ extern void dup();         ///< `( n -- n n )`
 extern void drop();        ///< `( n1 n2 -- n1 )`
 extern void swap();        ///< `( n1 n2 -- n2 n1 )`
 extern void over();        ///< `( n1 n2 -- n1 n2 n1 )`
+extern void press();       ///< `( n1 n2 -- n2 )`
 extern void rrot();        ///< `( n1 n2 n3 -- n2 n3 n1 )`
 extern void lrot();        ///< `( n1 n2 n3 -- n3 n1 n2 )`
 extern void pick();        ///< `( ... idx -- ... ni )`

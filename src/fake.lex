@@ -30,6 +30,7 @@ an [a-zA-Z_0-9]
 "drop"      { yylval.o = Op::drop;     return CMD; }
 "swap"      { yylval.o = Op::swap;     return CMD; }
 "over"      { yylval.o = Op::over;     return CMD; }
+"press"      { yylval.o = Op::press;   return CMD; }
 
 "rrot"      { yylval.o = Op::rrot;     return CMD; }
 "lrot"      { yylval.o = Op::lrot;     return CMD; }
