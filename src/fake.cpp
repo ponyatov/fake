@@ -61,10 +61,17 @@ void halt() {
     exit(0);
 }
 
-const char *line = nullptr;
-void highlight(char *l) {
-    line = l;
-    ("line: %s\n", line);
+void highlight(char *line) {
+    if (!line) {  // on Ctrl+C/D
+        trace = false;
+        halt();
+    }
+
+    yyfile = "repl";
+    fprintf(stderr, "line: %s\n", line);
+    yy_scan_string(line);
+    yyparse();
+    yyfile = nullptr;
 }
 
 void repl() {

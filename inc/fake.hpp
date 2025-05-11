@@ -90,4 +90,5 @@ extern FILE *yyin;                     ///< current file
 extern int yyparse();                  ///< parser
 extern void yyerror(const char *msg);  ///< syntax error callback
 #include "fake.yacc.hpp"
+extern YY_BUFFER_STATE yy_scan_string ( const char *str );
 /// @}

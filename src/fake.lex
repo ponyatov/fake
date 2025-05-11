@@ -5,7 +5,7 @@
     char *yyfile = nullptr;
 %}
 
-%option noyywrap yylineno
+%option noyywrap yylineno c++
 
                     // number sign
 s  [+/-]

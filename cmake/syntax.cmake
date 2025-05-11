@@ -31,13 +31,16 @@ file(GLOB M
 foreach(LEX_FILE ${L})
     string(REGEX REPLACE ".+\/(.+)\.lex$" "${CMAKE_BINARY_DIR}/\\1.lex.cpp"
         LEXER_CPP           ${LEX_FILE})
-    list(APPEND CP          ${LEXER_CPP})
+        list(APPEND CP      ${LEXER_CPP})
+    string(REGEX REPLACE ".+\/(.+)\.lex$" "${CMAKE_BINARY_DIR}/\\1.lex.hpp"
+        LEXER_HPP           ${LEX_FILE})
+        list(APPEND HP      ${LEXER_HPP})
     add_custom_command(
-        OUTPUT              ${LEXER_CPP}
+        OUTPUT              ${LEXER_CPP} ${LEXER_HPP}
         DEPENDS             ${LEX_FILE}
         WORKING_DIRECTORY   ${CMAKE_SOURCE_DIR}
         COMMAND             ${FLEX_EXECUTABLE}
-        ARGS                -o ${LEXER_CPP} ${LEX_FILE}
+        ARGS                --header-file=${LEXER_HPP} -o ${LEXER_CPP} ${LEX_FILE}
     )
 endforeach()
 
