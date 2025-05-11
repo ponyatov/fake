@@ -2,6 +2,7 @@
 /// @brief @ref vm core code
 
 #include "fake.hpp"
+#include "fake.lex.hpp"
 
 int main(int argc, char *argv[]) {
     arg(0, argv[0]);
@@ -28,6 +29,15 @@ void yyerror(const char *msg) {
 byte M[Msz];
 addr Cp = 0;
 addr Ip = 0;
+
+cell D[Dsz];
+byte Dp = 0;
+
+void push(cell n) {
+    if (trace) fprintf(stderr, "push %i\n", n);
+    assert(Dp < Dsz);
+    D[Dp++] = n;
+}
 
 bool compile = false;
 
@@ -61,27 +71,31 @@ void halt() {
     exit(0);
 }
 
+void dot() {
+    fprintf(stderr, "\n[ ");
+    for (int i = 0; i < Dp; i++) fprintf(stderr, "%i ", D[i]);
+    fprintf(stderr, "]\n");
+}
+
 void highlight(char *line) {
     if (!line) {  // on Ctrl+C/D
         trace = false;
         halt();
     }
 
-    yyfile = "repl";
-    fprintf(stderr, "line: %s\n", line);
+    yyfile = (char *)"repl";
+    if (trace) fprintf(stderr, "input: %s\n", line);
     yy_scan_string(line);
     yyparse();
     yyfile = nullptr;
+    dot();
 }
 
 void repl() {
     if (trace) fprintf(stderr, NOPARAM "repl\n");
-    rl_callback_handler_install("> ", highlight);
+    rl_callback_handler_install("\n> ", highlight);
     while (true) {
         rl_callback_read_char();
         rl_redisplay();
-        // line = readline("> ");
-        // if (!line) break;  // Ctrl+C
-        // fprintf(stderr, "\n[%s]\n", line);
     }
 }

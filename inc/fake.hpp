@@ -46,6 +46,9 @@ extern byte M[Msz];  ///< main VM memory
 extern addr Cp;      ///< compiler pointer
 extern addr Ip;      ///< instruction pointer
 
+extern cell D[Dsz];  ///< data stack
+extern byte Dp;      ///< @ref D pointer
+
 /// @}
 
 /// @defgroup command command
@@ -54,12 +57,26 @@ extern addr Ip;      ///< instruction pointer
 /// @brief opcode
 enum class Op {
     nop = 0x00,
-    halt = 0xFF,
+    dot = 0xD0,
     repl = 0xEE,
+    halt = 0xFF,
 };
 
+/// @defgroup flow flow control
+/// @{
 extern void nop();   ///< `( -- )` do nothing
 extern void halt();  ///< `( -- )` stop system
+/// @}
+
+/// @defgroup stack stack
+/// @{
+extern void push(cell n);  ///< `( -- n)` push cell
+/// @}
+
+/// @defgroup debug debug
+/// @{
+extern void dot();  ///< `( -- )` print @ref D
+/// @}
 
 /// @}
 
@@ -89,6 +106,6 @@ extern char *yytext;                   ///< lexeme value
 extern FILE *yyin;                     ///< current file
 extern int yyparse();                  ///< parser
 extern void yyerror(const char *msg);  ///< syntax error callback
-#include "fake.yacc.hpp"
-extern YY_BUFFER_STATE yy_scan_string ( const char *str );
+// #include "fake.lex.hpp"
+// #include "fake.yacc.hpp"
 /// @}

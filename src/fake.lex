@@ -2,10 +2,11 @@
     /// @brief `F` lexer
 %{
     #include "fake.hpp"
+    #include "fake.yacc.hpp"
     char *yyfile = nullptr;
 %}
 
-%option noyywrap yylineno c++
+%option noyywrap yylineno
 
                     // number sign
 s  [+/-]
