@@ -80,14 +80,14 @@ extern void repl();         ///< `( -- )` run CLI interface
 /// @defgroup skelex skelex
 /// @brief `lex`/`yacc` lexical skeleton
 /// @{
-extern int yylex();
-extern int yylineno;
-extern char *yyfile;
-extern char *yytext;
-extern FILE *yyin;
-extern int yyparse();
-extern void yyerror(const char *msg);
-#include "fake.yacc.hpp"
 #include <readline/readline.h>
 #include <readline/history.h>
+extern int yylex();                    ///< lexer
+extern int yylineno;                   ///< code line number
+extern char *yyfile;                   ///< file name
+extern char *yytext;                   ///< lexeme value
+extern FILE *yyin;                     ///< current file
+extern int yyparse();                  ///< parser
+extern void yyerror(const char *msg);  ///< syntax error callback
+#include "fake.yacc.hpp"
 /// @}

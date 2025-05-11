@@ -61,9 +61,20 @@ void halt() {
     exit(0);
 }
 
+const char *line = nullptr;
+void highlight(char *l) {
+    line = l;
+    ("line: %s\n", line);
+}
+
 void repl() {
     if (trace) fprintf(stderr, NOPARAM "repl\n");
+    rl_callback_handler_install("> ", highlight);
     while (true) {
-
+        rl_callback_read_char();
+        rl_redisplay();
+        // line = readline("> ");
+        // if (!line) break;  // Ctrl+C
+        // fprintf(stderr, "\n[%s]\n", line);
     }
 }
