@@ -73,12 +73,19 @@ enum class Op {
     pick = 0x17,
     depth = 0x18,
     dot = 0x19,
+    // math
+    add = 0x20,
+    sub = 0x21,
+    mul = 0x22,
+    div = 0x23,
+    mod = 0x24,
+    pow = 0x25,
 };
 
 /// @defgroup flow flow control
 /// @{
-extern void nop();   ///< `( -- )` do nothing
-extern void halt();  ///< `( -- )` stop system
+extern void nop();   ///< `0x00 ( -- )` do nothing
+extern void halt();  ///< `0xFF ( -- )` stop system
 /// @}
 
 /// @defgroup stack stack
@@ -86,21 +93,31 @@ extern void halt();  ///< `( -- )` stop system
 extern void push(cell n);  ///< `( -- n)` push cell
 extern cell top();         ///< `( n -- n )` copy top element
 extern cell pop();         ///< `( n -- )` get top element
-extern void dup();         ///< `( n -- n n )`
-extern void drop();        ///< `( n1 n2 -- n1 )`
-extern void swap();        ///< `( n1 n2 -- n2 n1 )`
-extern void over();        ///< `( n1 n2 -- n1 n2 n1 )`
-extern void press();       ///< `( n1 n2 -- n2 )`
-extern void rrot();        ///< `( n1 n2 n3 -- n2 n3 n1 )`
-extern void lrot();        ///< `( n1 n2 n3 -- n3 n1 n2 )`
-extern void pick();        ///< `( ... idx -- ... ni )`
-extern void depth();       ///< `( ... -- ... Dp )`
-extern void dot();         ///< `( ... -- )` clean @ref D
+extern void dup();         ///< `0x10 ( n -- n n )`
+extern void drop();        ///< `0x11 ( n1 n2 -- n1 )`
+extern void swap();        ///< `0x12 ( n1 n2 -- n2 n1 )`
+extern void over();        ///< `0x13 ( n1 n2 -- n1 n2 n1 )`
+extern void press();       ///< `0x14 ( n1 n2 -- n2 )`
+extern void rrot();        ///< `0x15 ( n1 n2 n3 -- n2 n3 n1 )`
+extern void lrot();        ///< `0x16 ( n1 n2 n3 -- n3 n1 n2 )`
+extern void pick();        ///< `0x17 ( ... idx -- ... ni )`
+extern void depth();       ///< `0x18 ( ... -- ... Dp )`
+extern void dot();         ///< `0x19 ( ... -- )` clean @ref D
+/// @}
+
+/// @defgroup math math
+/// @{
+extern void add();  ///< `0x20 ( n1 n2 -- n1+n2 )`
+extern void sub();  ///< `0x21 ( n1 n2 -- n1-n2 )`
+extern void mul();  ///< `0x22 ( n1 n2 -- n1*n2 )`
+extern void div();  ///< `0x23 ( n1 n2 -- n1/n2 )`
+extern void mod();  ///< `0x24 ( n1 n2 -- n1%n2 )`
+extern void pow();  ///< `0x25 ( n1 n2 -- n1^n2 )`
 /// @}
 
 /// @defgroup debug debug
 /// @{
-extern void dump();  ///< `( -- )` print @ref D
+extern void dump();  ///< `0xDD ( -- )` print @ref D
 /// @}
 
 /// @}
@@ -114,7 +131,7 @@ extern bool trace;    ///< execution trace
 /// @defgroup interpreter interpreter
 /// @{
 extern void cmd(Op cmd);  ///< run single command
-extern void repl();       ///< `( -- )` run CLI interface
+extern void repl();       ///< 0xEE `( -- )` run CLI interface
 /// @}
 
 /// @}

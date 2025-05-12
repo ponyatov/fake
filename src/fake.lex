@@ -40,6 +40,11 @@ an [a-zA-Z_0-9]
 "dot"       { yylval.o = Op::dot;      return CMD; }
 "."         { yylval.o = Op::dot;      return CMD; }
 
+"add"       { yylval.o = Op::add;      return CMD; }
+"sub"       { yylval.o = Op::sub;      return CMD; }
+"mul"       { yylval.o = Op::mul;      return CMD; }
+"div"       { yylval.o = Op::div;      return CMD; }
+
 {s}?{n}+    { yylval.n = atoi(yytext); return INT; }
 {a}{an}*    { yylval.s =      yytext ; return ID ; }
 
