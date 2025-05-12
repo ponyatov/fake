@@ -128,13 +128,19 @@ extern void dump();  ///< `0xDD ( -- )` print @ref D
 /// @{
 extern bool compile;  ///< compile/interpret state
 extern bool trace;    ///< execution trace
-extern bool batch;    ///< batch/repl mode
 /// @}
 
 /// @defgroup interpreter interpreter
 /// @{
 extern void cmd(Op cmd);  ///< run single command
 extern void repl();       ///< 0xEE `( -- )` run CLI interface
+/// @}
+
+/// @defgroup error error
+/// @details error processing & @ref recovery
+/// @{
+extern bool batch;       ///< batch/repl mode
+extern void recovery();  ///< error recovery in repl mode
 /// @}
 
 /// @}

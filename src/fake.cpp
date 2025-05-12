@@ -1,5 +1,5 @@
 /// @file
-/// @brief @ref vm core code
+/// @brief @ref VM core code
 
 #include "fake.hpp"
 #include "fake.lex.hpp"
@@ -23,12 +23,18 @@ void arg(int argc, char *argv) {  //
 
 bool batch = true;
 
+void recovery() {
+    assert(!batch);
+    fprintf(stderr, "\n");
+    yy_scan_string("");
+}
+
 void yyerror(const char *msg) {
     fprintf(stderr, "\n\n%s:%i %s [%s]\n\n", yyfile, yylineno, msg, yytext);
     if (batch)
         exit(-1);
     else
-        yy_scan_string("");
+        recovery();
 }
 
 byte M[Msz];
@@ -80,15 +86,15 @@ void drop() {
 void swap() {
     assert(Dp >= 2);
     if (trace) fprintf(stderr, "swap\t%i %i\n", D[Dp - 2], D[Dp - 1]);
-    cell n2 = pop(), n1 = pop();
-    push(n2);
-    push(n1);
+    cell n = D[Dp - 1];
+    D[Dp - 1] = D[Dp - 2];
+    D[Dp - 2] = n;
 }
 
 void over() {
     assert(Dp >= 2);
     if (trace) fprintf(stderr, "over\t%i %i\n", D[Dp - 2], D[Dp - 1]);
-    push(Dp - 2);
+    D[Dp++] = D[Dp - 2];
 }
 
 void press() {

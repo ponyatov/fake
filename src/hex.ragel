@@ -20,10 +20,15 @@ static int hex(char* p, char* pe) {
 }
 
 %%{
-    hex := |*
-        'x'   => {                                         };
+    optsign = |*
         '+'   => { sign =  true;                           };
         '-'   => { sign = false;                           };
+    *|;
+    pfx = "0x";
+    hex := 
+        optsign?
+        pfx
+    |*
         [0-9] => { num  = num << 4 | (ts[0] - '0'       ); };
         [a-f] => { num  = num << 4 | (ts[0] - 'a' + 0x0A); };
         [A-F] => { num  = num << 4 | (ts[0] - 'A' + 0x0A); };
