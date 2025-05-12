@@ -33,8 +33,8 @@ addr Ip = 0;
 cell D[Dsz];
 byte Dp = 0;
 
-void dot() {
-    if (trace) fprintf(stderr, "dot\n");
+void dump() {
+    if (trace) fprintf(stderr, "\tdump\n");
     fprintf(stderr, "\n[ ");
     for (int i = 0; i < Dp; i++) fprintf(stderr, "%i ", D[i]);
     fprintf(stderr, "]\n");
@@ -89,17 +89,28 @@ void over() {
 void press() {
     assert(Dp >= 2);
     if (trace) fprintf(stderr, "press\t%i %i\n", D[Dp - 2], D[Dp - 1]);
-    D[Dp-2] = D[Dp-1]; Dp--;
+    D[Dp - 2] = D[Dp - 1];
+    Dp--;
 }
 
 void rrot() {
+    assert(Dp >= 3);
     if (trace)
         fprintf(stderr, "rrot\t%i %i %i\n", D[Dp - 3], D[Dp - 2], D[Dp - 1]);
+    cell n = D[Dp - 3];
+    D[Dp - 3] = D[Dp - 2];
+    D[Dp - 2] = D[Dp - 1];
+    D[Dp - 1] = n;
 }
 
 void lrot() {
+    assert(Dp >= 3);
     if (trace)
         fprintf(stderr, "lrot\t%i %i %i\n", D[Dp - 3], D[Dp - 2], D[Dp - 1]);
+    cell n = D[Dp - 1];
+    D[Dp - 1] = D[Dp - 2];
+    D[Dp - 2] = D[Dp - 3];
+    D[Dp - 3] = n;
 }
 
 void pick() {
@@ -115,11 +126,16 @@ void depth() {
     push(Dp);
 }
 
+void dot() {
+    if (trace) fprintf(stderr, "dot\n");
+    Dp = 0;
+}
+
 bool compile = false;
 
 bool trace = true;
 
-void excmd(Op op) {
+void cmd(Op op) {
     if (trace) fprintf(stderr, "\n%.4X: %.2X ", Ip, op);
     switch (op) {
         case Op::nop:
@@ -128,11 +144,11 @@ void excmd(Op op) {
         case Op::halt:
             halt();
             break;
+        case Op::dump:
+            dump();
+            break;
         case Op::repl:
             repl();
-            break;
-        case Op::dot:
-            dot();
             break;
         case Op::dup:
             dup();
@@ -161,6 +177,9 @@ void excmd(Op op) {
         case Op::depth:
             depth();
             break;
+        case Op::dot:
+            dot();
+            break;
         default:
             abort();
     }
@@ -169,7 +188,7 @@ void excmd(Op op) {
 #define NOPARAM "     "
 
 void nop() {
-    if (trace) fprintf(stderr, NOPARAM "nop");
+    if (trace) fprintf(stderr, NOPARAM "nop\n");
 }
 
 void halt() {
@@ -188,7 +207,7 @@ void highlight(char *line) {
     yy_scan_string(line);
     yyparse();
     yyfile = nullptr;
-    dot();
+    dump();
 }
 
 void repl() {

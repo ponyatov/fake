@@ -1,6 +1,6 @@
 #pragma once
 /// @file
-/// @brief @ref vm headers
+/// @brief @ref VM headers
 
 /// @defgroup libc libc
 /// @brief standard headers
@@ -18,7 +18,7 @@ extern int main(int argc, char *argv[]);
 extern void arg(int argc, char *argv);
 /// @}
 
-/// @defgroup vm vm
+/// @defgroup VM VM
 /// @brief Virtual FORTH Machine
 /// @details bytecode interpreter
 /// @{
@@ -39,10 +39,10 @@ extern void arg(int argc, char *argv);
 /// @{
 
 typedef uint8_t byte;   ///< `u8`
-typedef uint16_t addr;  ///< `u16` VM memory address
-typedef int32_t cell;   ///< `i32` VM integers
+typedef uint16_t addr;  ///< `u16` @ref VM memory address
+typedef int32_t cell;   ///< `i32` integer
 
-extern byte M[Msz];  ///< main VM memory
+extern byte M[Msz];  ///< main @ref VM memory
 extern addr Cp;      ///< compiler pointer
 extern addr Ip;      ///< instruction pointer
 
@@ -56,7 +56,13 @@ extern byte Dp;      ///< @ref D pointer
 
 /// @brief opcode
 enum class Op {
+    // control flow
     nop = 0x00,
+    halt = 0xFF,
+    // debug
+    dump = 0xDD,
+    repl = 0xEE,
+    // stack ops
     dup = 0x10,
     drop = 0x11,
     swap = 0x12,
@@ -66,9 +72,7 @@ enum class Op {
     lrot = 0x16,
     pick = 0x17,
     depth = 0x18,
-    dot = 0xD0,
-    repl = 0xEE,
-    halt = 0xFF,
+    dot = 0x19,
 };
 
 /// @defgroup flow flow control
@@ -91,11 +95,12 @@ extern void rrot();        ///< `( n1 n2 n3 -- n2 n3 n1 )`
 extern void lrot();        ///< `( n1 n2 n3 -- n3 n1 n2 )`
 extern void pick();        ///< `( ... idx -- ... ni )`
 extern void depth();       ///< `( ... -- ... Dp )`
+extern void dot();         ///< `( ... -- )` clean @ref D
 /// @}
 
 /// @defgroup debug debug
 /// @{
-extern void dot();  ///< `( -- )` print @ref D
+extern void dump();  ///< `( -- )` print @ref D
 /// @}
 
 /// @}
@@ -108,8 +113,8 @@ extern bool trace;    ///< execution trace
 
 /// @defgroup interpreter interpreter
 /// @{
-extern void excmd(Op cmd);  ///< run single command
-extern void repl();         ///< `( -- )` run CLI interface
+extern void cmd(Op cmd);  ///< run single command
+extern void repl();       ///< `( -- )` run CLI interface
 /// @}
 
 /// @}

@@ -2,9 +2,6 @@
     "version": "0.0.1",
     "scopeName": "source.flang",
     "fileTypes": [".ini", ".f"],
-    "information_for_contributors": [
-        "CLI/REPL/FORTH"
-    ],
     "patterns": [
         {"include": "#comment"},
         {"include": "#keyword"},
