@@ -180,6 +180,24 @@ void cmd(Op op) {
         case Op::dot:
             dot();
             break;
+        case Op::add:
+            add();
+            break;
+        case Op::sub:
+            sub();
+            break;
+        case Op::mul:
+            mul();
+            break;
+        case Op::div:
+            div();
+            break;
+        case Op::mod:
+            mod();
+            break;
+        case Op::pow:
+            pow();
+            break;
         default:
             abort();
     }
@@ -194,6 +212,55 @@ void nop() {
 void halt() {
     if (trace) fprintf(stderr, NOPARAM "halt\n");
     exit(0);
+}
+
+void add() {
+    assert(Dp >= 2);
+    if (trace) fprintf(stderr, "add\t%i %i\n", D[Dp - 2], D[Dp - 1]);
+    D[Dp - 2] = D[Dp - 2] + D[Dp - 1];
+    Dp--;
+}
+
+void sub() {
+    assert(Dp >= 2);
+    if (trace) fprintf(stderr, "sub\t%i %i\n", D[Dp - 2], D[Dp - 1]);
+    D[Dp - 2] = D[Dp - 2] - D[Dp - 1];
+    Dp--;
+}
+
+void mul() {
+    assert(Dp >= 2);
+    if (trace) fprintf(stderr, "mul\t%i %i\n", D[Dp - 2], D[Dp - 1]);
+    D[Dp - 2] = D[Dp - 2] * D[Dp - 1];
+    Dp--;
+}
+
+void div() {
+    assert(Dp >= 2);
+    if (trace) fprintf(stderr, "div\t%i %i\n", D[Dp - 2], D[Dp - 1]);
+    D[Dp - 2] = D[Dp - 2] / D[Dp - 1];
+    Dp--;
+}
+
+void mod() {
+    assert(Dp >= 2);
+    if (trace) fprintf(stderr, "mod\t%i %i\n", D[Dp - 2], D[Dp - 1]);
+    D[Dp - 2] = D[Dp - 2] % D[Dp - 1];
+    Dp--;
+}
+
+void pow() {
+    assert(Dp >= 2);
+    if (trace) fprintf(stderr, "pow\t%i %i\n", D[Dp - 2], D[Dp - 1]);
+    int exp = D[--Dp];
+    int n = D[--Dp];
+    int r = 1;
+    if (exp >= 0) {
+        for (int i = 0; i < exp; i++) r *= n;
+        D[Dp++] = r;
+    } else {
+        abort();
+    }
 }
 
 void highlight(char *line) {

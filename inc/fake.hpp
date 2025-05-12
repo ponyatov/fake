@@ -107,12 +107,12 @@ extern void dot();         ///< `0x19 ( ... -- )` clean @ref D
 
 /// @defgroup math math
 /// @{
-extern void add();  ///< `0x20 ( n1 n2 -- n1+n2 )`
-extern void sub();  ///< `0x21 ( n1 n2 -- n1-n2 )`
-extern void mul();  ///< `0x22 ( n1 n2 -- n1*n2 )`
-extern void div();  ///< `0x23 ( n1 n2 -- n1/n2 )`
-extern void mod();  ///< `0x24 ( n1 n2 -- n1%n2 )`
-extern void pow();  ///< `0x25 ( n1 n2 -- n1^n2 )`
+extern void add();  ///< `0x20 ( n1 n2 -- n1+n2 ) +`
+extern void sub();  ///< `0x21 ( n1 n2 -- n1-n2 ) -`
+extern void mul();  ///< `0x22 ( n1 n2 -- n1*n2 ) *`
+extern void div();  ///< `0x23 ( n1 n2 -- n1/n2 ) /`
+extern void mod();  ///< `0x24 ( n1 n2 -- n1%n2 ) %`
+extern void pow();  ///< `0x25 ( n1 n2 -- n1^n2 ) ^`
 /// @}
 
 /// @defgroup debug debug
