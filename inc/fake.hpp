@@ -60,7 +60,8 @@ enum class Op {
     nop = 0x00,
     halt = 0xFF,
     // debug
-    dump = 0xDD,
+    quest = 0xD0,
+    dump = 0xD1,
     repl = 0xEE,
     // stack ops
     dup = 0x10,
@@ -119,7 +120,8 @@ extern void neg();  ///< `0x26 ( n -- -n )`
 
 /// @defgroup debug debug
 /// @{
-extern void dump();  ///< `0xDD ( -- )` print @ref D
+extern void quest();  ///< `0xD0 ? ( -- )` print @ref D
+extern void dump();   ///< `0xD1 dump ( -- )` print @ref D
 /// @}
 
 /// @}

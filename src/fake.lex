@@ -25,6 +25,7 @@ an [a-zA-Z_0-9]
 "halt"      { yylval.o = Op::halt;     return CMD; }
 
 "repl"      { yylval.o = Op::repl;     return CMD; }
+"?"         { yylval.o = Op::quest;    return CMD; }
 "dump"      { yylval.o = Op::dump;     return CMD; }
 
 "dup"       { yylval.o = Op::dup;      return CMD; }

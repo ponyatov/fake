@@ -44,11 +44,28 @@ addr Ip = 0;
 cell D[Dsz];
 byte Dp = 0;
 
-void dump() {
-    if (trace) fprintf(stderr, "\tdump\n");
+void quest() {
+    if (trace) fprintf(stderr, "\tquest\n");
     fprintf(stderr, "\n[ ");
     for (int i = 0; i < Dp; i++) fprintf(stderr, "%i ", D[i]);
     fprintf(stderr, "]\n");
+    push(0x0);
+    push(0x10);
+    dump();
+}
+
+void dump() {
+    assert(Dp >= 2);
+    if (trace) fprintf(stderr, "dump\t%.4X %i\n", D[Dp - 2], D[Dp - 1]);
+    addr s = D[--Dp];
+    assert(s < 0x100);
+    addr a = D[--Dp];
+    assert(a < 0x100);
+    for (addr i = a; i < a + s; i++) {
+        if (i % 0x10 == 0) fprintf(stderr, "\n%.4X:\t", i);
+        fprintf(stderr, "%.2X ", M[i]);
+    }
+    fprintf(stderr, "\n");
 }
 
 void push(cell n) {
@@ -154,6 +171,9 @@ void cmd(Op op) {
             break;
         case Op::halt:
             halt();
+            break;
+        case Op::quest:
+            quest();
             break;
         case Op::dump:
             dump();
