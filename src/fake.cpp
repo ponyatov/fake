@@ -282,6 +282,7 @@ void highlight(char *line) {
     yyparse();
     yyfile = nullptr;
     dump();
+    free(line);
 }
 
 void repl() {
