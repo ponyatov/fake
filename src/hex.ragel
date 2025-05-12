@@ -1,0 +1,40 @@
+#include "fake.hpp"
+
+%%machine hex;
+
+int hex(char *) { yyerror("hex"); }
+
+// %%write  data;
+
+// static int   cs  = 0;        ///< current state
+// static int   act = 0;        ///< ???
+// static char* eof = nullptr;  ///< end of file marker
+// static char* ts  = nullptr;  ///< token start
+// static char* te  = nullptr;  ///< token end
+
+// static int  num  =    0;  ///< result number
+// static bool sign = true;  ///< +sign flag
+
+// static int hex(char* p, char* pe) {
+//     num = 0; sign = true;
+//     eof = pe; cs = act = 0; ts = te = nullptr;
+//     %%write init;
+//     %%write exec;
+//     if (sign) return +num; else return -num;
+// }
+
+// %%{
+//     hex := |*
+//         'x'   => {                                        };
+//         '+'   => { sign =  true;                          };
+//         '-'   => { sign = false;                          };
+//         [0-9] => { num = num << 4 | (ts[0] - '0'       ); };
+//         [a-f] => { num = num << 4 | (ts[0] - 'a' + 0x0A); };
+//         [A-F] => { num = num << 4 | (ts[0] - 'A' + 0x0A); };
+//         any   => { yyerror("hex");                        };
+//     *|;
+// }%%
+
+// Hex::Hex(char* s) : Int(hex(s, s + strlen(s))) {}
+
+// void Hex::dump() { printf("<hex:%x> @%p\t", value, this); }

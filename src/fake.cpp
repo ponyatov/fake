@@ -21,9 +21,11 @@ void arg(int argc, char *argv) {  //
     fprintf(stderr, "arg[%i] = <%s>\n", argc, argv);
 }
 
+bool batch = true;
+
 void yyerror(const char *msg) {
     fprintf(stderr, "\n\n%s:%i %s [%s]\n\n", yyfile, yylineno, msg, yytext);
-    exit(-1);
+    if (batch) exit(-1);
 }
 
 byte M[Msz];
@@ -277,6 +279,7 @@ void highlight(char *line) {
 
     if (strlen(line)) add_history(line);
     yyfile = (char *)"repl";
+    yylineno = 0;
     if (trace) fprintf(stderr, "input: %s\n", line);
     yy_scan_string(line);
     yyparse();
@@ -287,9 +290,11 @@ void highlight(char *line) {
 
 void repl() {
     if (trace) fprintf(stderr, NOPARAM "repl\n");
+    batch = false;
     rl_callback_handler_install("\n> ", highlight);
     while (true) {
         rl_callback_read_char();
         rl_redisplay();
     }
+    batch = true;
 }

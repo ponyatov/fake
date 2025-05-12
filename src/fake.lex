@@ -48,7 +48,8 @@ an [a-zA-Z_0-9]
 "pow"       { yylval.o = Op::pow;      return CMD; }
 "neg"       { yylval.o = Op::neg;      return CMD; }
 
-{s}?{n}+    { yylval.n = atoi(yytext); return INT; }
+"0x"[0-9a-fA-F]+ { yylval.n = hex(yytext); return INT; }
+{s}?{n}+    { yylval.n = dec(yytext); return INT; }
 {a}{an}*    { yylval.s =      yytext ; return ID ; }
 
 .           {yyerror("");}  // any undetected char

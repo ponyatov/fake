@@ -128,6 +128,7 @@ extern void dump();  ///< `0xDD ( -- )` print @ref D
 /// @{
 extern bool compile;  ///< compile/interpret state
 extern bool trace;    ///< execution trace
+extern bool batch;    ///< batch/repl mode
 /// @}
 
 /// @defgroup interpreter interpreter
@@ -150,6 +151,16 @@ extern char *yytext;                   ///< lexeme value
 extern FILE *yyin;                     ///< current file
 extern int yyparse();                  ///< parser
 extern void yyerror(const char *msg);  ///< syntax error callback
+
+/// @name string to int conversion
+/// @{
+extern int hex(char *);
+extern int oct(char *);
+extern int bin(char *);
+extern int dec(char *);
+/// @}
+
 // #include "fake.lex.hpp"
 // #include "fake.yacc.hpp"
+
 /// @}

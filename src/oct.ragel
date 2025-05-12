@@ -1,0 +1,5 @@
+#include "fake.hpp"
+
+%%machine oct;
+
+int oct(char *) { yyerror("oct"); }
