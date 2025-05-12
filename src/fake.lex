@@ -48,10 +48,10 @@ an [a-zA-Z_0-9]
 "pow"       { yylval.o = Op::pow;      return CMD; }
 "neg"       { yylval.o = Op::neg;      return CMD; }
 
-"0x"[0-9a-fA-F]+ { yylval.n = hex(yytext); return INT; }
-"0o"[0-9a-fA-F]+ { yylval.n = oct(yytext); return INT; }
-"0b"[0-9a-fA-F]+ { yylval.n = bin(yytext); return INT; }
-{s}?{n}+         { yylval.n = dec(yytext); return INT; }
+{s}?"0x"[0-9a-fA-F]+ { yylval.n = hex(yytext); return INT; }
+{s}?"0o"[0-9a-fA-F]+ { yylval.n = oct(yytext); return INT; }
+{s}?"0b"[0-9a-fA-F]+ { yylval.n = bin(yytext); return INT; }
+{s}?{n}+             { yylval.n = dec(yytext); return INT; }
 
 {a}{an}*    { yylval.s =      yytext ; return ID ; }
 
