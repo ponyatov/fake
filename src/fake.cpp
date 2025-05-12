@@ -25,7 +25,9 @@ bool batch = true;
 
 void yyerror(const char *msg) {
     fprintf(stderr, "\n\n%s:%i %s [%s]\n\n", yyfile, yylineno, msg, yytext);
-    if (batch) exit(-1);
+    // if (batch) {//
+    exit(-1);
+    // else yy_scan_string("");
 }
 
 byte M[Msz];
