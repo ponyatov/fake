@@ -80,6 +80,7 @@ enum class Op {
     div = 0x23,
     mod = 0x24,
     pow = 0x25,
+    neg = 0x26,
 };
 
 /// @defgroup flow flow control
@@ -113,6 +114,7 @@ extern void mul();  ///< `0x22 ( n1 n2 -- n1*n2 ) *`
 extern void div();  ///< `0x23 ( n1 n2 -- n1/n2 ) /`
 extern void mod();  ///< `0x24 ( n1 n2 -- n1%n2 ) %`
 extern void pow();  ///< `0x25 ( n1 n2 -- n1^n2 ) ^`
+extern void neg();  ///< `0x26 ( n -- -n )`
 /// @}
 
 /// @defgroup debug debug

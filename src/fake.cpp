@@ -198,6 +198,9 @@ void cmd(Op op) {
         case Op::pow:
             pow();
             break;
+        case Op::neg:
+            neg();
+            break;
         default:
             abort();
     }
@@ -253,14 +256,17 @@ void pow() {
     assert(Dp >= 2);
     if (trace) fprintf(stderr, "pow\t%i %i\n", D[Dp - 2], D[Dp - 1]);
     int exp = D[--Dp];
+    assert(exp >= 0);
     int n = D[--Dp];
     int r = 1;
-    if (exp >= 0) {
-        for (int i = 0; i < exp; i++) r *= n;
-        D[Dp++] = r;
-    } else {
-        abort();
-    }
+    for (int i = 0; i < exp; i++) r *= n;
+    D[Dp++] = r;
+}
+
+void neg() {
+    assert(Dp >= 1);
+    if (trace) fprintf(stderr, "neg\t%i\n", D[Dp - 1]);
+    D[Dp - 1] = -D[Dp - 1];
 }
 
 void highlight(char *line) {
@@ -269,6 +275,7 @@ void highlight(char *line) {
         halt();
     }
 
+    if (strlen(line)) add_history(line);
     yyfile = (char *)"repl";
     if (trace) fprintf(stderr, "input: %s\n", line);
     yy_scan_string(line);

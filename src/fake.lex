@@ -46,6 +46,7 @@ an [a-zA-Z_0-9]
 "div"       { yylval.o = Op::div;      return CMD; }
 "mod"       { yylval.o = Op::mod;      return CMD; }
 "pow"       { yylval.o = Op::pow;      return CMD; }
+"neg"       { yylval.o = Op::neg;      return CMD; }
 
 {s}?{n}+    { yylval.n = atoi(yytext); return INT; }
 {a}{an}*    { yylval.s =      yytext ; return ID ; }
