@@ -34,6 +34,12 @@
             "problemMatcher" : []
         },
         {
+            "label"          : "cross: qemu386",
+            "type"           : "shell",
+            "command"        : "make cross HW=qemu386",
+            "problemMatcher" : []
+        },
+        {
             "label"          : "git: checkout .vscode",
             "type"           : "shell",
             "command"        : "git checkout .vscode/settings.json",
