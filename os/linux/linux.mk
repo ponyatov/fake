@@ -39,7 +39,7 @@ uclibc: $(UCLIBC_MK) $(UCLIBC_CFG) os/linux/linux.mk
 	cd $(dir $<) ; rm .config ; $(UCLIBC_MAKE)    allnoconfig ;\
 	cat $(UCLIBC_CFG)                              >> .config ;\
 	echo 'KERNEL_HEADERS="$(ROOT)/usr/include"'    >> .config ;\
-	echo 'RUNTIME_PREFIX="$(ROOT)/uclibc/runtime"' >> .config ;\
+	echo 'RUNTIME_PREFIX="$(ROOT)"'                >> .config ;\
 	echo 'DEVEL_PREFIX="$(ROOT)/usr"'              >> .config ;\
 	echo 'CROSS_COMPILER_PREFIX="$(TARGET)-"'      >> .config ;\
 	$(UCLIBC_MAKE) menuconfig &&\
