@@ -1,4 +1,4 @@
-APT += linux-source
+APT += linux-source uclibc-source
 
 LINUX_CFG += $(CWD)/hw/all.linux
 LINUX_CFG += $(CWD)/arch/$(ARCH)/$(ARCH).linux
@@ -27,3 +27,10 @@ tmp/kernel/.config: $(LINUX_CFG) mk/cross.mk os/linux/linux.mk
 	cat $(LINUX_CFG) >> .config ;\
 	echo 'CONFIG_LOCALVERSION="-$(HW)"'        >> .config ;\
 	echo 'CONFIG_DEFAULT_HOSTNAME="$(MODULE)"' >> .config
+
+GZ += /usr/src/linux-source-$(LINUX_VER)/README
+/usr/src/linux-source-$(LINUX_VER)/README: /usr/src/linux-source-$(LINUX_VER).tar.xz
+	cd /usr/src ; xzcat $< | sudo tar x && sudo touch $@
+GZ += /usr/src/uClibc-ng-$(UCLIBC_VER)/README
+/usr/src/uClibc-ng-$(UCLIBC_VER)/README: /usr/src/uClibc-ng-$(UCLIBC_VER).tar.xz
+	cd /usr/src ; xzcat $< | sudo tar x && sudo touch $@
