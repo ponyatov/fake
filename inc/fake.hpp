@@ -47,13 +47,30 @@ typedef uint16_t addr;  ///< `u16` @ref VM memory address
 typedef int32_t cell;   ///< `i32` integer
 
 /// @name main memory
+/// @{
 extern byte M[Msz];  ///< main @ref VM memory
 extern addr Cp;      ///< compiler pointer
 extern addr Ip;      ///< instruction pointer
 
+/// memory header
+struct HEADER {
+    byte _jmp;   ///< first (reset) entry jump
+    cell entry;  ///< bytecode entry point
+    cell lfa;    ///< link field area: last defined word in vocabulary
+    cell free;   ///< free memory blocks list (last free block)
+    cell used;   ///< used memory blocks list (last used block)
+} __attribute__((packed));
+
+extern HEADER *header;
+
+extern void init();  ///< initialize @ref VM (fill @ref header)
+/// @}
+
 /// @name data stack
+/// @{
 extern cell D[Dsz];  ///< data stack
 extern byte Dp;      ///< @ref D pointer
+/// @}
 
 /// @}
 
@@ -65,6 +82,11 @@ enum class Op {
     // control flow
     nop = 0x00,
     halt = 0xFF,
+    jmp = 0x01,
+    qjmp = 0x02,
+    call = 0x03,
+    ret = 0x04,
+    lit = 0x05,
     // debug
     quest = 0xD0,
     dump = 0xD1,

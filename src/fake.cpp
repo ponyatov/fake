@@ -37,7 +37,13 @@ void yyerror(const char *msg) {
         recovery();
 }
 
-byte M[Msz];
+byte M[Msz] = {
+    (byte)Op::jmp,  0xFF, 0xFF,  // entry
+    0x00,           0x00,        // lfa
+    sizeof(HEADER), 0x00,        // free
+    0x00,           0x00,        // used
+};
+HEADER *header = (HEADER *)M;
 addr Cp = 0;
 addr Ip = 0;
 
@@ -65,7 +71,8 @@ void dump() {
         if (i % 0x10 == 0) fprintf(stderr, "\n%.4X:\t", i);
         fprintf(stderr, "%.2X ", M[i]);
     }
-    fprintf(stderr, "\n");
+    fprintf(stderr, "\nheader:\n");
+    fprintf(stderr, "\tentry: %.4X\n", header->entry);
 }
 
 void push(cell n) {
