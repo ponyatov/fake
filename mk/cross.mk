@@ -18,12 +18,12 @@ ISOLINUX += $(CWD)/root/isolinux/libcom32.c32
 
 .PHONY: iso $(CWD)/bin/$(MODULE).$(HW).iso
 iso: $(CWD)/bin/$(MODULE).$(HW).iso
-$(CWD)/bin/$(MODULE).$(HW).iso: $(ISOLINUX) mk/cross.mk
+$(CWD)/bin/$(MODULE).$(HW).iso: $(ISOLINUX) mk/cross.mk os/linux/linux.mk
 	xorriso -as mkisofs \
 		-isohybrid-mbr /usr/lib/ISOLINUX/isohdpfx.bin \
 		-b isolinux/isolinux.bin \
 		-c boot/catalog -no-emul-boot -boot-load-size 4 -boot-info-table -J -R \
-		-V "$(MODULE)@$(HW)" \
+		-V "$(MODULE)@$(HW)" -m "usr" -m "*.gitignore" \
 		-o $@ $(CWD)/root
 
 $(CWD)/root/isolinux/%.c32: /usr/lib/syslinux/modules/bios/%.c32
