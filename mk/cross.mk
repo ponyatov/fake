@@ -9,11 +9,26 @@ cross:
 	@echo $@: hw:$(HW) cpu:$(CPU) arch:$(ARCH) os:$(OS)
 	$(MAKE) $(OS)
 
-.PHONY: iso $(CWD)/bin/$(MODULE).i386.iso
-iso: $(CWD)/bin/$(MODULE).i386.iso
-$(CWD)/bin/$(MODULE).i386.iso:
-	xorriso -as mkisofs -o $@ -r root -J -isohybrid-mbr \
-		-isohybrid-mbr  /usr/lib/ISOLINUX/isohdpfx.bin \
-		-b isolinux.bin \
-		-c boot.cat -no-emul-boot -boot-load-size 4 -boot-info-table -J -R \
-		-V "$(MODULE)@$(HW)"
+ISOLINUX += $(CWD)/root/isolinux/isolinux.cfg
+ISOLINUX  = $(CWD)/root/isolinux/isolinux.bin
+ISOLINUX += $(CWD)/root/isolinux/ldlinux.c32
+ISOLINUX += $(CWD)/root/isolinux/poweroff.c32
+ISOLINUX += $(CWD)/root/isolinux/reboot.c32
+ISOLINUX += $(CWD)/root/isolinux/libcom32.c32
+
+.PHONY: iso $(CWD)/bin/$(MODULE).$(HW).iso
+iso: $(CWD)/bin/$(MODULE).$(HW).iso
+$(CWD)/bin/$(MODULE).$(HW).iso: $(ISOLINUX) mk/cross.mk
+	xorriso -as mkisofs \
+		-isohybrid-mbr /usr/lib/ISOLINUX/isohdpfx.bin \
+		-b isolinux/isolinux.bin \
+		-c boot/catalog -no-emul-boot -boot-load-size 4 -boot-info-table -J -R \
+		-V "$(MODULE)@$(HW)" \
+		-o $@ $(CWD)/root
+
+$(CWD)/root/isolinux/%.c32: /usr/lib/syslinux/modules/bios/%.c32
+	cp $< $@
+
+.PHONY: qemu
+qemu: $(CWD)/bin/$(MODULE).$(HW).iso
+	qemu-system-i386 -cdrom $< -boot d

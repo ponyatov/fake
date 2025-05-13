@@ -10,3 +10,5 @@ DISTR    ?= $(HOME)/distr
 ESP       = $(HOME)/esp
 IDF_PATH ?= $(ESP)/ESP8266_RTOS_SDK
 CAR       = $(HOME)/.cargo
+ROOT      = $(CWD)/root
+BOOT      = $(ROOT)/boot
