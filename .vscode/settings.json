@@ -16,7 +16,7 @@
         "*.s": "arm", "*.s.fix": "arm", "*.S": "arm",
         "requirements.*": "properties",
         "*.*proj": "xml", ".fsi": "fsharp",
-        "*.linux": "properties"
+        "*.linux": "properties", "*.uclibc": "properties"
     },
 
     // editor

@@ -23,7 +23,7 @@ $(CWD)/bin/$(MODULE).$(HW).iso: $(ISOLINUX) mk/cross.mk os/linux/linux.mk
 		-isohybrid-mbr /usr/lib/ISOLINUX/isohdpfx.bin \
 		-b isolinux/isolinux.bin \
 		-c boot/catalog -no-emul-boot -boot-load-size 4 -boot-info-table -J -R \
-		-V "$(MODULE)@$(HW)" -m "usr" -m "*.gitignore" \
+		-V $(MODULE)@$(HW) -m "*.gitignore" \
 		-o $@ $(CWD)/root
 
 $(CWD)/root/isolinux/%.c32: /usr/lib/syslinux/modules/bios/%.c32
