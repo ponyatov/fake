@@ -13,6 +13,7 @@ cross:
 iso: $(CWD)/bin/$(MODULE).i386.iso
 $(CWD)/bin/$(MODULE).i386.iso:
 	xorriso -as mkisofs -o $@ -r root -J -isohybrid-mbr \
-		-isohybrid-mbr /usr/lib/ISOLINUX/extra/isohdpfx_c.bin \
-		-b isolinux/isolinux.bin \
-		-c isolinux/boot.cat -boot-load-size 4 -boot-info-table -no-emul-boot
+		-isohybrid-mbr  /usr/lib/ISOLINUX/isohdpfx.bin \
+		-b isolinux.bin \
+		-c boot.cat -no-emul-boot -boot-load-size 4 -boot-info-table -J -R \
+		-V "$(MODULE)@$(HW)"
