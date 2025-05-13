@@ -8,11 +8,13 @@ LINUX_CFG += $(CWD)/$(MODULE).linux
 
 LINUX_MAKE  = $(MAKE) -f /usr/src/linux-source-$(LINUX_VER)/Makefile
 LINUX_MAKE += ARCH=$(ARCH) CROSS_COMPILE=$(TARGET)-
+LINUX_MAKE += INSTALL_PATH=$(CWD)/root/boot
 
 .PHONY: linux
 linux: tmp/kernel/.config
 	cd tmp/kernel ;\
-	$(LINUX_MAKE) menuconfig && $(LINUX_MAKE)
+	$(LINUX_MAKE) menuconfig && $(LINUX_MAKE) &&\
+	$(LINUX_MAKE) install
 
 tmp/kernel/.config: $(LINUX_CFG) mk/cross.mk os/linux/linux.mk
 	cd tmp/kernel ; rm .config ; \
