@@ -16,7 +16,7 @@ LINUX_MAKE += INSTALL_DTBS_PATH=$(CWD)/root/boot/dtbs
 .PHONY: linux
 linux: tmp/kernel/.config
 	cd tmp/kernel ;\
-	$(LINUX_MAKE) menuconfig && $(LINUX_MAKE) &&\
+	$(LINUX_MAKE) menuconfig && $(LINUX_MAKE) -j4 &&\
 	$(LINUX_MAKE) install modules_install headers_install dtbs_install
 
 tmp/kernel/.config: $(LINUX_CFG) mk/cross.mk os/linux/linux.mk
