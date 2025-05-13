@@ -7,3 +7,4 @@ HW ?= qemu386
 .PHONY: cross
 cross:
 	@echo $@: hw:$(HW) cpu:$(CPU) arch:$(ARCH) os:$(OS)
+	$(MAKE) $(OS)
