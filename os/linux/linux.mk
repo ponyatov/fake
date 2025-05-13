@@ -12,11 +12,11 @@ LINUX_MAKE += ARCH=$(ARCH) CROSS_COMPILE=$(TARGET)-
 .PHONY: linux
 linux: tmp/kernel/.config
 	cd tmp/kernel ;\
-	$(LINUX_MAKE) menuconfig
+	$(LINUX_MAKE) menuconfig && $(LINUX_MAKE)
 
 tmp/kernel/.config: $(LINUX_CFG) mk/cross.mk os/linux/linux.mk
 	cd tmp/kernel ; rm .config ; \
 	$(LINUX_MAKE) allnoconfig ;\
 	cat $(LINUX_CFG) >> .config ;\
-	echo 'CONFIG_LOCALVERSION="-$(HW)"' >> .config ;\
-	echo 'CONFIG_DEFAULT_HOSTNAME="$(MODULE)"'    >> .config
+	echo 'CONFIG_LOCALVERSION="-$(HW)"'        >> .config ;\
+	echo 'CONFIG_DEFAULT_HOSTNAME="$(MODULE)"' >> .config
