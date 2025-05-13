@@ -18,7 +18,7 @@ linux: tmp/kernel/.config
 	cd tmp/kernel ;\
 	$(LINUX_MAKE) menuconfig && $(LINUX_MAKE) -j4 &&\
 	$(LINUX_MAKE) install modules_install headers_install &&\
-	rm $(BOOT)/*.old
+	rm -f $(BOOT)/*.old
 # dtbs_install
 
 tmp/kernel/.config: $(LINUX_CFG) mk/cross.mk os/linux/linux.mk
