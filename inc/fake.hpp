@@ -9,6 +9,9 @@
 #include <stdlib.h>
 #include <assert.h>
 #include <stdint.h>
+
+#include <map>
+#include <string>
 /// @}
 
 /// @defgroup main main
@@ -38,14 +41,17 @@ extern void arg(int argc, char *argv);
 /// @defgroup memory memory
 /// @{
 
+/// @name types
 typedef uint8_t byte;   ///< `u8`
 typedef uint16_t addr;  ///< `u16` VM memory address
 typedef int32_t cell;   ///< `i32` VM integers
 
+/// @name main memory
 extern byte M[Msz];  ///< main VM memory
 extern addr Cp;      ///< compiler pointer
 extern addr Ip;      ///< instruction pointer
 
+/// @name data stack
 extern cell D[Dsz];  ///< data stack
 extern byte Dp;      ///< @ref D pointer
 
@@ -102,8 +108,9 @@ extern void dot();  ///< `( -- )` print @ref D
 
 /// @defgroup compiler compiler
 /// @{
-extern bool compile;  ///< compile/interpret state
-extern bool trace;    ///< execution trace
+extern bool compile;                   ///< compile/interpret state
+extern bool trace;                     ///< execution trace
+extern std::map<std::string, addr> W;  ///< vocabulary: symbol table
 /// @}
 
 /// @defgroup interpreter interpreter
