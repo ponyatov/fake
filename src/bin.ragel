@@ -1,0 +1,33 @@
+#include "fake.hpp"
+
+%%machine bin;
+%%write  data;
+
+static int   cs  = 0;        ///< current state
+static int   act = 0;        ///< ???
+static char* eof = nullptr;  ///< end of file marker
+static char* ts  = nullptr;  ///< token start
+static char* te  = nullptr;  ///< token end
+static int  num  =    0;     ///< result number
+static bool sign = true;     ///< +sign flag
+
+static int bin(char* p, char* pe) {
+    num = 0; sign = true;
+    eof = pe; cs = act = 0; ts = te = nullptr;
+    %%write init;
+    %%write exec;
+    if (sign) return +num; else return -num;
+}
+
+%%{
+    bin := |*
+        'b'   => {                                         };
+        '+'   => { sign =  true;                           };
+        '-'   => { sign = false;                           };
+        '0'   => { num  = num << 1 | 0;                    };
+        '1'   => { num  = num << 1 | 1;                    };
+        any   => { yyerror("bin");                         };
+    *|;
+}%%
+
+int bin(char *s) { return bin(s,s+strlen(s)); }

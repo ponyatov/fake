@@ -1,6 +1,6 @@
 #pragma once
 /// @file
-/// @brief @ref vm headers
+/// @brief @ref VM headers
 
 /// @defgroup libc libc
 /// @brief standard headers
@@ -21,7 +21,7 @@ extern int main(int argc, char *argv[]);
 extern void arg(int argc, char *argv);
 /// @}
 
-/// @defgroup vm vm
+/// @defgroup VM VM
 /// @brief Virtual FORTH Machine
 /// @details bytecode interpreter
 /// @{
@@ -43,11 +43,11 @@ extern void arg(int argc, char *argv);
 
 /// @name types
 typedef uint8_t byte;   ///< `u8`
-typedef uint16_t addr;  ///< `u16` VM memory address
-typedef int32_t cell;   ///< `i32` VM integers
+typedef uint16_t addr;  ///< `u16` @ref VM memory address
+typedef int32_t cell;   ///< `i32` integer
 
 /// @name main memory
-extern byte M[Msz];  ///< main VM memory
+extern byte M[Msz];  ///< main @ref VM memory
 extern addr Cp;      ///< compiler pointer
 extern addr Ip;      ///< instruction pointer
 
@@ -62,7 +62,14 @@ extern byte Dp;      ///< @ref D pointer
 
 /// @brief opcode
 enum class Op {
+    // control flow
     nop = 0x00,
+    halt = 0xFF,
+    // debug
+    quest = 0xD0,
+    dump = 0xD1,
+    repl = 0xEE,
+    // stack ops
     dup = 0x10,
     drop = 0x11,
     swap = 0x12,
@@ -72,15 +79,21 @@ enum class Op {
     lrot = 0x16,
     pick = 0x17,
     depth = 0x18,
-    dot = 0xD0,
-    repl = 0xEE,
-    halt = 0xFF,
+    dot = 0x19,
+    // math
+    add = 0x20,
+    sub = 0x21,
+    mul = 0x22,
+    div = 0x23,
+    mod = 0x24,
+    pow = 0x25,
+    neg = 0x26,
 };
 
 /// @defgroup flow flow control
 /// @{
-extern void nop();   ///< `( -- )` do nothing
-extern void halt();  ///< `( -- )` stop system
+extern void nop();   ///< `0x00 ( -- )` do nothing
+extern void halt();  ///< `0xFF ( -- )` stop system
 /// @}
 
 /// @defgroup stack stack
@@ -88,20 +101,33 @@ extern void halt();  ///< `( -- )` stop system
 extern void push(cell n);  ///< `( -- n)` push cell
 extern cell top();         ///< `( n -- n )` copy top element
 extern cell pop();         ///< `( n -- )` get top element
-extern void dup();         ///< `( n -- n n )`
-extern void drop();        ///< `( n1 n2 -- n1 )`
-extern void swap();        ///< `( n1 n2 -- n2 n1 )`
-extern void over();        ///< `( n1 n2 -- n1 n2 n1 )`
-extern void press();       ///< `( n1 n2 -- n2 )`
-extern void rrot();        ///< `( n1 n2 n3 -- n2 n3 n1 )`
-extern void lrot();        ///< `( n1 n2 n3 -- n3 n1 n2 )`
-extern void pick();        ///< `( ... idx -- ... ni )`
-extern void depth();       ///< `( ... -- ... Dp )`
+extern void dup();         ///< `0x10 ( n -- n n )`
+extern void drop();        ///< `0x11 ( n1 n2 -- n1 )`
+extern void swap();        ///< `0x12 ( n1 n2 -- n2 n1 )`
+extern void over();        ///< `0x13 ( n1 n2 -- n1 n2 n1 )`
+extern void press();       ///< `0x14 ( n1 n2 -- n2 )`
+extern void rrot();        ///< `0x15 ( n1 n2 n3 -- n2 n3 n1 )`
+extern void lrot();        ///< `0x16 ( n1 n2 n3 -- n3 n1 n2 )`
+extern void pick();        ///< `0x17 ( ... idx -- ... ni )`
+extern void depth();       ///< `0x18 ( ... -- ... Dp )`
+extern void dot();         ///< `0x19 ( ... -- )` clean @ref D
+/// @}
+
+/// @defgroup math math
+/// @{
+extern void add();  ///< `0x20 ( n1 n2 -- n1+n2 ) +`
+extern void sub();  ///< `0x21 ( n1 n2 -- n1-n2 ) -`
+extern void mul();  ///< `0x22 ( n1 n2 -- n1*n2 ) *`
+extern void div();  ///< `0x23 ( n1 n2 -- n1/n2 ) /`
+extern void mod();  ///< `0x24 ( n1 n2 -- n1%n2 ) %`
+extern void pow();  ///< `0x25 ( n1 n2 -- n1^n2 ) ^`
+extern void neg();  ///< `0x26 ( n -- -n )`
 /// @}
 
 /// @defgroup debug debug
 /// @{
-extern void dot();  ///< `( -- )` print @ref D
+extern void quest();  ///< `0xD0 ? ( -- )` print @ref D
+extern void dump();   ///< `0xD1 dump ( -- )` print @ref D
 /// @}
 
 /// @}
@@ -115,8 +141,15 @@ extern std::map<std::string, addr> W;  ///< vocabulary: symbol table
 
 /// @defgroup interpreter interpreter
 /// @{
-extern void excmd(Op cmd);  ///< run single command
-extern void repl();         ///< `( -- )` run CLI interface
+extern void cmd(Op cmd);  ///< run single command
+extern void repl();       ///< 0xEE `( -- )` run CLI interface
+/// @}
+
+/// @defgroup error error
+/// @details error processing & @ref recovery
+/// @{
+extern bool batch;       ///< batch/repl mode
+extern void recovery();  ///< error recovery in repl mode
 /// @}
 
 /// @}
@@ -133,6 +166,16 @@ extern char *yytext;                   ///< lexeme value
 extern FILE *yyin;                     ///< current file
 extern int yyparse();                  ///< parser
 extern void yyerror(const char *msg);  ///< syntax error callback
+
+/// @name string to int conversion
+/// @{
+extern int hex(char *);
+extern int oct(char *);
+extern int bin(char *);
+extern int dec(char *);
+/// @}
+
 // #include "fake.lex.hpp"
 // #include "fake.yacc.hpp"
+
 /// @}

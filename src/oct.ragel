@@ -1,0 +1,32 @@
+#include "fake.hpp"
+
+%%machine oct;
+%%write  data;
+
+static int   cs  = 0;        ///< current state
+static int   act = 0;        ///< ???
+static char* eof = nullptr;  ///< end of file marker
+static char* ts  = nullptr;  ///< token start
+static char* te  = nullptr;  ///< token end
+static int  num  =    0;     ///< result number
+static bool sign = true;     ///< +sign flag
+
+static int oct(char* p, char* pe) {
+    num = 0; sign = true;
+    eof = pe; cs = act = 0; ts = te = nullptr;
+    %%write init;
+    %%write exec;
+    if (sign) return +num; else return -num;
+}
+
+%%{
+    oct := |*
+        'o'   => {                                        };
+        '+'   => { sign =  true;                          };
+        '-'   => { sign = false;                          };
+        [0-7] => { num = num << 3 | (ts[0] - '0'       ); };
+        any   => { yyerror("hex");                        };
+    *|;
+}%%
+
+int oct(char *s) { return oct(s,s+strlen(s)); }

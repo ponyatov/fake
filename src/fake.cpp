@@ -1,5 +1,5 @@
 /// @file
-/// @brief @ref vm core code
+/// @brief @ref VM core code
 
 #include "fake.hpp"
 #include "fake.lex.hpp"
@@ -21,9 +21,20 @@ void arg(int argc, char *argv) {  //
     fprintf(stderr, "arg[%i] = <%s>\n", argc, argv);
 }
 
+bool batch = true;
+
+void recovery() {
+    assert(!batch);
+    fprintf(stderr, "\n");
+    yy_scan_string("");
+}
+
 void yyerror(const char *msg) {
     fprintf(stderr, "\n\n%s:%i %s [%s]\n\n", yyfile, yylineno, msg, yytext);
-    exit(-1);
+    if (batch)
+        exit(-1);
+    else
+        recovery();
 }
 
 byte M[Msz];
@@ -33,11 +44,28 @@ addr Ip = 0;
 cell D[Dsz];
 byte Dp = 0;
 
-void dot() {
-    if (trace) fprintf(stderr, "dot\n");
-    fprintf(stderr, "\n%i/%i:[ ", Dp, Dsz);
+void quest() {
+    if (trace) fprintf(stderr, "\tquest\n");
+    fprintf(stderr, "\n[ ");
     for (int i = 0; i < Dp; i++) fprintf(stderr, "%i ", D[i]);
     fprintf(stderr, "]\n");
+    push(0x0);
+    push(0x10);
+    dump();
+}
+
+void dump() {
+    assert(Dp >= 2);
+    if (trace) fprintf(stderr, "dump\t%.4X %i\n", D[Dp - 2], D[Dp - 1]);
+    addr s = D[--Dp];
+    assert(s < 0x100);
+    addr a = D[--Dp];
+    assert(a < 0x100);
+    for (addr i = a; i < a + s; i++) {
+        if (i % 0x10 == 0) fprintf(stderr, "\n%.4X:\t", i);
+        fprintf(stderr, "%.2X ", M[i]);
+    }
+    fprintf(stderr, "\n");
 }
 
 void push(cell n) {
@@ -75,15 +103,15 @@ void drop() {
 void swap() {
     assert(Dp >= 2);
     if (trace) fprintf(stderr, "swap\t%i %i\n", D[Dp - 2], D[Dp - 1]);
-    cell n2 = pop(), n1 = pop();
-    push(n2);
-    push(n1);
+    cell n = D[Dp - 1];
+    D[Dp - 1] = D[Dp - 2];
+    D[Dp - 2] = n;
 }
 
 void over() {
     assert(Dp >= 2);
     if (trace) fprintf(stderr, "over\t%i %i\n", D[Dp - 2], D[Dp - 1]);
-    push(Dp - 2);
+    D[Dp++] = D[Dp - 2];
 }
 
 void press() {
@@ -94,6 +122,7 @@ void press() {
 }
 
 void rrot() {
+    assert(Dp >= 3);
     if (trace)
         fprintf(stderr, "rrot\t%i %i %i\n", D[Dp - 3], D[Dp - 2], D[Dp - 1]);
     cell n = D[Dp - 3];
@@ -103,6 +132,7 @@ void rrot() {
 }
 
 void lrot() {
+    assert(Dp >= 3);
     if (trace)
         fprintf(stderr, "lrot\t%i %i %i\n", D[Dp - 3], D[Dp - 2], D[Dp - 1]);
     cell n = D[Dp - 1];
@@ -124,11 +154,16 @@ void depth() {
     push(Dp);
 }
 
+void dot() {
+    if (trace) fprintf(stderr, "dot\n");
+    Dp = 0;
+}
+
 bool compile = false;
 
 bool trace = true;
 
-void excmd(Op op) {
+void cmd(Op op) {
     if (trace) fprintf(stderr, "\n%.4X: %.2X ", Ip, op);
     switch (op) {
         case Op::nop:
@@ -137,11 +172,14 @@ void excmd(Op op) {
         case Op::halt:
             halt();
             break;
+        case Op::quest:
+            quest();
+            break;
+        case Op::dump:
+            dump();
+            break;
         case Op::repl:
             repl();
-            break;
-        case Op::dot:
-            dot();
             break;
         case Op::dup:
             dup();
@@ -170,6 +208,30 @@ void excmd(Op op) {
         case Op::depth:
             depth();
             break;
+        case Op::dot:
+            dot();
+            break;
+        case Op::add:
+            add();
+            break;
+        case Op::sub:
+            sub();
+            break;
+        case Op::mul:
+            mul();
+            break;
+        case Op::div:
+            div();
+            break;
+        case Op::mod:
+            mod();
+            break;
+        case Op::pow:
+            pow();
+            break;
+        case Op::neg:
+            neg();
+            break;
         default:
             abort();
     }
@@ -178,7 +240,7 @@ void excmd(Op op) {
 #define NOPARAM "     "
 
 void nop() {
-    if (trace) fprintf(stderr, NOPARAM "nop");
+    if (trace) fprintf(stderr, NOPARAM "nop\n");
 }
 
 void halt() {
@@ -186,26 +248,82 @@ void halt() {
     exit(0);
 }
 
+void add() {
+    assert(Dp >= 2);
+    if (trace) fprintf(stderr, "add\t%i %i\n", D[Dp - 2], D[Dp - 1]);
+    D[Dp - 2] = D[Dp - 2] + D[Dp - 1];
+    Dp--;
+}
+
+void sub() {
+    assert(Dp >= 2);
+    if (trace) fprintf(stderr, "sub\t%i %i\n", D[Dp - 2], D[Dp - 1]);
+    D[Dp - 2] = D[Dp - 2] - D[Dp - 1];
+    Dp--;
+}
+
+void mul() {
+    assert(Dp >= 2);
+    if (trace) fprintf(stderr, "mul\t%i %i\n", D[Dp - 2], D[Dp - 1]);
+    D[Dp - 2] = D[Dp - 2] * D[Dp - 1];
+    Dp--;
+}
+
+void div() {
+    assert(Dp >= 2);
+    if (trace) fprintf(stderr, "div\t%i %i\n", D[Dp - 2], D[Dp - 1]);
+    D[Dp - 2] = D[Dp - 2] / D[Dp - 1];
+    Dp--;
+}
+
+void mod() {
+    assert(Dp >= 2);
+    if (trace) fprintf(stderr, "mod\t%i %i\n", D[Dp - 2], D[Dp - 1]);
+    D[Dp - 2] = D[Dp - 2] % D[Dp - 1];
+    Dp--;
+}
+
+void pow() {
+    assert(Dp >= 2);
+    if (trace) fprintf(stderr, "pow\t%i %i\n", D[Dp - 2], D[Dp - 1]);
+    int exp = D[--Dp];
+    assert(exp >= 0);
+    int n = D[--Dp];
+    int r = 1;
+    for (int i = 0; i < exp; i++) r *= n;
+    D[Dp++] = r;
+}
+
+void neg() {
+    assert(Dp >= 1);
+    if (trace) fprintf(stderr, "neg\t%i\n", D[Dp - 1]);
+    D[Dp - 1] = -D[Dp - 1];
+}
+
 void highlight(char *line) {
     if (!line) {  // on Ctrl+C/D
         trace = false;
         halt();
     }
-    add_history(line);
+
+    if (strlen(line)) add_history(line);
     yyfile = (char *)"repl";
+    yylineno = 0;
     if (trace) fprintf(stderr, "input: %s\n", line);
     yy_scan_string(line);
     yyparse();
     yyfile = nullptr;
     free(line);
-    dot();
+    dump();
 }
 
 void repl() {
     if (trace) fprintf(stderr, NOPARAM "repl\n");
+    batch = false;
     rl_callback_handler_install("\n> ", highlight);
     while (true) {
         rl_callback_read_char();
         rl_redisplay();
     }
+    batch = true;
 }
