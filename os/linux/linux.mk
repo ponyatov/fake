@@ -6,7 +6,8 @@ LINUX_CFG += $(CWD)/cpu/$(CPU)/$(CPU).linux
 LINUX_CFG += $(CWD)/hw/$(HW)/$(HW).linux
 LINUX_CFG += $(CWD)/$(MODULE).linux
 
-LINUX_MAKE  = $(MAKE) -f /usr/src/linux-source-$(LINUX_VER)/Makefile
+LINUX_MK    = /usr/src/linux-source-$(LINUX_VER)/Makefile
+LINUX_MAKE  = $(MAKE) -f $(LINUX_MK)
 LINUX_MAKE += ARCH=$(ARCH) CROSS_COMPILE=$(TARGET)-
 LINUX_MAKE += INSTALL_PATH=$(BOOT)
 LINUX_MAKE += INSTALL_MOD_PATH=$(ROOT)
@@ -14,9 +15,9 @@ LINUX_MAKE += INSTALL_HDR_PATH=$(ROOT)/usr
 # LINUX_MAKE += INSTALL_DTBS_PATH=$(ROOT)/boot/dtbs
 
 .PHONY: linux
-linux: tmp/kernel/.config /usr/src/linux-source-$(LINUX_VER)/Makefile
+linux: tmp/kernel/.config $(LINUX_MK)
 	cd tmp/kernel ;\
-	$(LINUX_MAKE) menuconfig && $(LINUX_MAKE) -j4 &&\
+	$(LINUX_MAKE) menuconfig && $(LINUX_MAKE) -j2 &&\
 	$(LINUX_MAKE) install modules_install headers_install &&\
 	rm -f $(BOOT)/*.old
 # dtbs_install
@@ -43,7 +44,7 @@ uclibc: $(UCLIBC_MK) $(UCLIBC_CFG) os/linux/linux.mk
 	echo 'DEVEL_PREFIX="$(ROOT)/usr"'              >> .config ;\
 	echo 'CROSS_COMPILER_PREFIX="$(TARGET)-"'      >> .config ;\
 	$(UCLIBC_MAKE) menuconfig &&\
-	$(UCLIBC_MAKE) -j4 && $(UCLIBC_MAKE) install
+	$(UCLIBC_MAKE) -j2 && $(UCLIBC_MAKE) install
 
 GZ += /usr/src/linux-source-$(LINUX_VER)/Makefile
 /usr/src/linux-source-$(LINUX_VER)/Makefile: /usr/src/linux-source-$(LINUX_VER).tar.xz
