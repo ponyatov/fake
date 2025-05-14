@@ -14,7 +14,7 @@ LINUX_MAKE += INSTALL_HDR_PATH=$(ROOT)/usr
 # LINUX_MAKE += INSTALL_DTBS_PATH=$(ROOT)/boot/dtbs
 
 .PHONY: linux
-linux: tmp/kernel/.config
+linux: tmp/kernel/.config /usr/src/linux-source-$(LINUX_VER)/Makefile
 	cd tmp/kernel ;\
 	$(LINUX_MAKE) menuconfig && $(LINUX_MAKE) -j4 &&\
 	$(LINUX_MAKE) install modules_install headers_install &&\
@@ -45,8 +45,8 @@ uclibc: $(UCLIBC_MK) $(UCLIBC_CFG) os/linux/linux.mk
 	$(UCLIBC_MAKE) menuconfig &&\
 	$(UCLIBC_MAKE) -j4 && $(UCLIBC_MAKE) install
 
-GZ += /usr/src/linux-source-$(LINUX_VER)/README
-/usr/src/linux-source-$(LINUX_VER)/README: /usr/src/linux-source-$(LINUX_VER).tar.xz
+GZ += /usr/src/linux-source-$(LINUX_VER)/Makefile
+/usr/src/linux-source-$(LINUX_VER)/Makefile: /usr/src/linux-source-$(LINUX_VER).tar.xz
 	cd /usr/src ; xzcat $< | sudo tar x && sudo touch $@
 GZ += $(UCLIBC_MK)
 $(UCLIBC_MK): /usr/src/uClibc-ng-$(UCLIBC_VER).tar.xz
