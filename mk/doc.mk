@@ -10,6 +10,10 @@ GZ += doc/FORTH/Threaded_interpretive_languages.pdf
 doc/FORTH/Threaded_interpretive_languages.pdf:
 	$(CURL) $@ https://sinclairql.speccy.org/archivo/docs/books/Threaded_interpretive_languages.pdf
 
+GZ += doc/FORTH/thinking-forth-color.pdf
+doc/FORTH/thinking-forth-color.pdf:
+	$(CURL) $@ http://prdownloads.sourceforge.net/thinking-forth/thinking-forth-color.pdf?download
+
 .PHONY: doxy
 doxy: .doxygen doc/DoxygenLayout.xml vscode/logo.png
 	rm -rf doc/html ; doxygen $< 1>/dev/null
