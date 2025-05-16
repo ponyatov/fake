@@ -49,7 +49,7 @@
         {
             "label"          : "rust: lm3s6965evb (M3)",
             "type"           : "shell",
-            "command"        : "cargo run --target=thumbv7m-none-eabi",
+            "command"        : "cargo build --target=thumbv7m-none-eabi",
             "problemMatcher" : [],
             "presentation"   : {"showReuseMessage": false, "focus": true, "reveal": "silent", "close": false}
         },

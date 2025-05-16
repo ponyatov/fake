@@ -6,14 +6,22 @@
             "request": "launch",
             "name": "lm3s6965evb",
             "servertype": "qemu",
+            "gdbPath": "/usr/bin/gdb-multiarch",
             "cwd": "${workspaceRoot}",
-            "preLaunchTask": "Cargo Build (debug)",
-            "runToEntryPoint": "main",
-            "executable": "./target/thumbv7m-none-eabi/debug/{{project-name}}",
+            "preLaunchTask": "rust: lm3s6965evb (M3)",
+            // "runToEntryPoint": "main",
+            "executable": "./target/thumbv7m-none-eabi/debug/${workspaceFolderBasename}",
             /* Run `cargo build --example hello` and uncomment this line to run semi-hosting example */
             //"executable": "./target/thumbv7m-none-eabi/debug/examples/hello",
             "cpu": "cortex-m3",
             "machine": "lm3s6965evb",
+            "preRestartCommands": [
+                "load",
+                // "break DefaultPreInit",
+                "break Reset",
+                "break ResetHandler",
+                "break DefaultHandler",
+            ]
         },
         {
             "name"         : "linux",

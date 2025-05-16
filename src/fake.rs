@@ -13,7 +13,7 @@ use panic_semihosting as _; // logs messages to the host stderr; requires a debu
 use cortex_m::asm;
 use cortex_m_rt::entry;
 
-#[cfg(target_arch = "arm")]
+// #[cfg(target_arch = "arm")]
 fn main() -> ! {
     asm::nop(); // To not have main optimize to abort in release mode, remove when you add code
 
