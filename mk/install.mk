@@ -18,3 +18,4 @@ Msys_update:
 rust:
 	rustup self update
 	rustup update
+	rustup target add thumbv7em-none-eabihf
