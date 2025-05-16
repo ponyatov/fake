@@ -43,10 +43,10 @@
         // Rust
         "rust-lang.rust-analyzer",
         "tamasfe.even-better-toml",
+        "marus25.cortex-debug",
         // "swellaby.vscode-rust-test-adapter",
         // "vadimcn.vscode-lldb",
         // "probe-rs.probe-rs-debugger",
-        // "marus25.cortex-debug",
         // F#
         "ionide.ionide-fsharp",
         "redhat.vscode-xml",
