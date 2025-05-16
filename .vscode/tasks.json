@@ -42,9 +42,9 @@
         {
             "label"          : "rust: linux",
             "type"           : "shell",
-            "command"        : "cargo run lib/${workspaceFolderBasename}.ini",
+            "command"        : "cargo run --target=x86_64-unknown-linux-gnu lib/${workspaceFolderBasename}.ini",
             "problemMatcher" : [],
-            "presentation"   : {"showReuseMessage": false, "focus": false, "reveal": "silent", "close": false}
+            "presentation"   : {"showReuseMessage": false, "focus": true, "reveal": "silent", "close": false}
         },
         {
             "label"          : "git: checkout .vscode",

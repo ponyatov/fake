@@ -8,5 +8,5 @@ fn main() {
     let src = std::fs::read_to_string(ini).unwrap();
     println!("#{:?} {:?} -> {:?}", argc, argv, ini);
     // / args
-    println!("{:?}", src);
+    println!("\n{:?}", src);
 }
