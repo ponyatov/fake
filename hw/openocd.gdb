@@ -16,7 +16,7 @@ break rust_begin_unwind
 # *try* to stop at the user entry point (it might be gone due to inlining)
 break main
 
-monitor arm semihosting enable
+# monitor arm semihosting enable
 
 # # OR: make the microcontroller SWO pin output compatible with UART (8N1)
 # # 8000000 must match the core clock frequency
@@ -29,4 +29,10 @@ monitor arm semihosting enable
 load
 
 # start the process but immediately halt the processor
-stepi
+# stepi
+
+# QEMU
+# monitor help
+# monitor system_reset
+# monitor system_powerdown
+# monitor quit
