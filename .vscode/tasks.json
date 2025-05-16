@@ -40,6 +40,13 @@
             "problemMatcher" : []
         },
         {
+            "label"          : "rust: linux",
+            "type"           : "shell",
+            "command"        : "cargo run lib/${workspaceFolderBasename}.ini",
+            "problemMatcher" : [],
+            "presentation"   : {"showReuseMessage": false, "focus": false, "reveal": "silent", "close": false}
+        },
+        {
             "label"          : "git: checkout .vscode",
             "type"           : "shell",
             "command"        : "git checkout .vscode/settings.json",
