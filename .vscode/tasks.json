@@ -47,6 +47,13 @@
             "presentation"   : {"showReuseMessage": false, "focus": true, "reveal": "silent", "close": false}
         },
         {
+            "label"          : "rust: lm3s6965evb (M3)",
+            "type"           : "shell",
+            "command"        : "cargo run --target=thumbv7m-none-eabi",
+            "problemMatcher" : [],
+            "presentation"   : {"showReuseMessage": false, "focus": true, "reveal": "silent", "close": false}
+        },
+        {
             "label"          : "git: checkout .vscode",
             "type"           : "shell",
             "command"        : "git checkout .vscode/settings.json",

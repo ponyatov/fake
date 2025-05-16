@@ -1,1 +1,1 @@
-hw/f429disco/f429disco.x
+hw/lm3s6965evb/lm3s6965evb.x

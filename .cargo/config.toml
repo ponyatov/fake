@@ -1,12 +1,16 @@
-[x86_64-unknown-linux-gnu]
-[aarch64-unknown-linux-gnu]
-[i686-pc-windows-gnu]
+[target.x86_64-unknown-linux-gnu]
+[target.aarch64-unknown-linux-gnu]
+[target.i686-pc-windows-gnu]
 
-[thumbv7m-none-eabi]
-[thumbv7em-none-eabihf]
+[target.'cfg(all(target_arch = "arm", target_os = "none"))']
+runner = "gdb-multiarch -q -x hw/openocd.gdb"
+[target.thumbv7m-none-eabi]
+runner = "qemu-system-arm -cpu cortex-m3 -machine lm3s6965evb -nographic -semihosting-config enable=on,target=native -kernel"
+[target.thumbv7em-none-eabihf]
+runner = "qemu-system-arm -cpu cortex-m4 -machine netduinoplus2 -nographic -semihosting-config enable=on,target=native -kernel"
 
-[wasm32-unknown-unknown]
-[aarch64-linux-android]
+[target.wasm32-unknown-unknown]
+[target.aarch64-linux-android]
 
 [build]
 # Pick ONE of these compilation targets
