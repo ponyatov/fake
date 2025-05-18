@@ -1,1 +1,0 @@
-hw/lm3s6965evb/lm3s6965evb.x
